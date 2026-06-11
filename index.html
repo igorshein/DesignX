@@ -491,6 +491,7 @@ function init() {
   const c = CATALOG;
   document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span>`;
   document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');};});
+  document.getElementById('panel-browse').classList.add('active');
   initFilters(); filterSkills(); updateExportBar();
   requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();renderReferences();buildProcessPipeline();updateStats();});
 }
