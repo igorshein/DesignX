@@ -157,6 +157,22 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 ::-webkit-scrollbar-track{background:var(--bg-surface)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 @media(max-width:640px){.grid{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:1fr}.layout{padding:.75rem}.header h1{font-size:1.125rem}.phil-grid{grid-template-columns:1fr 1fr}.contras-grid{grid-template-columns:1fr}}
+.process-flow{display:flex;flex-direction:column;gap:0;align-items:center}
+.process-stage{background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:1.25rem;width:100%;max-width:36rem;cursor:pointer;transition:border-color .15s,background .15s}
+.process-stage:hover{border-color:var(--accent)}
+.process-stage-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
+.process-icon{font-size:1.5rem}
+.process-stage h3{margin:0;font-size:1rem;color:var(--text-primary)}
+.process-desc{margin:0 0 .75rem 1.75rem;font-size:.8125rem;color:var(--text-muted)}
+.process-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-left:1.75rem}
+.process-skill-tag{padding:2px 8px;font-size:.75rem;border:1px solid var(--border);border-radius:4px;color:var(--text-code);cursor:pointer;transition:background .15s,border-color .15s}
+.process-skill-tag:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.process-arrow{color:var(--text-muted);font-size:1.25rem;padding:.25rem 0;opacity:.5}
+.process-stage.expanded{border-color:var(--accent);background:var(--bg-surface)}
+.process-stage.expanded .process-skills{display:flex}
+.process-skills{display:none}
+.process-stage.expanded .process-desc{display:block}
+.process-desc{display:none}
 </style>
 </head>
 <body>
@@ -176,6 +192,7 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
       <a data-panel="systems">Дизайн-системы</a>
       <a data-panel="philosophies">Философии</a>
       <a data-panel="tools">Инструменты</a>
+      <a data-panel="process">Процесс</a>
       <a data-panel="about">О проекте</a>
     </nav>
   </header>
@@ -355,6 +372,15 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
     </div>
   </div>
 
+  <!-- PANEL: Process -->
+  <div id="panel-process" class="panel">
+    <div class="section" style="max-width:50rem">
+      <h2>UX/UI процесс</h2>
+      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.8125rem">Карта полного цикла дизайн-разработки: от исследования до запуска. Нажми на этап — откроются подходящие навыки.</p>
+      <div id="process-pipeline"></div>
+    </div>
+  </div>
+
   <!-- PANEL: About -->
   <div id="panel-about" class="panel">
     <div class="section" style="max-width:40rem">
@@ -440,7 +466,7 @@ function init() {
   const c = CATALOG;
   document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span>`;
   document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');};});
-  initFilters(); renderAllSystems(); renderPhilosophiesPage(); renderMatcher(); renderTools(); updateStats(); updateExportBar(); filterSkills();
+  initFilters(); renderAllSystems(); renderPhilosophiesPage(); renderMatcher(); renderTools(); buildProcessPipeline(); updateStats(); updateExportBar(); filterSkills();
 }
 
 function initFilters() {
@@ -584,6 +610,7 @@ function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего на�
 function exportSelected(){const skills=CATALOG.skills.filter(s=>selectedSkillIds.has(s.id));const systems=(CATALOG.design_systems||[]).filter(ds=>selectedSystemIds.has(ds.id));const md=buildMd(skills,systems);downloadMd(md)}
 function buildMd(skills,systems){let md=`# DesignX Export\n\n> Exported: ${new Date().toISOString().split('T')[0]} · DesignX v2\n\n`;if(skills.length){md+=`## Skills (${skills.length})\n\n`;skills.forEach(s=>{md+=`### ${s.name}\n- **Source:** ${s.source||'custom'}\n- **Category:** ${CATALOG.categories.find(c=>c.id===s.category)?.name||s.category}\n- **Complexity:** ${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}\n\n${s.description||s.summary}\n\n`;if(s.key_principles?.length){md+=`**Principles:**\n`;s.key_principles.forEach(p=>md+=`- ${p}\n`);md+='\n'}md+='---\n\n'})}if(systems.length){md+=`## Design Systems (${systems.length})\n\n`;systems.forEach(ds=>{md+=`### ${ds.name}\n- **Aesthetic:** ${CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic}\n- **Products:** ${ds.product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}\n\n${ds.description||''}\n\n`;if(ds.tokens_css){const tc=ds.tokens_css;md+=`**Tokens:**\n`;Object.entries(tc).filter(([k])=>k!=='preview_demo').forEach(([k,v])=>md+=`- --${k}: ${v}\n`);md+='\n'}md+='---\n\n'})}md+=`## How to Use\n\n1. Copy SKILL.md files to your AI agent's skills directory\n2. Copy DESIGN.md to the root of your repository\n3. Your AI agent will read DESIGN.md and follow the design system\n4. Use skills with Claude Code, Cursor, Codex, OpenCode\n\n*Generated by DesignX*`;return md}
 function downloadMd(md){const b=new Blob([md],{type:'text/markdown'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='designx-export.md';a.click();URL.revokeObjectURL(u)}
+function buildProcessPipeline(){const stages=[{id:'research',icon:'🔍',title:'Исследование',desc:'User research, интервью, анализ конкурентов',skills:['user-interviews','competitive-analysis','diary-studies','contextual-inquiry','ethnographic-research','focus-groups','survey-design','design-research','jobs-to-be-done']},{id:'analysis',icon:'📊',title:'Анализ',desc:'CJM, сервис-блюпринт, data-driven решения',skills:['journey-mapping','service-blueprinting','cognitive-mapping','analytics-driven-design','heatmap-analysis','ux-metrics','product-analytics-ux','ab-testing','card-sorting','tree-testing','ux-kpis-dashboard']},{id:'design',icon:'📐',title:'Проектирование',desc:'Wireframes, IA, user flows, сценарии',skills:['wireframing-lowfi','wireframing-hifi','wireframing','user-personas','interaction-design','mobile-first','adaptive-design','onboarding-flows','auth-flows','form-design','navigation-patterns','search-filter']},{id:'visual',icon:'🎨',title:'Визуальный дизайн',desc:'Сетка, типографика, цвет, компоненты, бренд',skills:['visual-hierarchy','layout-composition','color-theory-palette','typography-design','brand-identity','component-design','visual-consistency','white-space','grid-systems-advanced','dark-light-mode','color-mode-theme','icon-design','illustration-style']},{id:'prototype',icon:'⚡',title:'Прототипирование',desc:'Интерактивные прототипы, motion, анимация',skills:['interactive-prototyping','prototyping','micro-interactions','motion-design-principles','lottie-rive-animation','scroll-based-animation','page-transitions-advanced','canvas-design','hyperframes']},{id:'test',icon:'🧪',title:'Тестирование',desc:'Юзабилити-тесты, A/B, экспертиза, доступность',skills:['usability-testing','cognitive-walkthrough','heuristic-evaluation','accessibility-audit','screen-reader-ux','visual-regression-testing','design-qa','usability-benchmarking','color-contrast-advanced','a-b-testing-analysis']},{id:'dev',icon:'🚀',title:'Разработка',desc:'Design-to-code, frontend, адаптивность, доступность',skills:['design-to-code','frontend-design','responsive-design','semantic-html','css-custom-properties','design-tokens','component-library','storybook','design-system-architect','performance-web-vitals','pwa-design']}];const container=document.getElementById('process-pipeline');if(!container)return;let html='<div class="process-flow">';stages.forEach((s,i)=>{html+='<div class="process-stage" data-stage="'+s.id+'">';html+='<div class="process-stage-header"><span class="process-icon">'+s.icon+'</span><h3>'+s.title+'</h3></div>';html+='<p class="process-desc">'+s.desc+'</p>';html+='<div class="process-skills">';s.skills.forEach(sid=>{const skill=CATALOG?.skills.find(sk=>sk.id===sid);if(skill){html+='<span class="process-skill-tag" data-skill="'+sid+'">'+skill.name_ru+'</span>'}});html+='</div></div>';if(i<stages.length-1)html+='<div class="process-arrow">↓</div>'});html+='</div>';container.innerHTML=html;container.querySelectorAll('.process-skill-tag').forEach(el=>{el.onclick=()=>{const sid=el.dataset.skill;if(sid){switchPanel('browse');setTimeout(()=>{const input=document.getElementById('skill-search');if(input){input.value=sid;filterSkills()}},100)}}});container.querySelectorAll('.process-stage').forEach(el=>{el.onclick=(e)=>{if(e.target.closest('.process-skill-tag'))return;el.classList.toggle('expanded')}})}
 </script>
 </body>
 </html>
