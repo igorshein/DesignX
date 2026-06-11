@@ -42,3 +42,61 @@ bg: #0d0d12, accent: #d4a84b, accent2: #6b4c8a
 
 ## Tokens CSS
 --bg, --bg-elevated, --text, --text-muted, --accent, --accent2, --border, --success, --error
+## Typography Scale
+- **H1** — 2rem/2.5rem, 700, JetBrains Mono
+- **H2** — 1.5rem/2rem, 700, JetBrains Mono
+- **H3** — 1.25rem/1.75rem, 600, JetBrains Mono
+- **Body** — 0.9375rem/1.5rem, 400, JetBrains Mono
+- **Body Small** — 0.8125rem/1.25rem, 400, JetBrains Mono
+- **Caption** — 0.75rem/1rem, 400, JetBrains Mono
+- **Label** — 0.8125rem/1rem, 600, JetBrains Mono
+- **Code** — 0.8125rem/1.25rem, 400, JetBrains Mono
+
+## Spacing & Grid
+- **Base unit**: 4px
+- **Spacing scale**: 4px / 8px / 12px / 16px / 24px / 32px / 48px / 64px
+- **Content max-width**: 1200px (12-col); **Gutter**: 24px
+- **Padding**: 16px (mobile) / 24px (desktop)
+
+## Button Specs
+| Variant | Default | Hover | Active | Disabled |
+|---|---|---|---|---|
+| Primary | bg #d4a84b, #fff | darker 10% | opacity .85 | opacity .4 |
+| Secondary | bg transparent, border rgba(212,168,75,.15), text #f0ece4 | bg #1a1a24 | border #d4a84b | opacity .4 |
+| Ghost | bg transparent, text #8a8278 | bg #1a1a24 | text #f0ece4 | opacity .4 |
+- Radius: 8px | Height: 36px (default) / 28px (sm) / 44px (lg)
+- Transition: all 0.15s ease
+
+## Input Field Specs
+| State | Background | Border | Text |
+|---|---|---|---|
+| Default | #0d0d12 | rgba(212,168,75,.15) | #f0ece4 |
+| Focus | #0d0d12 | #d4a84b (+shadow) | #f0ece4 |
+| Error | #0d0d12 | #d45555 | #d45555 |
+| Disabled | #1a1a24 | rgba(212,168,75,.15) | #8a8278 |
+- Height: 36px | Radius: 8px | Padding: 0 12px
+
+## Card Specs
+- Background: #1a1a24 | Border: 1px solid rgba(212,168,75,.15) | Radius: 8px
+- Padding: 16px | Hover: border #d4a84b (if interactive)
+
+## Navigation
+- Link: #8a8278, hover #f0ece4, active #d4a84b
+- Tab active: bottom 2px #d4a84b, color #d4a84b
+- Sidebar: padding 8px 16px
+
+## Accessibility
+- Contrast: WCAG AA (4.5:1 normal, 3:1 large)
+- Focus: 2px #d4a84b outline + offset
+- Target: min 44x44px interactive
+- Motion: respects prefers-reduced-motion
+
+## Iconography
+- Style: outline (1.5px), sizes 16/20/24px
+- Color: inherits text; #d4a84b for active
+- Set: Lucide or Feather
+
+## Motion
+- Duration: 150ms (micro) / 250ms (transitions)
+- Easing: ease (default), ease-out (in), ease-in (out)
+- Pattern: opacity + translateY/scale
