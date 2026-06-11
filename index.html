@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DesignX — Skill & Design System Matcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-surface:#0a0b0f;--bg-elevated:#111318;--bg-card:#16181d;--border:#22262e;--text-primary:#e8ebf0;--text-muted:#7a8290;--text-code:#9cdcfe;--accent-primary:#4da3ff;--accent-hover:#7ab3ff;--success:#4ec990;--warning:#dcdcaa;--error:#f14c4c;--radius:6px;--font:'JetBrains Mono',monospace;--font-size:14px}
+html{font-size:var(--font-size)}
+body{font-family:var(--font);background:var(--bg-surface);color:var(--text-primary);line-height:1.6;min-height:100vh;padding-bottom:5rem}
+.layout{max-width:80rem;margin:0 auto;padding:1.5rem}
+.header{border-bottom:1px solid var(--border);padding-bottom:.75rem;margin-bottom:1.5rem}
+.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.header h1{font-size:1.5rem;font-weight:600;letter-spacing:-.5px;color:var(--accent-primary)}
+.header h1 small{font-size:.75rem;color:var(--text-muted);font-weight:400}
+.header .sub{color:var(--text-muted);font-size:.75rem;margin-top:.15rem}
+.header-nav{display:flex;gap:.25rem;margin-top:.75rem;flex-wrap:wrap}
+.header-nav a{padding:.5rem 1rem;color:var(--text-muted);text-decoration:none;font-size:.8125rem;cursor:pointer;border-radius:var(--radius);transition:all .15s}
+.header-nav a:hover{color:var(--text-primary);background:var(--bg-elevated)}
+.header-nav a.active{color:var(--bg-surface);background:var(--accent-primary)}
+.stats{display:flex;gap:1rem;font-size:.75rem;color:var(--text-muted)}
+.stats span{display:flex;align-items:center;gap:4px}
+.panel{display:none}.panel.active{display:block}
+h2{font-size:1.125rem;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted)}
+
+/* Search */
+.search-bar{display:flex;gap:.5rem;margin-bottom:1rem}
+.search-bar input{flex:1;height:40px;padding:0 12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.8125rem;outline:none}
+.search-bar input:focus{border-color:var(--accent-primary)}
+
+/* Filters */
+.filter-bar,.filter-scroll{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.75rem}
+.filter-scroll{overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding-bottom:4px}
+.filter-scroll::-webkit-scrollbar{height:3px}
+.filter-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.filter-btn{padding:3px 10px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-muted);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+.filter-btn.active{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:.75rem}
+.grid-3{grid-template-columns:repeat(auto-fill,minmax(22rem,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fill,minmax(14rem,1fr))}
+
+/* Cards */
+.card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;cursor:pointer;transition:border-color .15s;overflow:hidden;position:relative}
+.card:hover{border-color:var(--accent-primary)}
+.card.selected{border-color:var(--accent-primary);background:rgba(77,163,255,.04)}
+.card-accent{height:3px;margin:-1rem -1rem .5rem -1rem;border-radius:6px 6px 0 0;transition:opacity .15s}
+.card h4{font-size:.875rem;font-weight:500;color:var(--text-primary)}
+.card .tags{display:flex;gap:3px;flex-wrap:wrap;margin:.35rem 0}
+.card .tag{padding:1px 5px;border:1px solid var(--border);border-radius:3px;font-size:.6875rem;color:var(--text-muted);background:var(--bg-surface)}
+.card .meta{display:flex;gap:.5rem;font-size:.6875rem;color:var(--text-muted);margin-top:.35rem;flex-wrap:wrap}
+.card p{font-size:.75rem;color:var(--text-muted);margin-top:.35rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .complexity{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.6875rem;font-weight:500}
+.comp-beginner{background:#1a3a2a;color:var(--success)}
+.comp-intermediate{background:#3a3520;color:var(--warning)}
+.comp-advanced{background:#3a1a1a;color:var(--error)}
+.card .cat-badge{font-size:.6875rem;color:var(--text-code)}
+.select-star{font-size:1rem;cursor:pointer;user-select:none;opacity:.3;transition:opacity .15s}
+.card:hover .select-star,.card.selected .select-star{opacity:1}
+.card.selected .select-star{color:var(--accent-primary)}
+
+/* Color swatches */
+.swatch-row{display:flex;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
+.swatch{display:flex;align-items:center;gap:4px;font-size:.625rem;color:var(--text-muted)}
+.swatch-dot{width:20px;height:20px;border-radius:4px;border:1px solid rgba(255,255,255,.1);flex-shrink:0}
+
+/* Preview mini interface */
+.preview-frame{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:.75rem}
+.preview-frame .pf-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
+.preview-frame .pf-logo{font-size:.75rem;font-weight:600;letter-spacing:-.3px}
+.preview-frame .pf-nav{display:flex;gap:8px}
+.preview-frame .pf-nav-item{font-size:.625rem;padding:2px 8px;border-radius:99px}
+.preview-frame .pf-body{padding:10px 12px;display:flex;gap:8px;flex-direction:column}
+.preview-frame .pf-card{padding:8px 10px;border-radius:var(--radius);display:flex;gap:6px;flex-direction:column}
+.preview-frame .pf-card-title{font-size:.75rem;font-weight:600}
+.preview-frame .pf-card-text{font-size:.625rem;opacity:.7;line-height:1.4}
+.preview-frame .pf-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:99px;font-size:.625rem;font-weight:500;border:none;cursor:pointer}
+.preview-frame .pf-btn-outline{background:transparent;border:1px solid}
+.preview-frame .pf-stats{display:flex;gap:8px;margin-top:4px}
+.preview-frame .pf-stat{flex:1;padding:6px;border-radius:4px;text-align:center}
+.preview-frame .pf-stat-val{font-size:.8125rem;font-weight:700}
+.preview-frame .pf-stat-lbl{font-size:.5625rem;opacity:.7;margin-top:1px}
+
+/* Product selector */
+.product-select{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.product-item{padding:8px 14px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-primary);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;text-align:center;min-width:90px;transition:all .15s}
+.product-item:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+.product-item.selected{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
+.product-item .icon{font-size:1.25rem;display:block;margin-bottom:2px}
+.product-item .label{font-size:.6875rem}
+
+/* Steps */
+.step{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+.step .step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent-primary);color:var(--bg-surface);font-size:.75rem;font-weight:600;margin-right:.5rem}
+.step h3{display:inline;color:var(--text-primary);font-size:.9375rem}
+.phil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.5rem}
+.phil-item{padding:.5rem .75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-surface);cursor:pointer;transition:all .15s;font-family:var(--font);font-size:.75rem;color:var(--text-muted);text-align:left}
+.phil-item:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+.phil-item.selected{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
+
+/* Philosophy preview mini-card */
+.phil-mini{border-left:3px solid;padding:.35rem .5rem;margin-top:.35rem;font-size:.625rem;line-height:1.3}
+
+/* Overlay */
+#detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;padding:1rem}
+#detail-overlay.open{display:flex}
+#detail-panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);max-width:48rem;width:100%;max-height:90vh;overflow-y:auto;padding:1.5rem 2rem}
+#detail-panel h2{font-size:1.25rem;color:var(--accent-primary);margin-bottom:.25rem}
+#detail-panel .close{float:right;background:none;border:1px solid var(--border);color:var(--text-muted);padding:4px 12px;border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem}
+#detail-panel .close:hover{border-color:var(--error);color:var(--error)}
+#detail-panel .principles{margin:.75rem 0;padding-left:1.25rem}
+#detail-panel .principles li{margin-bottom:.35rem;color:var(--text-muted);font-size:.8125rem}
+#detail-panel .detail-meta{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0;font-size:.75rem}
+#detail-panel .detail-meta span{display:flex;align-items:center;gap:4px}
+#detail-panel .source{display:inline-block;padding:2px 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:4px;font-size:.6875rem;color:var(--text-code);margin:.35rem 0}
+.compare-grid{display:grid;gap:1rem;margin-top:.75rem}.compare-grid.c2{grid-template-columns:1fr 1fr}.compare-grid.c3{grid-template-columns:1fr 1fr 1fr}.compare-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}.compare-col{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}.compare-col .acc-bar{height:3px;margin:-1rem -1rem .75rem -1rem;border-radius:6px 6px 0 0}.compare-col h3{font-size:.875rem;color:var(--accent-primary);margin-bottom:.25rem}.compare-col .cm-section{margin-bottom:.75rem}.compare-col .cm-label{font-size:.625rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:.25rem}.compare-col .cm-value{font-size:.75rem;color:var(--text-primary);line-height:1.5}.compare-col .cm-tags{display:flex;gap:3px;flex-wrap:wrap}.compare-col .cm-tag{padding:1px 5px;border:1px solid var(--border);border-radius:3px;font-size:.625rem;color:var(--text-muted);background:var(--bg-elevated)}
+
+/* Export bar */
+.export-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg-elevated);border-top:1px solid var(--border);padding:.75rem 0;display:none;z-index:100}
+.export-bar.visible{display:block}
+.export-bar .layout{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.export-count{color:var(--text-muted);font-size:.8125rem}
+.export-actions{display:flex;gap:.5rem}
+.export-btn{background:var(--accent-primary);color:var(--bg-surface);border:none;padding:8px 20px;border-radius:var(--radius);font-family:var(--font);font-size:.8125rem;font-weight:500;cursor:pointer}
+.export-btn:hover{background:var(--accent-hover)}
+.export-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text-primary)}
+.export-btn.secondary:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+
+/* Contrast tool */
+.contras-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:30rem}
+.contras-grid input{height:36px;padding:0 10px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem}
+.contras-result{padding:.75rem 1rem;border-radius:var(--radius);margin-top:.75rem}
+.contras-result.pass{background:#1a3a2a;color:var(--success)}
+.contras-result.fail{background:#3a1a1a;color:var(--error)}
+.contras-sample{padding:.75rem;border-radius:var(--radius);margin-top:.5rem;font-size:.875rem}
+
+/* Principles */
+.principle-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+.principle-card h4{font-size:.8125rem;font-weight:500;margin-bottom:.25rem}
+.principle-card p{font-size:.6875rem;color:var(--text-muted);line-height:1.5}
+
+/* Empty */
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-muted);grid-column:1/-1}
+.empty .icon{font-size:2rem;margin-bottom:.5rem;display:block}
+.section{margin-bottom:1.5rem}
+.section-title{font-size:.8125rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
+#loader{display:flex;align-items:center;justify-content:center;min-height:40vh;flex-direction:column;gap:1rem}
+#loader .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent-primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg-surface)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:1fr}.layout{padding:.75rem}.header h1{font-size:1.125rem}.phil-grid{grid-template-columns:1fr 1fr}.contras-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <header class="header">
+    <div class="header-top">
+      <div>
+        <h1>DesignX <small>v2</small></h1>
+        <p class="sub">Skill & Design System Matcher · подбор AI-agent навыков и DESIGN.md дизайн-систем</p>
+      </div>
+      <div class="stats" id="stats-bar"><span>⋯ навыков</span><span>⋯ дизайн-систем</span></div>
+    </div>
+    <nav class="header-nav" id="main-nav">
+      <a class="active" data-panel="browse">Обзор</a>
+      <a data-panel="matcher">Подбор</a>
+      <a data-panel="systems">Дизайн-системы</a>
+      <a data-panel="philosophies">Философии</a>
+      <a data-panel="tools">Инструменты</a>
+      <a data-panel="about">О проекте</a>
+    </nav>
+  </header>
+
+  <div id="loader"><div class="spinner"></div><p style="color:var(--text-muted);font-size:.8125rem">Загрузка каталога...</p></div>
+
+  <!-- PANEL: Browse -->
+  <div id="panel-browse" class="panel">
+    <div class="search-bar"><input type="text" id="skill-search" placeholder="Поиск навыков по названию, тегам, описанию..." oninput="filterSkills()"></div>
+    <div class="section"><h3>Категория</h3><div class="filter-scroll" id="category-filters"></div></div>
+    <div class="section">
+      <h3>Сложность</h3>
+      <div class="filter-bar" id="complexity-filters">
+        <button class="filter-btn active" onclick="setComplexity('all')">Любая</button>
+        <button class="filter-btn" onclick="setComplexity('beginner')">Начальный</button>
+        <button class="filter-btn" onclick="setComplexity('intermediate')">Средний</button>
+        <button class="filter-btn" onclick="setComplexity('advanced')">Продвинутый</button>
+      </div>
+    </div>
+    <div class="section"><h3>Тип продукта</h3><div class="filter-scroll" id="product-type-filters"></div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+      <span style="font-size:.8125rem;color:var(--text-muted)" id="result-count"></span>
+      <button class="export-btn secondary" onclick="exportSelected()" style="padding:4px 12px;font-size:.75rem">Экспорт</button>
+    </div>
+    <div id="skills-grid" class="grid"></div>
+  </div>
+
+  <!-- PANEL: Matcher -->
+  <div id="panel-matcher" class="panel">
+    <div class="step"><span class="step-num">1</span><h3>Что вы строите?</h3><div class="product-select" id="matcher-product-types" style="margin-top:.75rem"></div></div>
+    <div class="step" id="matcher-step2" style="display:none"><span class="step-num">2</span><h3>Какая эстетика?</h3><div class="phil-grid" id="matcher-philosophies" style="margin-top:.75rem"></div></div>
+    <div class="step" id="matcher-step3" style="display:none"><span class="step-num">3</span><h3>Рекомендуемые навыки</h3><p style="color:var(--text-muted);font-size:.75rem;margin:.5rem 0" id="matcher-reason"></p><div class="grid" id="matcher-skills"></div></div>
+    <div class="step" id="matcher-step4" style="display:none"><span class="step-num">4</span><h3>Дизайн-системы</h3><div class="grid grid-3" id="matcher-systems"></div></div>
+    <div id="matcher-step5" style="display:none" class="step" style="text-align:center"><button class="export-btn" onclick="exportSelected()">📦 Экспортировать набор</button></div>
+  </div>
+
+  <!-- PANEL: Design Systems -->
+  <div id="panel-systems" class="panel">
+    <div class="section"><h3>Фильтр по эстетике</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
+    <div class="section"><h3>Фильтр по типу продукта</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
+    <div class="grid grid-3" id="systems-grid"></div>
+  </div>
+
+  <!-- PANEL: Philosophies -->
+  <div id="panel-philosophies" class="panel">
+    <div class="section">
+      <h2>Философии дизайна</h2>
+      <p style="color:var(--text-muted);font-size:.8125rem;margin-bottom:1rem">
+        15 эстетических направлений для ИИ-агентов. Каждая философия задаёт визуальный язык и атмосферу интерфейса.
+      </p>
+      <div class="grid grid-4" id="philosophies-grid"></div>
+    </div>
+  </div>
+
+  <!-- PANEL: Tools -->
+  <div id="panel-tools" class="panel">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(24rem,1fr));gap:1.5rem">
+      <!-- Contrast Checker -->
+      <div class="step">
+        <h3 style="margin-bottom:.75rem">🎨 WCAG Contrast Checker</h3>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
+          Проверка цветового контраста по стандарту WCAG 2.2 (AA: 4.5:1, AAA: 7:1)
+        </p>
+        <div class="contras-grid">
+          <div><label style="font-size:.6875rem;color:var(--text-muted)">Текст / цвет</label><input id="contrast-fg" value="#e8ebf0" oninput="checkContrast()"></div>
+          <div><label style="font-size:.6875rem;color:var(--text-muted)">Фон</label><input id="contrast-bg" value="#0a0b0f" oninput="checkContrast()"></div>
+        </div>
+        <div id="contrast-result" class="contras-result pass">
+          Ratio: 10.2:1 · WCAG AA ✅ · WCAG AAA ✅
+        </div>
+        <div id="contrast-sample" class="contras-sample">Пример текста для проверки читаемости</div>
+      </div>
+
+      <!-- Design Principles -->
+      <div class="step">
+        <h3 style="margin-bottom:.75rem">📐 Принципы дизайна (NN/g)</h3>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
+          10 эвристик Nielsen Norman Group + 5 принципов визуального дизайна
+        </p>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:.5rem">
+          <div class="principle-card"><h4>1. Visibility of Status</h4><p>Система всегда должна информировать пользователя о том, что происходит.</p></div>
+          <div class="principle-card"><h4>2. Match Real World</h4><p>Говорите на языке пользователя, а не системными терминами.</p></div>
+          <div class="principle-card"><h4>3. User Control</h4><p>Пользователь должен иметь возможность отменить или повторить действие.</p></div>
+          <div class="principle-card"><h4>4. Consistency</h4><p>Одни и те же термины, элементы и паттерны — везде.</p></div>
+          <div class="principle-card"><h4>5. Error Prevention</h4><p>Лучше предотвратить ошибку, чем показывать красивое сообщение о ней.</p></div>
+          <div class="principle-card"><h4>6. Recognition</h4><p>Минимизируйте нагрузку на память — делайте элементы видимыми.</p></div>
+          <div class="principle-card"><h4>7. Flexibility</h4><p>Ускорения для опытных пользователей, не ломая базовый опыт.</p></div>
+          <div class="principle-card"><h4>8. Aesthetic Design</h4><p>Минималистичный дизайн без нерелевантной информации.</p></div>
+          <div class="principle-card"><h4>9. Error Recovery</h4><p>Сообщайте об ошибках понятным языком и предлагайте решение.</p></div>
+          <div class="principle-card"><h4>10. Help & Docs</h4><p>Документация должна быть легко находимой и сфокусированной на задачах.</p></div>
+        </div>
+      </div>
+
+      <!-- Gestalt Principles -->
+      <div class="step" style="grid-column:1/-1">
+        <h3 style="margin-bottom:.75rem">🧩 Gestalt-принципы в UI-дизайне</h3>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
+          Принципы гештальтпсихологии, объясняющие, как люди воспринимают визуальные композиции
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.75rem">
+          <div class="principle-card">
+            <h4>Близость (Proximity)</h4>
+            <p>Объекты, расположенные близко друг к другу, воспринимаются как группа. Используйте отступы для группировки связанных элементов.</p>
+            <div style="display:flex;gap:4px;margin-top:6px">
+              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px;opacity:.3"></span>
+              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px;opacity:.3"></span>
+              <span style="width:12px"></span>
+              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px"></span>
+              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px"></span>
+            </div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Две группы по 2 элемента → воспринимаются как 2 блока</p>
+          </div>
+          <div class="principle-card">
+            <h4>Сходство (Similarity)</h4>
+            <p>Похожие элементы воспринимаются как связанные. Цвет, форма, размер — сигналы принадлежности к группе.</p>
+            <div style="display:flex;gap:6px;margin-top:6px;justify-content:center">
+              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
+              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
+              <span style="width:16px;height:16px;border:2px solid var(--accent-primary);border-radius:50%"></span>
+              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
+              <span style="width:16px;height:16px;border:2px solid var(--accent-primary);border-radius:50%"></span>
+            </div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Сплошные = одно, outline = другое</p>
+          </div>
+          <div class="principle-card">
+            <h4>Фигура/Фон (Figure/Ground)</h4>
+            <p>Восприятие разделяет изображение на объект (фигуру) и фон. Карточки и тени создают чёткое разделение.</p>
+            <div style="display:flex;align-items:center;justify-content:center;height:36px;margin-top:6px;background:var(--bg-surface);border-radius:4px;padding:4px">
+              <span style="width:28px;height:28px;background:var(--bg-elevated);border-radius:4px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.2)"></span>
+            </div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Карточка = фигура, фон страницы = ground</p>
+          </div>
+          <div class="principle-card">
+            <h4>Замыкание (Closure)</h4>
+            <p>Мозг достраивает неполные формы до целых. Используется в логотипах и иконках.</p>
+            <div style="display:flex;gap:6px;margin-top:6px;justify-content:center;font-size:1.25rem;letter-spacing:4px;color:var(--text-code)">◡◡◡◡</div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Разрывы воспринимаются как контур целой формы</p>
+          </div>
+          <div class="principle-card">
+            <h4>Единая область (Common Region)</h4>
+            <p>Элементы внутри замкнутой области воспринимаются как группа. Это основа карточек и панелей.</p>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <span style="flex:1;border:1px solid var(--border);border-radius:4px;padding:4px;display:flex;flex-direction:column;gap:2px">
+                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:60%"></span>
+                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:80%"></span>
+              </span>
+              <span style="flex:1;border:1px solid var(--border);border-radius:4px;padding:4px;display:flex;flex-direction:column;gap:2px">
+                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:50%"></span>
+              </span>
+            </div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Карточки группируют контент</p>
+          </div>
+          <div class="principle-card">
+            <h4>Продолжение (Continuation)</h4>
+            <p>Глаз следует по линии, даже если она прерывается. Используется в степах, прогресс-барах.</p>
+            <div style="display:flex;gap:0;margin-top:6px;align-items:center">
+              <span style="width:20px;height:20px;border-radius:50%;background:var(--accent-primary);display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">1</span>
+              <span style="flex:1;height:2px;background:var(--accent-primary);opacity:.5"></span>
+              <span style="width:16px;height:16px;border-radius:50%;background:var(--accent-primary);opacity:.5;display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">2</span>
+              <span style="flex:1;height:2px;background:var(--border)"></span>
+              <span style="width:16px;height:16px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--text-muted)">3</span>
+            </div>
+            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Stepper: глаз продолжает линию через круги</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tokens Viewer -->
+      <div class="step" style="grid-column:1/-1">
+        <h3 style="margin-bottom:.75rem">🏷 Design Tokens Viewer</h3>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
+          Визуализация токенов из любой DESIGN.md. Выберите дизайн-систему ниже:
+        </p>
+        <div class="filter-bar" id="tokens-ds-filters" style="margin-bottom:.75rem"></div>
+        <div id="tokens-viewer">Выберите дизайн-систему для просмотра токенов</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: About -->
+  <div id="panel-about" class="panel">
+    <div class="section" style="max-width:40rem">
+      <h2>DesignX v2</h2>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">
+        Самый большой открытый каталог UI/UX design skills и DESIGN.md систем дизайна для ИИ-агентов.
+      </p>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">
+        <strong>Отличие от Open Design:</strong> DesignX — каталог-рекомендатель, а не генератор артефактов. 
+        Мы помогаем понять, какие навыки и дизайн-системы нужны вашему проекту.
+      </p>
+      <h3>Как использовать</h3>
+      <ol style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem">
+        <li>Выберите тип продукта → DesignX подберет навыки + дизайн-систему</li>
+        <li>Выберите философию дизайна → уточните стиль</li>
+        <li>Экспортируйте набор → SKILL.md + DESIGN.md в корень репозитория</li>
+        <li>ИИ-агент прочитает файлы и будет следовать системе дизайна</li>
+      </ol>
+      <h3 style="margin-top:1rem">Статистика</h3>
+      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem" id="about-stats"></ul>
+      <h3 style="margin-top:1rem">Источники</h3>
+      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem">
+        <li><a href="https://github.com/anthropics/skills" style="color:var(--accent-primary)">anthropics/skills</a></li>
+        <li><a href="https://github.com/Owl-Listener/designer-skills" style="color:var(--accent-primary)">Owl-Listener/designer-skills</a></li>
+        <li><a href="https://github.com/VoltAgent/awesome-agent-skills" style="color:var(--accent-primary)">VoltAgent/awesome-agent-skills</a></li>
+        <li><a href="https://github.com/VoltAgent/awesome-design-md" style="color:var(--accent-primary)">VoltAgent/awesome-design-md</a></li>
+        <li><a href="https://github.com/bergside/awesome-design-skills" style="color:var(--accent-primary)">bergside/awesome-design-skills</a></li>
+        <li><a href="https://github.com/nexu-io/open-design" style="color:var(--accent-primary)">nexu-io/open-design</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Overlay -->
+<div id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div id="detail-panel">
+    <button class="close" onclick="closeDetail()">✕</button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<!-- Export Bar -->
+<div class="export-bar" id="export-bar">
+  <div class="layout">
+    <span class="export-count" id="export-count">Выбрано: 0</span>
+    <div class="export-actions">
+      <button class="export-btn secondary" id="compare-btn" onclick="compareSkills()" style="display:none">⇄ Сравнить</button>
+      <button class="export-btn secondary" onclick="clearSelection()">Очистить</button>
+      <button class="export-btn" onclick="exportSelected()">📦 Экспорт</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let CATALOG = null;
+const CAT_COLORS={
+  'visual-design':'#4da3ff','ux-research':'#9cdcfe','prototyping':'#dcdcaa','design-system':'#4ec990',
+  'critique':'#f14c4c','brand':'#c9a84c','motion':'#b388ff','typography':'#e8ebf0','color-theory':'#ff6b6b',
+  'layout-composition':'#7a8290','interaction':'#00e5ff','mobile':'#8b5cf6','responsive':'#4ec990',
+  'frontend-dev':'#9cdcfe','data-viz':'#f0a060','accessibility':'#4da3ff','game-ui':'#ff6600',
+  'design-tools':'#7a8290','ai-tools':'#b388ff','design-ops':'#4da3ff'
+};
+const CAT_ICONS={
+  'visual-design':'🎨','ux-research':'🔬','prototyping':'📐','design-system':'🏗️',
+  'critique':'🔍','brand':'™️','motion':'✨','typography':'Aa','color-theory':'🌈',
+  'layout-composition':'📐','interaction':'👆','mobile':'📱','responsive':'🔄',
+  'frontend-dev':'⚡','data-viz':'📊','accessibility':'♿','game-ui':'🎮',
+  'design-tools':'🛠️','ai-tools':'🤖','design-ops':'⚙️'
+};
+let selectedSkillIds = new Set();
+let selectedSystemIds = new Set();
+let categoryFilter = 'all', complexityFilter = 'all', productFilter = null;
+let matcherProduct = null, matcherPhilosophy = null;
+
+(function loadCatalog() {
+  const paths = ['../src/data/catalog.json','src/data/catalog.json','data/catalog.json'];
+  function tryPath(i) { if (i>=paths.length) { document.getElementById('loader').innerHTML='<p style=\"color:var(--error)\">Ошибка загрузки</p><p style=\"color:var(--text-muted);font-size:.8125rem\">Запустите <code style=\"color:var(--text-code)\">npx serve .</code></p>'; return; }
+    fetch(paths[i]).then(r=>{if(!r.ok)throw Error();return r.json()}).then(c=>{CATALOG=c;document.getElementById('loader').style.display='none';init()}).catch(()=>tryPath(i+1)); }
+  tryPath(0);
+})();
+
+function init() {
+  const c = CATALOG;
+  document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span>`;
+  document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');};});
+  initFilters(); renderAllSystems(); renderPhilosophiesPage(); renderMatcher(); renderTools(); updateStats(); updateExportBar(); filterSkills();
+}
+
+function initFilters() {
+  const counts={}; CATALOG.skills.forEach(s=>{counts[s.category]=(counts[s.category]||0)+1});
+  document.getElementById('category-filters').innerHTML = `<button class="filter-btn active" onclick="setCategory('all')">Все (${CATALOG.skills.length})</button>` +
+    CATALOG.categories.map(c=>`<button class="filter-btn" onclick="setCategory('${c.id}')">${c.name} (${counts[c.id]||0})</button>`).join('');
+  document.getElementById('product-type-filters').innerHTML = `<button class="filter-btn${!productFilter?' active':''}" onclick="setProductFilter(null)">Все продукты</button>` +
+    CATALOG.product_types.map(pt=>`<button class="filter-btn${productFilter===pt.id?' active':''}" onclick="setProductFilter('${pt.id}')">${pt.icon||'📁'} ${pt.name}</button>`).join('');
+}
+
+function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'Все':CATALOG.categories.find(c=>c.id===cat)?.name)));filterSkills()}
+function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'Любая':{beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[val])));filterSkills()}
+function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.val===id));filterSkills()}
+
+// Skills
+function filterSkills() {
+  if(!CATALOG)return;
+  let skills=[...CATALOG.skills]; const s=(document.getElementById('skill-search')?.value||'').toLowerCase();
+  if(categoryFilter!=='all')skills=skills.filter(s=>s.category===categoryFilter);
+  if(complexityFilter!=='all')skills=skills.filter(s=>s.complexity===complexityFilter);
+  if(productFilter)skills=skills.filter(s=>s.for_product_types?.includes(productFilter));
+  if(s)skills=skills.filter(x=>x.name.toLowerCase().includes(s)||(x.tags||[]).some(t=>t.includes(s))||x.summary.toLowerCase().includes(s));
+  document.getElementById('result-count').textContent=`Найдено: ${skills.length} из ${CATALOG.skills.length}`;
+  document.getElementById('skills-grid').innerHTML=skills.length?skills.map(s=>renderCard(s)).join(''):'<div class="empty"><span class="icon">🔍</span>Ничего не найдено</div>';
+}
+function renderCard(s){const sel=selectedSkillIds.has(s.id);const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cc=CAT_COLORS[s.category]||'var(--border)';const ci=CAT_ICONS[s.category]||'📁';
+  return `<div class="card${sel?' selected':''}" onclick="toggleSkill('${s.id}')" ondblclick="showSkillDetail('${s.id}')"><div class="card-accent" style="background:${cc}"></div><div><h4>${s.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="tags">${(s.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}</div><p>${s.summary}</p><div class="meta"><span class="${s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced'}">${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}</span><span class="cat-badge">${ci} ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}</div></div>`;
+}
+
+// Design Systems
+function renderAllSystems() {
+  if(!CATALOG)return;
+  let systems=CATALOG.design_systems||[];
+  if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.aesthetic===dsPhilosophyFilter);
+  document.getElementById('systems-grid').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';
+}
+let dsPhilosophyFilter=null,dsProductFilter=null;
+function renderDsCard(ds){const sel=selectedSystemIds.has(ds.id);const tc=ds.tokens_css;const style=tc?`--pbg:${tc.bg};--ptxt:${tc.text};--pacc:${tc.accent};--prad:${tc.radius};--pfont:${tc.font};--pborder:${tc.border}`:'';const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
+  return `<div class="card${sel?' selected':''}" onclick="toggleDs('${ds.id}')" ondblclick="openDsPreview('${ds.id}')"><div class="card-header"><h4>${ds.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="meta"><span>🎨 ${philName}</span><span>📁 ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</span></div>${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
+}
+function renderMiniPreview(tc){
+  return `<div class="preview-frame" style="background:${tc.bg};color:${tc.text};font-family:${tc.font}">
+    <div class="pf-header" style="background:${tc.accent};color:${tc.bg}"><span class="pf-logo">Logo</span><div class="pf-nav"><span class="pf-nav-item" style="background:rgba(255,255,255,.2)">Home</span><span class="pf-nav-item">About</span></div></div>
+    <div class="pf-body"><div class="pf-card" style="background:${tc.bg_elevated};border:1px solid ${tc.border}"><div class="pf-card-title">Dashboard</div><div class="pf-card-text">Last 30 days performance metrics and insights.</div><div class="pf-stats"><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.accent}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Users</div></div><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.success||tc.accent2}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Revenue</div></div></div></div>
+    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:4px"><span class="pf-btn" style="background:${tc.accent};color:${tc.bg}">Action</span><span class="pf-btn-outline" style="border-color:${tc.border};color:${tc.text}">Cancel</span></div>
+    ${renderPalette(tc)}</div></div>`;
+}
+function renderPalette(tc){return `<div class="swatch-row">${[{c:tc.bg,l:'bg'},{c:tc.bg_elevated,l:'elev'},{c:tc.accent,l:'acc'},{c:tc.accent2,l:'acc2'},{c:tc.text,l:'txt'},{c:tc.text_muted,l:'muted'},{c:tc.border,l:'bord'}].map(({c,l})=>`<span class="swatch"><span class="swatch-dot" style="background:${c}"></span>${l}</span>`).join('')}</div>`;}
+
+// Philosophies Page
+function renderPhilosophiesPage() {
+  if(!CATALOG||!CATALOG.design_philosophies)return;
+  const philStyles={'industrial-minimal':{c:'#4da3ff',bg:'#0a0b0f',txt:'#e8ebf0'},'brutally-minimal':{c:'#ffffff',bg:'#000',txt:'#fff'},'retro-futuristic':{c:'#ff00ff',bg:'#0a0b1a',txt:'#f0f0ff'},'luxury-refined':{c:'#c9a84c',bg:'#fef9e7',txt:'#1a1a2e'},'editorial-magazine':{c:'#cc3333',bg:'#fff',txt:'#1a1a1a'},'soft-pastel':{c:'#8b5cf6',bg:'#faf5ff',txt:'#2d1b4e'},'art-deco-geometric':{c:'#c9a84c',bg:'#fef9e7',txt:'#1a1a2e'},'brutalist-raw':{c:'#ff0000',bg:'#000',txt:'#fff'},'playful':{c:'#ff6b6b',bg:'#fff8e7',txt:'#2d2d2d'},'japanese-minimal':{c:'#bf4a3a',bg:'#faf7f2',txt:'#2c2c2c'},'scandinavian':{c:'#b8a88a',bg:'#f8f8f6',txt:'#2d2d2d'},'cyberpunk':{c:'#ff00ff',bg:'#0a0a1a',txt:'#e0e0ff'},'glassmorphism':{c:'#00e5ff',bg:'#0a0a0f',txt:'#f0f0f5'},'neumorphism':{c:'#4a90d9',bg:'#e0e5ec',txt:'#4a4a4a'},'maximalist-chaos':{c:'#ff6600',bg:'#1a0a2e',txt:'#f0e0ff'}};
+  document.getElementById('philosophies-grid').innerHTML = CATALOG.design_philosophies.map(p => {
+    const s=philStyles[p.id]||{c:'#4da3ff',bg:'#0a0b0f',txt:'#e8ebf0'};
+    return `<div class="card" onclick="showPhilosophyDetail('${p.id}')">
+      <h4>${p.name}</h4>
+      <div class="phil-mini" style="border-color:${s.c};background:${s.bg};color:${s.txt}">
+        <strong style="font-size:.7rem">${p.name}</strong><br>
+        <span>Aa — ${p.id}</span>
+      </div>
+      <p>${p.description}</p>
+      <div class="meta"><span>🎨 ${(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===p.id).length} дизайн-систем</span></div>
+    </div>`;
+  }).join('');
+}
+
+function showPhilosophyDetail(id) {
+  const p=CATALOG.design_philosophies?.find(x=>x.id===id);
+  if(!p)return;
+  const systems=(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===id);
+  document.getElementById('detail-content').innerHTML=`
+    <h2>${p.name}</h2><div class="source">design-philosophy</div>
+    <p style="margin:.75rem 0;color:var(--text-muted)">${p.description}</p>
+    <h3>Дизайн-системы в этой философии</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">
+      ${systems.map(ds=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();openDsPreview('${ds.id}')">${ds.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет привязанных систем</span>'}
+    </div>
+    <h3 style="margin-top:1rem">Ключевые характеристики</h3>
+    <ul class="principles">
+      ${p.id==='industrial-minimal'?'<li>Строгая сетка и много whitespace</li><li>Минимум декора — максимум контента</li><li>Акцент на типографику и функциональность</li><li>Темная тема с высокой контрастностью</li>':''}
+      ${p.id==='brutally-minimal'?'<li>Только то, что необходимо. Ничего лишнего</li><li>Максимальное пустое пространство</li><li>Один accent цвет, без градиентов</li>':''}
+      ${p.id==='retro-futuristic'?'<li>Неон, сетки, моноширинные шрифты</li><li>Ностальгия по прошлым представлениям о будущем</li><li>Градиенты и glitch-эффекты</li>':''}
+      ${p.id==='luxury-refined'?'<li>Элегантная типографика, тонкие линии</li><li>Сдержанная палитра, премиальные материалы</li><li>Внимание к мельчайшим деталям</li>':''}
+      ${p.id==='playful'?'<li>Яркие цвета, игровая типографика</li><li>Иллюстрации и неожиданные взаимодействия</li><li>Bounce-анимации, elastic overshoot</li>':''}
+    </ul>`;
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+// Matcher
+function renderMatcher() {
+  document.getElementById('matcher-product-types').innerHTML = CATALOG.product_types.map(pt=>
+    `<div class="product-item${matcherProduct===pt.id?' selected':''}" onclick="selectMatcherProduct('${pt.id}')"><span class="icon">${pt.icon||'📁'}</span><span class="label">${pt.name}</span></div>`).join('');
+  document.getElementById('matcher-philosophies').innerHTML = (CATALOG.design_philosophies||[]).map(p=>
+    `<div class="phil-item" onclick="selectMatcherPhilosophy('${p.id}')">${p.name}</div>`).join('');
+}
+function selectMatcherProduct(id){matcherProduct=matcherProduct===id?null:id;renderMatcher();document.getElementById('matcher-step2').style.display=matcherProduct?'block':'none';if(!matcherProduct){document.getElementById('matcher-step3').style.display='none';document.getElementById('matcher-step4').style.display='none';document.getElementById('matcher-step5').style.display='none'}matcherPhilosophy=null;updateMatcher()}
+function selectMatcherPhilosophy(id){matcherPhilosophy=matcherPhilosophy===id?null:id;document.querySelectorAll('#matcher-philosophies .phil-item').forEach(p=>p.classList.toggle('selected',p.textContent.trim()===(CATALOG.design_philosophies?.find(x=>x.id===id)?.name)));updateMatcher()}
+
+const PR={'web-app':{reason:'Веб-приложению нужна полная дизайн-система: от токенов до компонентов и доступности.',cats:['visual-design','design-system','typography','color-theory','layout-composition','prototyping','critique','accessibility','interaction','frontend-dev'],syss:['corporate-saas','material-design-3']},'dashboard':{reason:'Дашборду нужны data viz, темная тема, адаптивная сетка.',cats:['data-viz','visual-design','typography','color-theory','layout-composition','frontend-dev','accessibility','prototyping'],syss:['analytics-dashboard','dark-glass']},'landing':{reason:'Лендингу нужна смелая эстетика, анимация, motion.',cats:['visual-design','typography','color-theory','motion','brand','layout-composition','prototyping'],syss:['landing-retro-future','scandinavian-light','playful-colorful']},'saas':{reason:'B2B SaaS требует целостной ДС, research, доступности.',cats:['visual-design','design-system','ux-research','critique','typography','color-theory','accessibility','prototyping','interaction'],syss:['corporate-saas','material-design-3','luxury-minimal']},'mobile':{reason:'Mobile — платформенные гайдлайны, жесты, touch targets.',cats:['mobile','visual-design','interaction','prototyping','typography','color-theory','accessibility','motion'],syss:['consumer-mobile','apple-hig','material-design-3']},'ecommerce':{reason:'E-commerce — конверсия, каталог, карточки товаров.',cats:['visual-design','typography','color-theory','layout-composition','interaction','prototyping','accessibility','design-system'],syss:['ecommerce-marketplace','scandinavian-light','playful-colorful']},'desktop':{reason:'Десктоп — плотные интерфейсы, системные контролы.',cats:['visual-design','design-system','typography','critique','accessibility','layout-composition','interaction'],syss:['dev-tool','brutalist-dark','apple-hig']},'marketing':{reason:'Маркетинг — бренд, визуалы, motion, email.',cats:['brand','visual-design','motion','typography','color-theory','layout-composition'],syss:['landing-retro-future','scandinavian-light','editorial-magazine']},'game':{reason:'Game UI — HUD, меню, инвентарь, анимации.',cats:['game-ui','visual-design','motion','color-theory','typography','interaction'],syss:['cyberpunk-neon','retro-80s','playful-colorful']},'design-tool':{reason:'Design tool — плагины, интеграции, производительность.',cats:['design-system','visual-design','frontend-dev','typography','interaction','accessibility'],syss:['dev-tool','corporate-saas','brutalist-dark']}};
+
+function updateMatcher(){if(!matcherProduct)return;const r=PR[matcherProduct];if(!r)return;document.getElementById('matcher-reason').textContent=r.reason;document.getElementById('matcher-step3').style.display='block';let skills=CATALOG.skills.filter(s=>r.cats.includes(s.category));if(matcherPhilosophy){const philSys=(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===matcherPhilosophy);const philP=[...new Set(philSys.flatMap(ds=>ds.product_types||[]))];if(philP.length>0){const f=skills.filter(s=>s.for_product_types?.some(pt=>philP.includes(pt)));if(f.length>=3)skills=f}}document.getElementById('matcher-skills').innerHTML=skills.length?skills.map(s=>renderCard(s)).join(''):'<div class="empty"><span class="icon">📭</span>Нет навыков</div>';document.getElementById('matcher-step4').style.display='block';let systems=(CATALOG.design_systems||[]).filter(ds=>r.syss.includes(ds.id));if(matcherPhilosophy){const f=systems.filter(ds=>ds.aesthetic===matcherPhilosophy);if(f.length>0)systems=f}document.getElementById('matcher-systems').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';document.getElementById('matcher-step5').style.display='block'}
+
+// Selection
+function toggleSkill(id){if(selectedSkillIds.has(id))selectedSkillIds.delete(id);else selectedSkillIds.add(id);filterSkills();updateExportBar()}
+function toggleDs(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);renderAllSystems();updateExportBar()}
+function clearSelection(){selectedSkillIds.clear();selectedSystemIds.clear();filterSkills();renderAllSystems();updateExportBar()}
+function updateExportBar(){const t=selectedSkillIds.size+selectedSystemIds.size;const bar=document.getElementById('export-bar');if(t>0){bar.classList.add('visible');document.getElementById('export-count').textContent=`Выбрано: ${selectedSkillIds.size} навыков, ${selectedSystemIds.size} дизайн-систем`;const cb=document.getElementById('compare-btn');if(cb)cb.style.display=selectedSkillIds.size>=2?'inline-block':'none'}else{bar.classList.remove('visible')}}
+
+// Compare
+function compareSkills(){const ids=[...selectedSkillIds];if(ids.length<2)return;const skills=ids.map(id=>CATALOG.skills.find(s=>s.id===id)).filter(Boolean);const n=Math.min(skills.length,4);document.getElementById('detail-panel').classList.add('wide');const cols=skills.map(s=>{const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cc=CAT_COLORS[s.category]||'var(--border)';const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cco=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';return `<div class="compare-col"><div class="acc-bar" style="background:${cc}"></div><h3>${s.name}</h3><div class="detail-meta"><span class="${cco}">${cl}</span><span>📁 ${cn}</span></div><div class="cm-section"><div class="cm-label">Описание</div><div class="cm-value">${(s.description||s.summary||'').substring(0,150)}${(s.description||s.summary||'').length>150?'...':''}</div></div>${s.key_principles?`<div class="cm-section"><div class="cm-label">Принципы</div><div class="cm-value"><ul style="margin:0;padding-left:1rem;font-size:.75rem;color:var(--text-muted);line-height:1.6">${s.key_principles.slice(0,4).map(p=>`<li>${p}</li>`).join('')}</ul></div></div>`:''}${s.tags?.length?`<div class="cm-section"><div class="cm-label">Теги</div><div class="cm-tags">${s.tags.slice(0,6).map(t=>`<span class="cm-tag">${t}</span>`).join('')}</div></div>`:''}<div class="cm-section"><div class="cm-label">Продукты</div><div class="cm-value">${s.for_product_types?.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')||'—'}</div></div></div>`}).join('');document.getElementById('detail-content').innerHTML=`<h2>Сравнение навыков (${skills.length})</h2><div class="compare-grid c${n}">${cols}</div>`;document.getElementById('detail-overlay').classList.add('open')}
+
+// Detail
+function showSkillDetail(id){const s=CATALOG.skills.find(x=>x.id===id);if(!s)return;const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cc=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';
+  document.getElementById('detail-content').innerHTML=`<h2>${s.name}</h2><div class="source">${s.source||'custom'}</div><p style="margin:.75rem 0;color:var(--text-muted);font-size:.875rem">${s.description||s.summary}</p>${s.key_principles?`<h3>Ключевые принципы</h3><ul class="principles">${s.key_principles.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}<div class="detail-meta"><span class="${cc}">${cl}</span><span>📁 ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}${s.frameworks?.length?`<span>🛠 ${s.frameworks.join(', ')}</span>`:''}</div>${s.for_product_types?.length?`<p style="color:var(--text-muted);font-size:.75rem;margin-top:.5rem">Подходит для: ${s.for_product_types.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')}</p>`:''}<div class="tags" style="margin-top:.75rem">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;document.getElementById('detail-overlay').classList.add('open')}
+function closeDetail(){document.getElementById('detail-overlay').classList.remove('open');document.getElementById('detail-panel').classList.remove('wide')}
+
+// DS Preview
+function openDsPreview(id){const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds)return;const tc=ds.tokens_css;const pn=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';let html=`<h2>${ds.name}</h2><div class="source">${pn} · ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</div><p style="margin:.75rem 0;color:var(--text-muted)">${ds.description||''}</p>`;if(tc){html+=`<h3>Превью</h3>${renderMiniPreview(tc)}<h3 style="margin-top:1rem">Design Tokens</h3><div class="swatch-row">${[{c:tc.bg,l:'bg-surface',v:tc.bg},{c:tc.bg_elevated,l:'bg-elevated',v:tc.bg_elevated},{c:tc.accent,l:'accent',v:tc.accent},{c:tc.accent2,l:'accent2',v:tc.accent2},{c:tc.text,l:'text',v:tc.text},{c:tc.text_muted,l:'text-muted',v:tc.text_muted},{c:tc.border,l:'border',v:tc.border}].map(({c,l,v})=>`<span class="swatch"><span class="swatch-dot" style="background:${c};${tc.dark?'border-color:rgba(255,255,255,.15)':''}"></span><span style="display:flex;flex-direction:column;gap:0"><span>${l}</span><span style="font-size:.5625rem;opacity:.5">${v}</span></span></span>`).join('')}</div><div class="detail-meta" style="margin-top:.75rem"><span>Font: ${tc.font||'JetBrains Mono'}</span><span>Radius: ${tc.radius||'6px'}</span><span>Scheme: ${tc.dark?'🌙 Dark':'☀️ Light'}</span></div>`;}html+=`<h3 style="margin-top:1rem">Связанные навыки</h3><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">${CATALOG.skills.filter(s=>s.for_product_types?.some(pt=>(ds.product_types||[]).includes(pt))).slice(0,6).map(s=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();showSkillDetail('${s.id}')">${s.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет связанных</span>'}</div>`;document.getElementById('detail-content').innerHTML=html;document.getElementById('detail-overlay').classList.add('open')}
+
+// Tools
+function renderTools(){
+  // Tokens DS filters
+  const tEl=document.getElementById('tokens-ds-filters');if(tEl)tEl.innerHTML=(CATALOG.design_systems||[]).map(ds=>`<button class="filter-btn" onclick="showTokens('${ds.id}')">${ds.name}</button>`).join('');
+}
+
+function showTokens(id){
+  const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds||!ds.tokens_css)return;
+  const tc=ds.tokens_css;const el=document.getElementById('tokens-viewer');
+  el.innerHTML=`<h4 style="margin-bottom:.5rem">${ds.name} — Design Tokens</h4>${renderMiniPreview(tc)}<div style="margin-top:.75rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.5rem">${Object.entries(tc).filter(([k])=>k!=='preview_demo').map(([k,v])=>`<div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:4px;padding:.5rem .75rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:16px;border-radius:3px;background:${v};border:1px solid rgba(255,255,255,.1);flex-shrink:0"></span><span style="flex:1;font-size:.6875rem;color:var(--text-code)">--${k}</span><span style="font-size:.6875rem;color:var(--text-muted)">${String(v).substring(0,30)}</span></div>`).join('')}</div>`;
+}
+
+// Contrast Checker
+function hexToLuminance(h){const r=parseInt(h.slice(1,3),16)/255;const g=parseInt(h.slice(3,5),16)/255;const b=parseInt(h.slice(5,7),16)/255;const f=n=>{n=n/255;return n<=.03928?n/12.92:Math.pow((n+.055)/1.055,2.4)};return 0.2126*r+0.7152*g+0.0722*b}
+function checkContrast(){const fg=document.getElementById('contrast-fg').value;const bg=document.getElementById('contrast-bg').value;const el=document.getElementById('contrast-result');const sample=document.getElementById('contrast-sample');if(!/^#[0-9a-f]{6}$/i.test(fg)||!/^#[0-9a-f]{6}$/i.test(bg)){el.textContent='Введите HEX цвета (#RRGGBB)';el.className='contras-result fail';return}const l1=hexToLuminance(fg)+.05;const l2=hexToLuminance(bg)+.05;const ratio=Math.max(l1,l2)/Math.min(l1,l2);const aa=ratio>=4.5;const aaa=ratio>=7;const large=ratio>=3;el.textContent=`Ratio: ${ratio.toFixed(1)}:1 · WCAG AA: ${aa?'✅':'❌'} · WCAG AAA: ${aaa?'✅':'❌'} · Large text: ${large?'✅':'❌'}`;el.className=`contras-result ${ratio>=4.5?'pass':'fail'}`;sample.style.background=bg;sample.style.color=fg}
+
+// About
+function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего навыков: <strong>${CATALOG.skills.length}</strong></li>`;h+=`<li>📁 Категорий: <strong>${CATALOG.categories.length}</strong></li>`;h+=`<li>🎨 Дизайн-систем: <strong>${(CATALOG.design_systems||[]).length}</strong></li>`;h+=`<li>🎯 Типов продуктов: <strong>${CATALOG.product_types.length}</strong></li>`;h+=`<li>🏛 Философий дизайна: <strong>${CATALOG.design_philosophies?.length||0}</strong></li>`;h+=`<li>🔄 Всего тегов: <strong>${new Set(CATALOG.skills.flatMap(s=>s.tags||[])).size}</strong></li>`;const step={beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'};const dist=CATALOG.skills.reduce((a,s)=>{a[step[s.complexity]]=(a[step[s.complexity]]||0)+1;return a},{});h+=`<li>📊 Сложность: ${Object.entries(dist).map(([k,v])=>`${k}: ${v}`).join(' · ')}</li>`;document.getElementById('about-stats').innerHTML=h}
+
+// Export
+function exportSelected(){const skills=CATALOG.skills.filter(s=>selectedSkillIds.has(s.id));const systems=(CATALOG.design_systems||[]).filter(ds=>selectedSystemIds.has(ds.id));const md=buildMd(skills,systems);downloadMd(md)}
+function buildMd(skills,systems){let md=`# DesignX Export\n\n> Exported: ${new Date().toISOString().split('T')[0]} · DesignX v2\n\n`;if(skills.length){md+=`## Skills (${skills.length})\n\n`;skills.forEach(s=>{md+=`### ${s.name}\n- **Source:** ${s.source||'custom'}\n- **Category:** ${CATALOG.categories.find(c=>c.id===s.category)?.name||s.category}\n- **Complexity:** ${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}\n\n${s.description||s.summary}\n\n`;if(s.key_principles?.length){md+=`**Principles:**\n`;s.key_principles.forEach(p=>md+=`- ${p}\n`);md+='\n'}md+='---\n\n'})}if(systems.length){md+=`## Design Systems (${systems.length})\n\n`;systems.forEach(ds=>{md+=`### ${ds.name}\n- **Aesthetic:** ${CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic}\n- **Products:** ${ds.product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}\n\n${ds.description||''}\n\n`;if(ds.tokens_css){const tc=ds.tokens_css;md+=`**Tokens:**\n`;Object.entries(tc).filter(([k])=>k!=='preview_demo').forEach(([k,v])=>md+=`- --${k}: ${v}\n`);md+='\n'}md+='---\n\n'})}md+=`## How to Use\n\n1. Copy SKILL.md files to your AI agent's skills directory\n2. Copy DESIGN.md to the root of your repository\n3. Your AI agent will read DESIGN.md and follow the design system\n4. Use skills with Claude Code, Cursor, Codex, OpenCode\n\n*Generated by DesignX*`;return md}
+function downloadMd(md){const b=new Blob([md],{type:'text/markdown'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='designx-export.md';a.click();URL.revokeObjectURL(u)}
+</script>
+</body>
+</html>
