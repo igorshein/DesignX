@@ -76,10 +76,28 @@ DesignX — инструмент для подбора AI-skills и DESIGN.md с
 - Hover row: bg color-bg-elevated
 - Code cells: font-family JetBrains Mono, color-text-code
 
+## Components — Search & Filter
+- Search bar: full-width под шапкой, placeholder "Поиск навыков...", shortcut "/"
+- Фильтрация мгновенная (oninput), без кнопки "Применить"
+- Фильтры: категории (pill-style), сложность, тип продукта
+- Active filters: выделены цветом color-accent-primary, снимаются в один клик
+- Empty result: сообщение "Ничего не найдено" + кнопка сброса фильтров
+- Результаты: счётчик "Найдено: X из Y" над сеткой карточек
+
+## Components — States (обязательны для каждого компонента)
+- **Loading:** минималистичный спиннер (32px, border-top accent, rotate .8s) + текст "Загрузка...". НЕ skeleton на всю страницу.
+- **Empty:** текст "Ничего не найдено" + иконка (эмодзи в data-состояниях допустимы) + кнопка сброса. НЕ иллюстрации-клипарты.
+- **Error:** "Ошибка загрузки" + текст с причиной + кнопка повтора. НЕ коды ошибок в лицо пользователю.
+- **Hover:** border-color accent-primary, transition 150ms
+- **Focus:** ring 2px accent-primary @ 20% opacity, outline none
+- **Disabled:** opacity .5, cursor not-allowed, без hover-эффектов
+
 ## Motion
 - Все переходы: 150ms ease-out
 - Hover/focus: 100ms ease-out
 - Нет сложных анимаций — только мгновенная обратная связь
+- Accordion/раскрытие: max-height transition, duration 200ms
+- Появление карточек: stagger 30ms при загрузке сетки
 
 ## Accessibility
 - Контраст текста ≥ 4.5:1 (WCAG AA)
@@ -87,6 +105,7 @@ DesignX — инструмент для подбора AI-skills и DESIGN.md с
 - Семантический HTML: header, main, section, article, nav, button, label
 - ARIA labels для иконок без текста
 - Клавиатурная навигация: Tab, Enter, Escape, стрелки в селектах
+- prefers-reduced-motion: отключать transform/transition анимации
 
 ## Anti-Patterns (What to Avoid)
 - НЕ используй Inter, Roboto, system-ui — только JetBrains Mono
@@ -96,3 +115,8 @@ DesignX — инструмент для подбора AI-skills и DESIGN.md с
 - НЕ используй анимации длинее 200ms
 - НЕ используй декоративные иконки без подписи
 - НЕ делай карточки с hover-эффектом scale/translate — только border/color change
+- НЕ используй glassmorphism, neumorphism — только solid background
+- НЕ ставь фильтрацию по кнопке "Применить" — только мгновенная oninput
+- НЕ используй carousel и autoplay-slider
+- НЕ показывай ошибки в alert() — только inline или toast
+- НЕ используй дефолтные скроллбары — кастомные, в стиле проекта

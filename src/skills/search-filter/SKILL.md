@@ -4,23 +4,32 @@
 DesignX Catalog · prototyping
 
 ## Purpose
-Дизайн поиска: search bar (постоянный/раскрывающийся), autocomplete/suggestions, faceted filters (категории, цена, рейтинг), результаты (list/grid, сортировка, пагинация).
+Дизайн поиска и фильтрации: search bar (постоянный/раскрывающийся), autocomplete/suggestions, faceted filters, результаты, пустое состояние. Главный принцип — мгновенный отклик, нигде не ждём кнопки «Применить».
 
 ## When to Use
-- Проектирование и разработка интерфейсов в категории prototyping
-- Работа над продуктами: web-app, ecommerce, saas, mobile, dashboard
-- Интеграция с дизайн-системами и ИИ-агентами
+- Проектирование поиска в каталогах, галереях, дашбордах
+- Работа над продуктами с фильтрацией: web-app, ecommerce, saas, dashboard
+- Любой интерфейс с сеткой карточек и категориями
 
 ## Behavior
-1. Осмысли контекст: тип продукта, аудиторию, платформу, технические ограничения
-2. Следуй ключевым принципам:
-3. - Search bar visible, не в hamburger
-4. - Autocomplete: 5-7 подсказок, категоризированные
-5. - Facets: checkbox/range/rating, applied filters badge
-6. - No results: suggestion, spell check, category browse
+1. Search bar — всегда видим, не прячь в hamburger. Шорткат "/" для фокуса.
+2. Autocomplete: 5-7 подсказок, категоризированные (последние запросы, популярные категории).
+3. Фильтрация мгновенная oninput, debounce 150-300ms, без кнопки «Применить».
+4. Facets: checkbox/range/rating/badge. Активные фильтры — pill-теги с кнопкой сброса.
+5. Empty state: «Ничего не найдено» + предложение ослабить фильтры + кнопка сброса.
+6. Результаты: счётчик найденного + grid/list переключение.
+7. Состояние фильтров в URL (shareable link — обязательное требование для каталогов).
+8. Edge cases: спелл-чек опечаток, частичное совпадение, пустой поисковый запрос.
 
 ## Tags
-search, filter, autocomplete, faceted, search-results
+search, filter, autocomplete, faceted, search-results, debounce
 
 ## For Product Types
 web-app, ecommerce, saas, mobile, dashboard
+
+## Forbidden
+- Кнопка «Применить» для фильтров (кроме range-слайдеров с API-запросами)
+- Автоочистка поля поиска при потере фокуса
+- Фильтры, которые не показывают активное состояние
+- Результаты, не реагирующие на изменение фильтра без перезагрузки
+- Empty state с ошибкой вместо осмысленного предложения
