@@ -488,7 +488,8 @@ function init() {
   const c = CATALOG;
   document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span>`;
   document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');};});
-  initFilters(); renderAllSystems(); renderPhilosophiesPage(); renderMatcher(); renderTools(); renderToolsMap(); renderReferences(); buildProcessPipeline(); updateStats(); updateExportBar(); filterSkills();
+  initFilters(); filterSkills(); updateExportBar();
+  requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();renderReferences();buildProcessPipeline();updateStats();});
 }
 
 function initFilters() {
@@ -533,7 +534,7 @@ function renderMiniPreview(tc){
   return `<div class="preview-frame" style="background:${tc.bg};color:${tc.text};font-family:${tc.font}">
     <div class="pf-header" style="background:${tc.accent};color:${tc.bg}"><span class="pf-logo">Logo</span><div class="pf-nav"><span class="pf-nav-item" style="background:rgba(255,255,255,.2)">Home</span><span class="pf-nav-item">About</span></div></div>
     <div class="pf-body"><div class="pf-card" style="background:${tc.bg_elevated};border:1px solid ${tc.border}"><div class="pf-card-title">Dashboard</div><div class="pf-card-text">Last 30 days performance metrics and insights.</div><div class="pf-stats"><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.accent}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Users</div></div><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.success||tc.accent2}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Revenue</div></div></div></div>
-    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:4px"><span class="pf-btn" style="background:${tc.accent};color:${tc.bg}">Action</span><span class="pf-btn-outline" style="border-color:${tc.border};color:${tc.text}">Cancel</span></div>
+    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:4px"><span class="pf-btn" style="background:${tc.accent};color:${tc.bg}">Action</span><span class="pf-btn" style="border:1px solid ${tc.border};color:${tc.text_muted};background:transparent">Cancel</span></div>
     ${renderPalette(tc)}</div></div>`;
 }
 function renderPalette(tc){return `<div class="swatch-row">${[{c:tc.bg,l:'bg'},{c:tc.bg_elevated,l:'elev'},{c:tc.accent,l:'acc'},{c:tc.accent2,l:'acc2'},{c:tc.text,l:'txt'},{c:tc.text_muted,l:'muted'},{c:tc.border,l:'bord'}].map(({c,l})=>`<span class="swatch"><span class="swatch-dot" style="background:${c}"></span>${l}</span>`).join('')}</div>`;}
