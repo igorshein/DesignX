@@ -187,7 +187,10 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
         <h1>DesignX <small>v2</small></h1>
         <p class="sub">Skill & Design System Matcher · подбор AI-agent навыков и DESIGN.md дизайн-систем</p>
       </div>
-      <div class="stats" id="stats-bar"><span>⋯ навыков</span><span>⋯ дизайн-систем</span></div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <div class="stats" id="stats-bar"><span>⋯ навыков</span><span>⋯ дизайн-систем</span></div>
+        <button class="export-btn" onclick="pickRandom()" style="padding:4px 12px;font-size:.75rem">🎲 Random</button>
+      </div>
     </div>
     <nav class="header-nav" id="main-nav">
       <a class="active" data-panel="browse">Обзор</a>
@@ -593,6 +596,19 @@ const PR={'web-app':{reason:'Веб-приложению нужна полная
 
 function updateMatcher(){if(!matcherProduct)return;const r=PR[matcherProduct];if(!r)return;document.getElementById('matcher-reason').textContent=r.reason;document.getElementById('matcher-step3').style.display='block';let skills=CATALOG.skills.filter(s=>r.cats.includes(s.category));if(matcherPhilosophy){const philSys=(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===matcherPhilosophy);const philP=[...new Set(philSys.flatMap(ds=>ds.product_types||[]))];if(philP.length>0){const f=skills.filter(s=>s.for_product_types?.some(pt=>philP.includes(pt)));if(f.length>=3)skills=f}}document.getElementById('matcher-skills').innerHTML=skills.length?skills.map(s=>renderCard(s)).join(''):'<div class="empty"><span class="icon">📭</span>Нет навыков</div>';document.getElementById('matcher-step4').style.display='block';let systems=(CATALOG.design_systems||[]).filter(ds=>r.syss.includes(ds.id));if(matcherPhilosophy){const f=systems.filter(ds=>ds.aesthetic===matcherPhilosophy);if(f.length>0)systems=f}document.getElementById('matcher-systems').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';document.getElementById('matcher-step5').style.display='block'}
 
+// Random
+function pickRandom() {
+  if(!CATALOG)return;
+  const skill = CATALOG.skills[Math.floor(Math.random() * CATALOG.skills.length)];
+  const ds = CATALOG.design_systems[Math.floor(Math.random() * CATALOG.design_systems.length)];
+  selectedSkillIds.clear(); selectedSystemIds.clear();
+  selectedSkillIds.add(skill.id); selectedSystemIds.add(ds.id);
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-browse').classList.add('active');
+  document.querySelectorAll('.header-nav a').forEach(a=>a.classList.toggle('active',a.dataset.panel==='browse'));
+  filterSkills(); renderAllSystems(); updateExportBar();
+  showSkillDetail(skill.id);
+}
 // Selection
 function toggleSkill(id){if(selectedSkillIds.has(id))selectedSkillIds.delete(id);else selectedSkillIds.add(id);filterSkills();updateExportBar()}
 function toggleDs(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);renderAllSystems();updateExportBar()}
