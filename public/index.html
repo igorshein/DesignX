@@ -679,6 +679,27 @@ function applyRandomTheme() {
     s.setProperty(prop, val);
   }
 
+  // ── Dynamic font loading ────────────────────────────────────
+  // Load the DS font from Google Fonts and apply it
+  if (t.font) {
+    const fontName = t.font;
+    const fontFamily = fontName.includes(' ') ? `"${fontName}"` : fontName;
+    const gfKey = fontName.replace(/ /g, '+');
+
+    // Inject Google Fonts <link> if not already present
+    const existing = document.querySelector(`link[data-gf="${fontName}"]`);
+    if (!existing) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `https://fonts.googleapis.com/css2?family=${gfKey}&display=swap`;
+      link.setAttribute('data-gf', fontName);
+      document.head.appendChild(link);
+    }
+
+    // Apply font — fall back to JetBrains Mono (already loaded) for stability
+    s.setProperty('--font', `${fontFamily}, 'JetBrains Mono', monospace`);
+  }
+
   // Apply a subtle accent bar at the top of the page to signal the active theme
   let badge = document.getElementById('theme-badge');
   if (!badge) {
@@ -699,12 +720,10 @@ function applyRandomTheme() {
     document.body.appendChild(label);
   }
   label.textContent = '🎨 ' + ds.name;
-  console.log('[DesignX] Applied theme:', ds.name, '| bg:', t.bg, '| accent:', t.accent, '| text:', t.text);
+  console.log('[DesignX] Applied theme:', ds.name, '| font:', t.font, '| bg:', t.bg, '| accent:', t.accent, '| text:', t.text);
 
   // Store for potential re-use
   window.__activeTheme = ds;
-  // Font stays JetBrains Mono — шрифт — часть идентичности DesignX,
-  // upstream DS токены влияют только на цвета/радиус, не на типографику.
 }
 
 // ── Original file fetching ──────────────────────────────────────
