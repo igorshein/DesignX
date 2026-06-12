@@ -690,6 +690,17 @@ function applyRandomTheme() {
   badge.style.background = `linear-gradient(90deg, ${t.accent}, ${t.accent2 || t.accent})`;
   document.body.style.paddingTop = '2px';
 
+  // Show active DS name in a visible badge
+  let label = document.getElementById('theme-label');
+  if (!label) {
+    label = document.createElement('div');
+    label.id = 'theme-label';
+    label.style.cssText = 'position:fixed;top:4px;right:8px;z-index:9999;font-size:.625rem;color:var(--text-muted);opacity:.5;pointer-events:none;transition:color .3s';
+    document.body.appendChild(label);
+  }
+  label.textContent = '🎨 ' + ds.name;
+  console.log('[DesignX] Applied theme:', ds.name, '| bg:', t.bg, '| accent:', t.accent, '| text:', t.text);
+
   // Store for potential re-use
   window.__activeTheme = ds;
   // Font stays JetBrains Mono — шрифт — часть идентичности DesignX,
