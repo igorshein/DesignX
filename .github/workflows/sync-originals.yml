@@ -1,0 +1,42 @@
+name: Sync Originals
+
+on:
+  schedule:
+    # Daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Manual trigger via GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Fetch upstream originals (SKILL.md + DESIGN.md)
+        run: node scripts/sync-originals.js
+
+      - name: Regenerate design systems catalog from originals
+        run: |
+          node scripts/generate-design-systems.js
+          node scripts/update-catalog.mjs
+          rm -f src/data/catalog-design-systems.json src/data/catalog.backup.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "designx-bot"
+          git config user.email "bot@designx.app"
+          git add src/originals/ src/data/catalog.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "sync: update upstream originals ($(date +%Y-%m-%d))"
+            git push
+          fi
