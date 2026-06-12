@@ -1101,8 +1101,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Playfair Display",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1125,8 +1125,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Plus Jakarta Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1150,7 +1150,7 @@
         "success": "#10b981",
         "error": "#ef4444",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1173,8 +1173,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Limelight",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1198,7 +1198,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1221,8 +1221,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Archivo Black",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1245,8 +1245,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Darker Grotesque",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1269,8 +1269,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Poppins",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1293,8 +1293,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Anthropic Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1317,8 +1317,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Poppins",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1341,8 +1341,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Poppins",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1365,8 +1365,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Open Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1390,7 +1390,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1413,8 +1413,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Jost",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1437,8 +1437,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Poppins",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1461,8 +1461,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Audiowide",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1485,8 +1485,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Bangers",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1509,8 +1509,8 @@
         "border": "#e2e5ec",
         "success": "#10b981",
         "error": "#ef4444",
-        "font": "IBM Plex Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1533,8 +1533,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Space Grotesk",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1557,8 +1557,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Delius Swash Caps",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1581,8 +1581,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Outfit",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1605,8 +1605,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Gelasio",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1629,8 +1629,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Google Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1653,8 +1653,8 @@
         "border": "#e2e5ec",
         "success": "#16a34a",
         "error": "#dc2626",
-        "font": "Limelight",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1677,8 +1677,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Oswald",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1701,8 +1701,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "IBM Plex Mono",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1725,8 +1725,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "New Rocker",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1749,8 +1749,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Cossette Texte",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1774,7 +1774,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1797,8 +1797,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Noto Serif Display",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1821,8 +1821,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Audiowide",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1845,8 +1845,8 @@
         "border": "#e2e5ec",
         "success": "#07CA6B",
         "error": "#EA2143",
-        "font": "Plus Jakarta Sans",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1869,8 +1869,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Space Grotesk",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1893,8 +1893,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Oswald",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1917,8 +1917,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Chakra Petch",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1942,7 +1942,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1965,8 +1965,8 @@
         "border": "#e2e5ec",
         "success": "#58cc02",
         "error": "#ff4b4b",
-        "font": "Nunito",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -1989,8 +1989,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Oswald",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2013,8 +2013,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Roboto",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2037,8 +2037,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Space Mono",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2062,7 +2062,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2085,8 +2085,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "IBM Plex Serif",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2109,8 +2109,8 @@
         "border": "#e2e5ec",
         "success": "#00A63D",
         "error": "#FF2157",
-        "font": "Space Mono",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2134,7 +2134,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2157,8 +2157,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "STIX Two Text",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2181,8 +2181,8 @@
         "border": "#e2e5ec",
         "success": "#00A63D",
         "error": "#FF2157",
-        "font": "Space Mono",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2205,8 +2205,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Press Start 2P",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2229,8 +2229,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Montserrat",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2253,8 +2253,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Oswald",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2278,7 +2278,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2301,8 +2301,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Poppins",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2325,8 +2325,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Oswald",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2349,8 +2349,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Playfair Display",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2373,8 +2373,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Macondo",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2397,8 +2397,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Space Grotesk",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2421,8 +2421,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "VT323",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2445,8 +2445,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Geist",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2470,7 +2470,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2493,8 +2493,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Delicious Handrawn",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2517,8 +2517,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Germania One",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2542,7 +2542,7 @@
         "success": "#16A34A",
         "error": "#DC2626",
         "font": "Inter",
-        "radius": "4px",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2565,8 +2565,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Montserrat",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2589,8 +2589,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Abril Fatface",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2613,8 +2613,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "DM Serif Display",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2637,8 +2637,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Bangers",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2661,8 +2661,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Fascinate",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
@@ -2685,8 +2685,8 @@
         "border": "#e2e5ec",
         "success": "#16A34A",
         "error": "#DC2626",
-        "font": "Silkscreen",
-        "radius": "4px",
+        "font": "Inter",
+        "radius": "6px",
         "dark": false
       },
       "preview_demo": true
