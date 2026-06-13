@@ -501,8 +501,6 @@ function init() {
   document.getElementById('panel-browse').classList.add('active');
   initFilters(); filterSkills(); updateExportBar();
   requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();renderReferences();buildProcessPipeline();updateStats();});
-  // Apply random theme from catalog after first paint (non-blocking)
-  setTimeout(applyRandomTheme, 0);
 }
 
 function initFilters() {
@@ -654,84 +652,6 @@ function checkContrast(){const fg=document.getElementById('contrast-fg').value;c
 
 // About
 function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего навыков: <strong>${CATALOG.skills.length}</strong></li>`;h+=`<li>📁 Категорий: <strong>${CATALOG.categories.length}</strong></li>`;h+=`<li>🎨 Дизайн-систем: <strong>${(CATALOG.design_systems||[]).length}</strong></li>`;h+=`<li>🎯 Типов продуктов: <strong>${CATALOG.product_types.length}</strong></li>`;h+=`<li>🏛 Философий дизайна: <strong>${CATALOG.design_philosophies?.length||0}</strong></li>`;h+=`<li>🔄 Всего тегов: <strong>${new Set(CATALOG.skills.flatMap(s=>s.tags||[])).size}</strong></li>`;const step={beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'};const dist=CATALOG.skills.reduce((a,s)=>{a[step[s.complexity]]=(a[step[s.complexity]]||0)+1;return a},{});h+=`<li>📊 Сложность: ${Object.entries(dist).map(([k,v])=>`${k}: ${v}`).join(' · ')}</li>`;document.getElementById('about-stats').innerHTML=h}
-
-// ── Dynamic Theming ─────────────────────────────────────────────
-// Picks a random design system from catalog and applies its tokens as CSS vars
-function applyRandomTheme() {
-  if (!CATALOG) return;
-  const designs = (CATALOG.design_systems || []).filter(d => d.tokens_css);
-  if (!designs.length) return;
-
-  const ds = designs[Math.floor(Math.random() * designs.length)];
-  const t = ds.tokens_css;
-
-  // Map tokens → CSS custom properties
-  const map = {
-    '--bg-surface':      t.bg,
-    '--bg-elevated':     t.bg_elevated,
-    '--bg-card':         t.bg_elevated,
-    '--text-primary':    t.text,
-    '--text-muted':      t.text_muted,
-    '--accent-primary':  t.accent,
-    '--accent-hover':    t.accent2 || t.accent,
-    '--text-code':       t.accent,  // accent is always visible on any bg
-    '--border':          t.border,
-    '--success':         t.success,
-    '--error':           t.error,
-    '--radius':          t.radius,
-  };
-
-  const s = document.documentElement.style;
-  for (const [prop, val] of Object.entries(map)) {
-    s.setProperty(prop, val);
-  }
-
-  // ── Dynamic font loading ────────────────────────────────────
-  // Load the DS font from Google Fonts and apply it
-  if (t.font) {
-    const fontName = t.font;
-    const fontFamily = fontName.includes(' ') ? `"${fontName}"` : fontName;
-    const gfKey = fontName.replace(/ /g, '+');
-
-    // Inject Google Fonts <link> if not already present
-    const existing = document.querySelector(`link[data-gf="${fontName}"]`);
-    if (!existing) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = `https://fonts.googleapis.com/css2?family=${gfKey}&display=swap`;
-      link.setAttribute('data-gf', fontName);
-      document.head.appendChild(link);
-    }
-
-    // Apply font — fall back to JetBrains Mono (already loaded) for stability
-    s.setProperty('--font', `${fontFamily}, 'JetBrains Mono', monospace`);
-  }
-
-  // Apply a subtle accent bar at the top of the page to signal the active theme
-  let badge = document.getElementById('theme-badge');
-  if (!badge) {
-    badge = document.createElement('div');
-    badge.id = 'theme-badge';
-    badge.style.cssText = 'position:fixed;top:0;left:0;right:0;height:2px;z-index:999;transition:background .3s';
-    document.body.prepend(badge);
-  }
-  badge.style.background = `linear-gradient(90deg, ${t.accent}, ${t.accent2 || t.accent})`;
-  document.body.style.paddingTop = '2px';
-
-  // Show active DS name in a visible badge
-  let label = document.getElementById('theme-label');
-  if (!label) {
-    label = document.createElement('div');
-    label.id = 'theme-label';
-    label.style.cssText = 'position:fixed;top:4px;right:8px;z-index:9999;font-size:.625rem;color:var(--text-muted);opacity:.5;pointer-events:none;transition:color .3s';
-    document.body.appendChild(label);
-  }
-  label.textContent = '🎨 ' + ds.name;
-  console.log('[DesignX] Applied theme:', ds.name, '| font:', t.font, '| bg:', t.bg, '| accent:', t.accent, '| text:', t.text);
-
-  // Store for potential re-use
-  window.__activeTheme = ds;
-}
 
 // ── Original file fetching ──────────────────────────────────────
 // Tries to load original upstream SKILL.md/DESIGN.md/README.md from src/originals/
