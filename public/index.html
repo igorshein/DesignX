@@ -482,16 +482,16 @@ let matcherProduct = null, matcherPhilosophy = null;
 
 (function loadCatalog() {
   const paths = ['src/data/catalog.json', '../src/data/catalog.json', 'data/catalog.json'];
-  const loader = document.getElementById('loader');
-  Promise.any(paths.map(p =>
-    fetch(p).then(r => { if (!r.ok) throw Error(); return r.json(); })
-  )).then(c => {
-    CATALOG = c;
-    loader.style.display = 'none';
-    init();
-  }).catch(() => {
-    loader.innerHTML = '<p style=\"color:var(--error)\">Ошибка загрузки</p><p style=\"color:var(--text-muted);font-size:.8125rem\">Запустите <code style=\"color:var(--text-code)\">npx serve .</code></p>';
-  });
+  function tryPath(i) {
+    if (i >= paths.length) {
+      document.getElementById('loader').innerHTML = '<p style=\"color:var(--error)\">Ошибка загрузки</p><p style=\"color:var(--text-muted);font-size:.8125rem\">Запустите <code style=\"color:var(--text-code)\">npx serve .</code></p>';
+      return;
+    }
+    fetch(paths[i]).then(r => { if (!r.ok) throw Error(); return r.json(); })
+      .then(c => { CATALOG = c; document.getElementById('loader').style.display = 'none'; init(); })
+      .catch(() => tryPath(i + 1));
+  }
+  tryPath(0);
 })();
 
 function init() {
