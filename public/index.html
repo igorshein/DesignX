@@ -380,7 +380,6 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
         <select class="sort-select" id="ds-sort-select" onchange="renderAllSystems()">
           <option value="name-asc">Name ↑</option>
           <option value="name-desc">Name ↓</option>
-          <option value="rating-desc">Rating ↓</option>
         </select>
         <span class="result-count" id="ds-result-count"></span>
         <span id="ds-hex-badge" style="display:none;font-size:.6875rem;padding:2px 10px;background:var(--text-primary);color:var(--bg-surface)"></span>
@@ -795,7 +794,6 @@ function renderAllSystems(){
   systems.sort((a,b)=>{
     if(sort==='name-asc')return a.name.localeCompare(b.name);
     if(sort==='name-desc')return b.name.localeCompare(a.name);
-    if(sort==='rating-desc')return (b.rating||0)-(a.rating||0);
     return 0;
   });
   const total=systems.length;
