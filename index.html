@@ -1080,9 +1080,8 @@ function checkContrast(){
   if(sample){sample.style.color=fg;sample.style.background=bg;sample.textContent='Sample text for readability check'}
 }
 // Tokens Viewer
-let _allTokenSystems=[];
 function initTokensViewer(){
-  if(!CATALOG||!_allTokenSystems.length)_allTokenSystems=CATALOG.design_systems.filter(ds=>ds.tokens_css).map(ds=>({id:ds.id,name:ds.name,tokens:ds.tokens_css}));
+  if(CATALOG&&!_allTokenSystems.length)_allTokenSystems=CATALOG.design_systems.filter(ds=>ds.tokens_css).map(ds=>({id:ds.id,name:ds.name,tokens:ds.tokens_css}));
 }
 function filterTokensSystems(){
   initTokensViewer();
@@ -1104,11 +1103,11 @@ function selectTokenSystem(id){
   document.getElementById('tokens-ds-list').style.display='none';
   const viewer=document.getElementById('tokens-viewer');
   if(!viewer)return;
-  const t=ds.tokens;
-  let swatches=Object.entries(t).filter(([k])=>!['font','radius','dark'].includes(k)&&typeof t[k]==='string'&&t[k].startsWith('#')).map(([k,v])=>`<div class="token-swatch"><span class="swatch-dot" style="background:${v}"></span><span class="token-key">${escapeHtml(k)}</span><span class="token-val">${v}</span></div>`).join('');
+  const tok=ds.tokens;
+  let swatches=Object.entries(tok).filter(([k])=>!['font','radius','dark'].includes(k)&&typeof tok[k]==='string'&&tok[k].startsWith('#')).map(([k,v])=>`<div class="token-swatch"><span class="swatch-dot" style="background:${v}"></span><span class="token-key">${escapeHtml(k)}</span><span class="token-val">${v}</span></div>`).join('');
   viewer.innerHTML=`<div class="token-header">
     <h4 style="font-size:.8125rem;margin:0">${escapeHtml(ds.name)}</h4>
-    <span class="token-meta">${t.dark?t('ds.dark'):t('ds.light')} · ${t.font||'—'} · ${t('ds.radius')} ${t.radius||'—'}</span>
+    <span class="token-meta">${tok.dark?t('ds.dark'):t('ds.light')} · ${tok.font||'—'} · ${t('ds.radius')} ${tok.radius||'—'}</span>
   </div>
   <div class="token-swatches">${swatches||'<span style="color:var(--text-dim)">'+t('ds.noTokens')+'</span>'}</div>`;
 }
