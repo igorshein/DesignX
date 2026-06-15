@@ -504,14 +504,14 @@ import {
   CAT_COLORS, escapeHtml, debounce, contrastRatio, hexToLuminance, isDarkColor,
   filterSkills as coreFilter, sortSkills, paginate, loadCatalog as loadCore,
   loadFavorites, saveFavorites, dateBadge as coreDateBadge, normalizeTokens
-} from '../src/app.js';
+} from './src/app.js';
 import {
   registerLocale, setLanguage, getLanguage, getLocales, getLocaleNames,
   onChange, t, tArray, initLanguage
-} from '../src/i18n.js';
-import ru from '../src/locales/ru.js';
-import en from '../src/locales/en.js';
-import zh from '../src/locales/zh.js';
+} from './src/i18n.js';
+import ru from './src/locales/ru.js';
+import en from './src/locales/en.js';
+import zh from './src/locales/zh.js';
 
 registerLocale('ru', ru);
 registerLocale('en', en);
