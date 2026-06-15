@@ -1,122 +1,113 @@
-# DESIGN.md — DesignX
+# DESIGN.md — DesignX (Cosmos Redesign)
 
 ## Brand & Tone
-DesignX — инструмент для подбора AI-skills и DESIGN.md стартеров. Помогает разработчикам и продуктам понять, какие навыки и системы дизайна подключить к ИИ-агенту для их будущего приложения.
-Тон: техничный, прагматичный, без лишнего шума. Интерфейс — справочник, а не 놀이터.
+DesignX — каталог AI-skills и DESIGN.md стартеров. Интерфейс вдохновлён эстетикой Cosmos: чистота, воздух, тёплые нейтральные тона, акцент на контент. Минимум UI-шума — максимум читаемости и сканируемости.
+
+Тон: спокойный, экспертный, визуально-ориентированный.
 
 ## Visual Aesthetic
-Эстетика: **industrial / minimal**. Функциональный минимализм: сетка, моноширинный шрифт для кода, много whitespace, акцент на сканируемость. Никаких декоративных иллюстраций — только типографика, таблицы, карточки.
+Эстетика: **clean editorial / warm minimal** — светлый фон (#f7f5f3), тёплый бумажный оттенок, почти чёрный текст (#0d0d0d). Тонкие полупрозрачные бордеры, отсутствие теней, крупная типографика, большие отступы. Наследие Cosmos, SSENSE, Aesop — editorial-подход к каталогу.
 
 ## Color Tokens
-- color-bg-surface: #0a0b0f (основной фон)
-- color-bg-elevated: #111318 (карточки, панели)
-- color-border: #22262e (разделители)
-- color-text-primary: #e8ebf0
-- color-text-muted: #7a8290
-- color-text-code: #9cdcfe
-- color-accent-primary: #4da3ff (ссылки, фокус, активные состояния)
-- color-accent-hover: #7ab3ff
-- color-success: #4ec990
-- color-warning: #dcdcaa
-- color-error: #f14c4c
+- color-bg-paper: #f7f5f3 (тёплый бумажный фон страницы)
+- color-bg-surface: #ffffff (карточки, панели, elevated поверхности)
+- color-bg-elevated: #fcfbfa (лёгкий подъём над фоном)
+- color-bg-hover: rgba(13,13,13,0.04)
+- color-border: rgba(13,13,13,0.10) (тонкие разделители, 0.5px)
+- color-border-hover: rgba(13,13,13,0.20)
+- color-text-primary: #0d0d0d (почти чёрный)
+- color-text-muted: #6e6a69 (тёплый серый для второстепенного)
+- color-text-dim: #9a9796 (самый светлый текст)
+- color-accent: #2965f6 (синий — ссылки, CTA, акценты)
+- color-accent-hover: #1a4fd0
+- color-focus-ring: rgba(41,101,246,0.2)
+- color-success: #00af5d
+- color-warning: #e8a838
+- color-error: #bd3c1f
 
 Все текстовые цвета обеспечивают контраст ≥ 4.5:1 относительно фона.
 
 ## Typography
-- UI Font: **JetBrains Mono** (monospace) — для всего интерфейса, включая заголовки
+- UI Font: **Inter** (sans-serif) — чистый геометрический гротеск, аналогичен CosmosOracle
 - Code Font: **JetBrains Mono** — для сниппетов, путей, токенов
 - Шкала (mobile-first, rem-based):
-  - Display: 2.5rem / 1.2, weight 700
-  - H1: 1.75rem / 1.3, weight 600
-  - H2: 1.375rem / 1.3, weight 600
+  - Display: 3rem / 1.1, weight 500
+  - H1: 2rem / 1.2, weight 500
+  - H2: 1.5rem / 1.3, weight 500
   - H3: 1.125rem / 1.4, weight 500
-  - Body: 1rem / 1.6, weight 400
+  - Body: 0.9375rem / 1.6, weight 400
   - Small: 0.8125rem / 1.5, weight 400
-  - Code: 0.875rem / 1.5, weight 400
-- Межстрочный интервал следует Material Design 3 type scale
+  - Code: 0.8125rem / 1.5, weight 400
+  - Label: 0.6875rem / 1.4, weight 500, uppercase, letter-spacing 0.5px
 
 ## Spacing & Grid
 - Base unit: 4px (0.25rem)
-- Scale: 1 (4px), 2 (8px), 3 (12px), 4 (16px), 5 (20px), 6 (24px), 8 (32px), 10 (40px), 12 (48px), 16 (64px)
-- Контейнер: max-width 72rem (1152px), padding inline 1.5rem (mobile) / 3rem (desktop)
-- Карточки: padding 1.5rem, gap 1rem
+- Scale: 2 (8px), 4 (16px), 6 (24px), 8 (32px), 10 (40px), 12 (48px), 16 (64px), 20 (80px)
+- Контейнер: max-width 80rem (1280px), padding inline 1.5rem (mobile) / 2.5rem (desktop)
+- Карточки: padding 1.25rem 1.5rem, gap 1rem
+- Горизонтальные отступы между секциями: 2.5rem
 
 ## Components — Cards
-- Фон: color-bg-elevated
-- Border: 1px solid color-border
-- Radius: 6px
-- Hover: border-color color-accent-primary, transition 150ms ease
-- Padding: 1.5rem
-- Заголовок карточки: H3, color-text-primary
+- Фон: color-bg-surface
+- Border: 0.5px solid color-border
+- Radius: 0px (прямые углы, как в Cosmos)
+- Hover: bg color-bg-hover, transition 150ms ease
+- Padding: 1.25rem 1.5rem
+- Заголовок: H3, color-text-primary
 - Описание: Body, color-text-muted
-- Теги: inline, background color-bg-surface, border color-border, radius 4px, padding 2px 8px, small font
+- Теги: inline, background color-bg-paper, border none, radius 0, padding 2px 10px, small font
 
 ## Components — Buttons
-- Min-height: 40px, min-width: 40px (touch target)
-- Radius: 6px
-- Primary: bg color-accent-primary, text color-bg-surface, weight 500
-- Primary hover: bg color-accent-hover
-- Secondary: transparent bg, border 1px solid color-border, text color-text-primary
-- Secondary hover: border color-accent-primary, text color-accent-primary
+- Min-height: 40px (touch target), padding: 0 20px
+- Radius: 0px
+- Primary: bg color-text-primary, text color-bg-surface, weight 500
+- Primary hover: opacity 0.85
+- Secondary: transparent bg, border 0.5px solid color-border, text color-text-primary
+- Secondary hover: border-color color-border-hover
 - Ghost: transparent, text color-text-muted, hover text color-text-primary
 
 ## Components — Inputs & Selects
-- Height: 40px
-- Padding: 0 12px
+- Height: 44px
+- Padding: 0 16px
 - Background: color-bg-surface
-- Border: 1px solid color-border
-- Radius: 6px
-- Placeholder: color-text-muted
-- Focus: border color-accent-primary, outline none, ring 2px color-accent-primary @ 20% opacity
-- Error: border color-error
+- Border: 0.5px solid color-border
+- Radius: 0px
+- Placeholder: color-text-dim
+- Focus: border-color color-accent, ring 2px color-focus-ring
 
-## Components — Tables
-- Header: weight 600, color-text-muted, text-align left, padding 12px 16px, border-bottom 1px solid color-border
-- Row: padding 12px 16px, border-bottom 1px solid color-border (last: none)
-- Hover row: bg color-bg-elevated
-- Code cells: font-family JetBrains Mono, color-text-code
-
-## Components — Search & Filter
-- Search bar: full-width под шапкой, placeholder "Поиск навыков...", shortcut "/"
-- Фильтрация мгновенная (oninput), без кнопки "Применить"
-- Фильтры: категории (pill-style), сложность, тип продукта
-- Active filters: выделены цветом color-accent-primary, снимаются в один клик
-- Empty result: сообщение "Ничего не найдено" + кнопка сброса фильтров
-- Результаты: счётчик "Найдено: X из Y" над сеткой карточек
+## Components — Nav/Tabs
+- Навигация: inline, без подчёркиваний, активный пункт — weight 500 + color-text-primary
+- Неактивный: color-text-muted
+- Hover: color-text-primary
+- Никаких нижних линий, бордеров — только изменение веса и цвета
 
 ## Components — States (обязательны для каждого компонента)
-- **Loading:** минималистичный спиннер (32px, border-top accent, rotate .8s) + текст "Загрузка...". НЕ skeleton на всю страницу.
-- **Empty:** текст "Ничего не найдено" + иконка (эмодзи в data-состояниях допустимы) + кнопка сброса. НЕ иллюстрации-клипарты.
-- **Error:** "Ошибка загрузки" + текст с причиной + кнопка повтора. НЕ коды ошибок в лицо пользователю.
-- **Hover:** border-color accent-primary, transition 150ms
-- **Focus:** ring 2px accent-primary @ 20% opacity, outline none
-- **Disabled:** opacity .5, cursor not-allowed, без hover-эффектов
+- **Loading:** спиннер 28px, border-top color-text-primary, rotate .8s
+- **Empty:** текст "Nothing found" + кнопка сброса
+- **Error:** текст ошибки + кнопка повтора
+- **Hover:** bg color-bg-hover или color-text-primary (для текста)
+- **Focus:** ring 2px color-focus-ring
+- **Disabled:** opacity .4, cursor not-allowed
 
 ## Motion
-- Все переходы: 150ms ease-out
-- Hover/focus: 100ms ease-out
-- Нет сложных анимаций — только мгновенная обратная связь
-- Accordion/раскрытие: max-height transition, duration 200ms
-- Появление карточек: stagger 30ms при загрузке сетки
+- Все переходы: 150ms ease
+- Hover/focus: 100ms ease
+- Никаких сложных анимаций
+- prefers-reduced-motion: отключать анимации
 
 ## Accessibility
 - Контраст текста ≥ 4.5:1 (WCAG AA)
 - Фокус-индикаторы видимы на всех интерактивных элементах
-- Семантический HTML: header, main, section, article, nav, button, label
-- ARIA labels для иконок без текста
-- Клавиатурная навигация: Tab, Enter, Escape, стрелки в селектах
-- prefers-reduced-motion: отключать transform/transition анимации
+- Семантический HTML
+- Клавиатурная навигация
+- ARIA labels для иконок
 
-## Anti-Patterns (What to Avoid)
-- НЕ используй Inter, Roboto, system-ui — только JetBrains Mono
-- НЕ используй фиолетовые/пурпурные градиенты
-- НЕ используй тени (box-shadow) — только border для глубины
-- НЕ используй rounded-xl (12px+) — max 6px
-- НЕ используй анимации длинее 200ms
-- НЕ используй декоративные иконки без подписи
-- НЕ делай карточки с hover-эффектом scale/translate — только border/color change
-- НЕ используй glassmorphism, neumorphism — только solid background
+## Anti-Patterns
+- НЕ используй box-shadow — только border
+- НЕ используй скругления > 0px (кроме бейджей)
+- НЕ используй яркие/насыщенные цвета — только палитра из токенов
+- НЕ используй тёмную тему (этот дизайн только light mode)
+- НЕ используй градиенты, glassmorphism
 - НЕ ставь фильтрацию по кнопке "Применить" — только мгновенная oninput
-- НЕ используй carousel и autoplay-slider
-- НЕ показывай ошибки в alert() — только inline или toast
-- НЕ используй дефолтные скроллбары — кастомные, в стиле проекта
+- НЕ показывай ошибки в alert() — только inline
+- НЕ используй эмодзи в UI — только текст

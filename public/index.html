@@ -1,318 +1,395 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DesignX — Skill & Design System Matcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@300..700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg-surface:#0a0b0f;--bg-elevated:#111318;--bg-card:#16181d;--border:#22262e;--text-primary:#e8ebf0;--text-muted:#7a8290;--text-code:#9cdcfe;--accent-primary:#4da3ff;--accent-hover:#7ab3ff;--success:#4ec990;--warning:#dcdcaa;--error:#f14c4c;--radius:6px;--font:'JetBrains Mono',monospace;--font-size:14px}
-html{font-size:var(--font-size)}
-body{font-family:var(--font);background:var(--bg-surface);color:var(--text-primary);line-height:1.6;min-height:100vh;padding-bottom:5rem}
-.layout{max-width:80rem;margin:0 auto;padding:1.5rem}
-.header{border-bottom:1px solid var(--border);padding-bottom:.75rem;margin-bottom:1.5rem}
-.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.header h1{font-size:1.5rem;font-weight:600;letter-spacing:-.5px;color:var(--accent-primary)}
-.header h1 small{font-size:.75rem;color:var(--text-muted);font-weight:400}
-.header .sub{color:var(--text-muted);font-size:.75rem;margin-top:.15rem}
-.header-nav{display:flex;gap:.25rem;margin-top:.75rem;flex-wrap:wrap}
-.header-nav a{padding:.5rem 1rem;color:var(--text-muted);text-decoration:none;font-size:.8125rem;cursor:pointer;border-radius:var(--radius);transition:all .15s}
-.header-nav a:hover{color:var(--text-primary);background:var(--bg-elevated)}
-.header-nav a.active{color:var(--bg-surface);background:var(--accent-primary)}
-.stats{display:flex;gap:1rem;font-size:.75rem;color:var(--text-muted)}
-.stats span{display:flex;align-items:center;gap:4px}
-.panel{display:none}.panel.active{display:block}
-h2{font-size:1.125rem;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
-h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted)}
+:root{--bg-paper:#f7f5f3;--bg-surface:#fff;--bg-elevated:#fcfbfa;--bg-hover:rgba(13,13,13,0.04);--border:rgba(13,13,13,0.10);--border-hover:rgba(13,13,13,0.20);--text-primary:#0d0d0d;--text-muted:#6e6a69;--text-dim:#9a9796;--accent:#2965f6;--accent-hover:#1a4fd0;--focus-ring:rgba(41,101,246,0.2);--success:#00af5d;--warning:#e8a838;--error:#bd3c1f;--font:'Inter',system-ui,-apple-system,sans-serif;--font-mono:'JetBrains Mono',monospace}
+html{font-size:15px}
+body{font-family:var(--font);background:var(--bg-paper);color:var(--text-primary);line-height:1.6;min-height:100vh;padding-bottom:6rem;-webkit-font-smoothing:antialiased}
+::selection{background:var(--text-primary);color:var(--bg-surface)}
+.layout{max-width:80rem;margin:0 auto;padding:0 2.5rem}
+@media(max-width:640px){.layout{padding:0 1rem}}
+
+/* Header */
+.header{padding:1.5rem 0 1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.header-logo{display:flex;align-items:baseline;gap:.5rem;text-decoration:none}
+.header-logo h1{font-size:1.25rem;font-weight:500;color:var(--text-primary);letter-spacing:-.3px}
+.header-logo small{font-size:.6875rem;color:var(--text-dim);font-weight:400;letter-spacing:.3px;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:1.25rem}
+.header-stats{display:flex;gap:1rem;font-size:.75rem;color:var(--text-muted)}
+.header-stats span{white-space:nowrap}
+
+/* Nav */
+.nav{display:flex;gap:0;padding:.5rem 0 1.25rem;border-bottom:0.5px solid var(--border);margin-bottom:1.5rem;overflow-x:auto;overflow-y:hidden}
+.nav::-webkit-scrollbar{height:0}
+.nav a{display:inline-flex;align-items:center;padding:.4rem 0;margin-right:1.75rem;color:var(--text-muted);text-decoration:none;font-size:.8125rem;cursor:pointer;transition:color .15s;white-space:nowrap;border:none;background:none;font-family:var(--font)}
+.nav a:focus-visible{outline:none;box-shadow:0 0 0 2px var(--focus-ring)}
+.nav a:hover{color:var(--text-primary)}
+.nav a.active{color:var(--text-primary);font-weight:500}
+
+/* Panel system */
+.panel{display:none;animation:none}
+.panel.active{display:block;animation:panelFade .25s ease both}
+@keyframes panelFade{0%{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+h2{font-size:1.25rem;font-weight:500;margin-bottom:.25rem;letter-spacing:-.3px}
+h3{font-size:.6875rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
 
 /* Search */
-.search-bar{display:flex;gap:.5rem;margin-bottom:1rem}
-.search-bar input{flex:1;height:40px;padding:0 12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.8125rem;outline:none}
-.search-bar input:focus{border-color:var(--accent-primary)}
+.search-wrap{position:relative;margin-bottom:1.5rem;max-width:32rem}
+.search-wrap input{width:100%;height:48px;padding:0 16px 0 44px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.9375rem;outline:none;transition:border-color .15s,background .15s}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--focus-ring)}
+.search-wrap input::placeholder{color:var(--text-dim)}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:.8125rem;pointer-events:none}
 
 /* Filters */
-.filter-bar,.filter-scroll{display:flex;gap:.375rem;flex-wrap:wrap;margin-bottom:.75rem}
-.filter-scroll{overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding-bottom:4px}
-.filter-scroll::-webkit-scrollbar{height:3px}
-.filter-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.filter-btn{padding:3px 10px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-muted);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s;white-space:nowrap}
-.filter-btn:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
-.filter-btn.active{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
+.filter-section{margin-bottom:1.25rem}
+.filter-bar,.filter-scroll{display:flex;gap:.375rem;flex-wrap:wrap}
+.filter-scroll{overflow-x:auto;white-space:nowrap;padding-bottom:4px}
+.filter-bar button{font-size:.6875rem;padding:5px 14px;border:0.5px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:all .15s;font-family:var(--font)}
+.filter-bar button:hover{border-color:var(--text-primary);color:var(--text-primary)}
+.filter-bar button.active{background:var(--text-primary);color:var(--bg-surface);border-color:var(--text-primary)}
+.phil-cat-badge{display:inline-block;font-size:.5625rem;padding:2px 8px;background:var(--bg-paper);color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem;transition:background .15s,color .15s}
+.card:hover .phil-cat-badge{background:var(--text-primary);color:var(--bg-surface)}
+.filter-scroll::-webkit-scrollbar{height:2px}
+.filter-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:0}
+.filter-btn{padding:6px 14px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-muted);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--text-primary);color:var(--text-primary)}
+.filter-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--focus-ring)}
+.filter-btn.active{background:var(--text-primary);color:var(--bg-surface);border-color:var(--text-primary)}
 
 /* Grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:.75rem}
-.grid-3{grid-template-columns:repeat(auto-fill,minmax(22rem,1fr))}
-.grid-4{grid-template-columns:repeat(auto-fill,minmax(14rem,1fr))}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:1px;background:var(--border)}
+.grid-3{grid-template-columns:repeat(auto-fill,minmax(24rem,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fill,minmax(16rem,1fr))}
 
 /* Cards */
-.card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;cursor:pointer;transition:border-color .15s;overflow:hidden;position:relative}
-.card:hover{border-color:var(--accent-primary)}
-.card.selected{border-color:var(--accent-primary);background:rgba(77,163,255,.04)}
-.card-accent{height:3px;margin:-1rem -1rem .5rem -1rem;border-radius:6px 6px 0 0;transition:opacity .15s}
-.card h4{font-size:.875rem;font-weight:500;color:var(--text-primary)}
-.card .tags{display:flex;gap:3px;flex-wrap:wrap;margin:.35rem 0}
-.card .tag{padding:1px 5px;border:1px solid var(--border);border-radius:3px;font-size:.6875rem;color:var(--text-muted);background:var(--bg-surface)}
-.card .meta{display:flex;gap:.5rem;font-size:.6875rem;color:var(--text-muted);margin-top:.35rem;flex-wrap:wrap}
-.card p{font-size:.75rem;color:var(--text-muted);margin-top:.35rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card .complexity{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.6875rem;font-weight:500}
-.comp-beginner{background:#1a3a2a;color:var(--success)}
-.comp-intermediate{background:#3a3520;color:var(--warning)}
-.comp-advanced{background:#3a1a1a;color:var(--error)}
-.card .cat-badge{font-size:.6875rem;color:var(--text-code)}
-.select-star{font-size:1rem;cursor:pointer;user-select:none;opacity:.3;transition:opacity .15s}
-.card:hover .select-star,.card.selected .select-star{opacity:1}
-.card.selected .select-star{color:var(--accent-primary)}
-.card[style*="--card-acc"]:hover{border-color:var(--card-acc)!important}
-.card[style*="--card-acc"].selected{border-color:var(--card-acc)!important;background:color-mix(in srgb,var(--card-acc) 6%,transparent)}
-.card:hover .preview-frame{box-shadow:0 0 0 1px var(--card-acc,rgba(255,255,255,.1))}
+.card{background:var(--bg-surface);padding:1.25rem 1.5rem;cursor:pointer;display:flex;flex-direction:column;position:relative;border:none;border-left:3px solid transparent;animation:cardEnter .35s ease both;transition:background .15s,transform .15s,border-left-color .15s}
+.card:hover{background:var(--bg-hover);transform:translateY(-2px);border-left-color:var(--border-hover)}
+.card.selected{background:var(--bg-hover)}
+.card h4{font-size:.9375rem;font-weight:500;color:var(--text-primary);line-height:1.4;transition:color .15s}
+.card:hover h4{color:var(--text-primary)}
+.card .tags{display:flex;gap:4px;flex-wrap:wrap;margin:.5rem 0}
+.card .tag{padding:2px 10px;font-size:.6875rem;color:var(--text-dim);background:var(--bg-paper);line-height:1.5;transition:color .15s,background .15s}
+.card:hover .tag{color:var(--text-muted);background:var(--bg-surface)}
+.card .meta{display:flex;gap:.75rem;font-size:.6875rem;color:var(--text-dim);margin-top:.35rem;flex-wrap:wrap;align-items:center}
+.card p{font-size:.8125rem;color:var(--text-dim);margin-top:.35rem;line-height:1.5;transition:color .15s}
+.card:hover p{color:var(--text-muted)}
+.card .complexity{display:inline-flex;align-items:center;gap:3px;padding:2px 10px;font-size:.625rem;font-weight:500;transition:opacity .15s}
+.card:hover .complexity{opacity:1}
+.comp-beginner{color:var(--success);background:rgba(0,175,93,0.08)}
+.comp-intermediate{color:var(--warning);background:rgba(232,168,56,0.08)}
+.comp-advanced{color:var(--error);background:rgba(189,60,31,0.08)}
+.select-star{font-size:1rem;cursor:pointer;user-select:none;opacity:0;transition:opacity .15s;margin-left:auto;color:var(--text-dim)}
+.card:hover .select-star{opacity:1}
+.card.selected .select-star{opacity:1;color:var(--text-primary)}
 
-/* Date badges */
-.date-badge{display:inline-flex;align-items:center;gap:3px;font-size:.625rem;padding:1px 6px;border-radius:3px;line-height:1.5;white-space:nowrap;letter-spacing:.3px}
-.badge-updated{background:rgba(77,163,255,.15);color:var(--accent-primary);border:1px solid rgba(77,163,255,.3)}
-.badge-created{background:rgba(78,201,144,.12);color:var(--success);border:1px solid rgba(78,201,144,.25)}
-.date-muted{background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
+/* Card entrance animation */
+@keyframes cardEnter{0%{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* Color swatches */
-.swatch-row{display:flex;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
-.swatch{display:flex;align-items:center;gap:4px;font-size:.625rem;color:var(--text-muted)}
-.swatch-dot{width:20px;height:20px;border-radius:4px;border:1px solid rgba(255,255,255,.1);flex-shrink:0}
+/* Sort & result bar */
+.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.toolbar-left{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.toolbar-right{display:flex;align-items:center;gap:.5rem}
+.result-count{font-size:.75rem;color:var(--text-muted)}
+.sort-select{height:36px;padding:0 12px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none;cursor:pointer}
+.sort-select:focus{border-color:var(--accent)}
 
-/* Preview mini interface */
-.preview-frame{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:.75rem}
-.preview-frame .pf-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
-.preview-frame .pf-logo{font-size:.75rem;font-weight:600;letter-spacing:-.3px}
-.preview-frame .pf-nav{display:flex;gap:8px}
-.preview-frame .pf-nav-item{font-size:.625rem;padding:2px 8px;border-radius:99px}
-.preview-frame .pf-body{padding:10px 12px;display:flex;gap:8px;flex-direction:column}
-.preview-frame .pf-card{padding:8px 10px;border-radius:var(--radius);display:flex;gap:6px;flex-direction:column}
-.preview-frame .pf-card-title{font-size:.75rem;font-weight:600}
-.preview-frame .pf-card-text{font-size:.625rem;opacity:.7;line-height:1.4}
-.preview-frame .pf-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:99px;font-size:.625rem;font-weight:500;border:none;cursor:pointer}
-.preview-frame .pf-btn-outline{background:transparent;border:1px solid}
-.preview-frame .pf-stats{display:flex;gap:8px;margin-top:4px}
-.preview-frame .pf-stat{flex:1;padding:6px;border-radius:4px;text-align:center}
-.preview-frame .pf-stat-val{font-size:.8125rem;font-weight:700}
-.preview-frame .pf-stat-lbl{font-size:.5625rem;opacity:.7;margin-top:1px}
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:center;gap:.375rem;margin-top:1.5rem;padding-top:1.25rem;border-top:0.5px solid var(--border)}
+.pagination button{height:36px;min-width:36px;padding:0 12px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-muted);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s}
+.pagination button:hover:not(:disabled){border-color:var(--text-primary);color:var(--text-primary)}
+.pagination button:disabled{opacity:.3;cursor:not-allowed}
+.pagination button.active{background:var(--text-primary);color:var(--bg-surface);border-color:var(--text-primary)}
+.pagination .page-info{font-size:.75rem;color:var(--text-muted);padding:0 8px}
 
-/* Product selector */
-.product-select{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
-.product-item{padding:8px 14px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-primary);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;text-align:center;min-width:90px;transition:all .15s}
-.product-item:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
-.product-item.selected{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
-.product-item .icon{font-size:1.25rem;display:block;margin-bottom:2px}
-.product-item .label{font-size:.6875rem}
+/* Empty */
+.empty{text-align:center;padding:4rem 1rem;color:var(--text-muted);grid-column:1/-1;font-size:.875rem}
 
-/* Steps */
-.step{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
-.step .step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent-primary);color:var(--bg-surface);font-size:.75rem;font-weight:600;margin-right:.5rem}
-.step h3{display:inline;color:var(--text-primary);font-size:.9375rem}
-.phil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.5rem}
-.phil-item{padding:.5rem .75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-surface);cursor:pointer;transition:all .15s;font-family:var(--font);font-size:.75rem;color:var(--text-muted);text-align:left}
-.phil-item:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
-.phil-item.selected{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
-
-/* Philosophy preview mini-card */
-.phil-mini{border-left:3px solid;padding:.35rem .5rem;margin-top:.35rem;font-size:.625rem;line-height:1.3}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 20px;border:none;background:var(--text-primary);color:var(--bg-surface);font-family:var(--font);font-size:.8125rem;font-weight:500;cursor:pointer;transition:opacity .15s;text-decoration:none}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--focus-ring)}
+.btn:hover{opacity:.85}
+.btn-outline{background:transparent;border:0.5px solid var(--border);color:var(--text-primary)}
+.btn-outline:hover{border-color:var(--text-primary);opacity:1}
+.btn-ghost{background:transparent;color:var(--text-muted);padding:0 12px}
+.btn-ghost:hover{color:var(--text-primary);opacity:1}
+.btn-sm{height:32px;padding:0 14px;font-size:.75rem}
 
 /* Overlay */
-#detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;padding:1rem}
+#detail-overlay{display:none;position:fixed;inset:0;background:rgba(13,13,13,0.6);z-index:200;align-items:center;justify-content:center;padding:1rem;animation:overlayFade .2s ease both}
 #detail-overlay.open{display:flex}
-#detail-panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);max-width:48rem;width:100%;max-height:90vh;overflow-y:auto;padding:1.5rem 2rem}
-#detail-panel h2{font-size:1.25rem;color:var(--accent-primary);margin-bottom:.25rem}
-#detail-panel .close{float:right;background:none;border:1px solid var(--border);color:var(--text-muted);padding:4px 12px;border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem}
-#detail-panel .close:hover{border-color:var(--error);color:var(--error)}
-#detail-panel .principles{margin:.75rem 0;padding-left:1.25rem}
-#detail-panel .principles li{margin-bottom:.35rem;color:var(--text-muted);font-size:.8125rem}
-#detail-panel .detail-meta{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0;font-size:.75rem}
-#detail-panel .detail-meta span{display:flex;align-items:center;gap:4px}
-#detail-panel .source{display:inline-block;padding:2px 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:4px;font-size:.6875rem;color:var(--text-code);margin:.35rem 0}
-.compare-grid{display:grid;gap:1rem;margin-top:.75rem}.compare-grid.c2{grid-template-columns:1fr 1fr}.compare-grid.c3{grid-template-columns:1fr 1fr 1fr}.compare-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}.compare-col{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}.compare-col .acc-bar{height:3px;margin:-1rem -1rem .75rem -1rem;border-radius:6px 6px 0 0}.compare-col h3{font-size:.875rem;color:var(--accent-primary);margin-bottom:.25rem}.compare-col .cm-section{margin-bottom:.75rem}.compare-col .cm-label{font-size:.625rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:.25rem}.compare-col .cm-value{font-size:.75rem;color:var(--text-primary);line-height:1.5}.compare-col .cm-tags{display:flex;gap:3px;flex-wrap:wrap}.compare-col .cm-tag{padding:1px 5px;border:1px solid var(--border);border-radius:3px;font-size:.625rem;color:var(--text-muted);background:var(--bg-elevated)}
+#detail-overlay:not(.open){display:none;animation:none}
+#detail-panel{background:var(--bg-surface);max-width:48rem;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;animation:panelSlide .25s ease both}
+@keyframes overlayFade{0%{opacity:0}to{opacity:1}}
+@keyframes panelSlide{0%{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+#detail-panel h2{font-size:1.25rem;color:var(--text-primary);margin-bottom:.25rem}
+#detail-panel .close{position:absolute;top:1rem;right:1.5rem;background:none;border:0.5px solid var(--border);color:var(--text-muted);padding:6px 14px;cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s}
+#detail-panel .close:hover{border-color:var(--text-primary);color:var(--text-primary)}
+#detail-panel{position:relative}
+#detail-panel .detail-meta{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0;font-size:.8125rem;color:var(--text-muted)}
+#detail-panel .principles{margin:.75rem 0;padding-left:1.25rem;color:var(--text-muted);font-size:.8125rem}
 
 /* Export bar */
-.export-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg-elevated);border-top:1px solid var(--border);padding:.75rem 0;display:none;z-index:100}
+.export-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg-surface);border-top:0.5px solid var(--border);padding:.75rem 0;display:none;z-index:100}
 .export-bar.visible{display:block}
-.export-bar .layout{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.export-inner{max-width:80rem;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+@media(max-width:640px){.export-inner{padding:0 1rem}}
 .export-count{color:var(--text-muted);font-size:.8125rem}
 .export-actions{display:flex;gap:.5rem}
-.export-btn{background:var(--accent-primary);color:var(--bg-surface);border:none;padding:8px 20px;border-radius:var(--radius);font-family:var(--font);font-size:.8125rem;font-weight:500;cursor:pointer}
-.export-btn:hover{background:var(--accent-hover)}
-.export-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text-primary)}
-.export-btn.secondary:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+
+/* Sections */
+.section{margin-bottom:1.75rem}
+.section-title{font-size:.6875rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
+#loader{display:flex;align-items:center;justify-content:center;min-height:50vh;flex-direction:column;gap:1rem}
+#loader .spinner{width:28px;height:28px;border:1.5px solid var(--border);border-top-color:var(--text-primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.card:hover{transform:none!important}.product-item:hover{transform:none!important}.phil-item:hover{transform:none!important}.panel.active{animation:none}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border)}
+
+/* Steps / Matcher */
+.step{background:var(--bg-surface);padding:1.5rem;margin-bottom:1px;animation:cardEnter .35s ease both}
+.step .step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--text-primary);color:var(--bg-surface);font-size:.6875rem;font-weight:500;margin-right:.5rem}
+.step h3{display:inline;color:var(--text-primary);font-size:.875rem}
+.product-select{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.product-item{padding:10px 18px;min-width:80px;border:0.5px solid var(--border);background:var(--bg-surface);color:var(--text-muted);cursor:pointer;font-family:var(--font);font-size:.75rem;text-align:center;transition:all .15s;animation:cardEnter .3s ease both}
+.product-item:hover{border-color:var(--text-primary);color:var(--text-primary);transform:translateY(-1px)}
+.product-item.selected{background:var(--text-primary);color:var(--bg-surface);border-color:var(--text-primary);transform:none}
+.product-item .label{font-size:.625rem;text-transform:uppercase;letter-spacing:.3px}
+
+.phil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:1px;background:var(--border);margin-top:.75rem}
+.phil-item{padding:.75rem 1rem;background:var(--bg-surface);cursor:pointer;transition:all .15s;font-family:var(--font);font-size:.75rem;color:var(--text-muted);text-align:left;border:none;animation:cardEnter .3s ease both}
+.phil-item:hover{background:var(--bg-hover);color:var(--text-primary);transform:translateY(-1px)}
+.phil-item.selected{background:var(--text-primary);color:var(--bg-surface);transform:none}
+
+/* Principles */
+.principle-card{background:var(--bg-elevated);padding:1rem 1.25rem}
+.principle-card h4{font-size:.8125rem;font-weight:500;margin-bottom:.25rem;color:var(--text-primary)}
+.principle-card p{font-size:.75rem;color:var(--text-muted);line-height:1.5}
+
+/* Compare grid */
+.compare-grid{display:grid;gap:1px;background:var(--border);margin-top:.75rem}.compare-grid.c2{grid-template-columns:1fr 1fr}.compare-grid.c3{grid-template-columns:1fr 1fr 1fr}.compare-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}.compare-col{background:var(--bg-surface);padding:1.25rem}.compare-col h3{font-size:.8125rem;color:var(--text-primary);margin-bottom:.25rem;text-transform:none;letter-spacing:0}.compare-col .cm-section{margin-bottom:.75rem}.compare-col .cm-label{font-size:.5625rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);margin-bottom:.25rem}.compare-col .cm-value{font-size:.75rem;color:var(--text-primary);line-height:1.5}.compare-col .cm-tags{display:flex;gap:3px;flex-wrap:wrap}.compare-col .cm-tag{padding:2px 8px;font-size:.625rem;color:var(--text-muted);background:var(--bg-paper)}
+
+/* Favorite */
+.fav-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px;line-height:1;opacity:0;transition:opacity .15s;color:var(--text-primary);margin-left:auto}
+.card:hover .fav-btn,.fav-btn.active{opacity:1}
+.fav-btn.active{opacity:1;color:var(--text-primary)}
 
 /* Contrast tool */
 .contras-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:30rem}
-.contras-grid input{height:36px;padding:0 10px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem}
-.contras-result{padding:.75rem 1rem;border-radius:var(--radius);margin-top:.75rem}
-.contras-result.pass{background:#1a3a2a;color:var(--success)}
-.contras-result.fail{background:#3a1a1a;color:var(--error)}
-.contras-sample{padding:.75rem;border-radius:var(--radius);margin-top:.5rem;font-size:.875rem}
+.contras-grid label{font-size:.6875rem;color:var(--text-muted);display:block;margin-bottom:4px}
+.contras-grid input{height:40px;padding:0 12px;width:100%;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.8125rem;outline:none}
+.contras-grid input:focus{border-color:var(--accent)}
+.contras-result{padding:.75rem 1rem;margin-top:.75rem;font-size:.8125rem}
+.contras-result.pass{background:rgba(0,175,93,0.08);color:var(--success)}
+.contras-result.fail{background:rgba(189,60,31,0.08);color:var(--error)}
+.contras-sample{padding:.75rem;margin-top:.5rem;font-size:.8125rem}
 
-/* Principles */
-.principle-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
-.principle-card h4{font-size:.8125rem;font-weight:500;margin-bottom:.25rem}
-.principle-card p{font-size:.6875rem;color:var(--text-muted);line-height:1.5}
+/* Date badges */
+.date-badge{display:inline-flex;align-items:center;gap:3px;font-size:.5625rem;padding:1px 8px;line-height:1.5;white-space:nowrap;letter-spacing:.5px;text-transform:uppercase}
+.badge-updated{background:rgba(41,101,246,0.08);color:var(--accent)}
+.badge-created{background:rgba(0,175,93,0.08);color:var(--success)}
+.date-muted{background:transparent;color:var(--text-dim)}
 
-/* Empty */
-.empty{text-align:center;padding:3rem 1rem;color:var(--text-muted);grid-column:1/-1}
-.empty .icon{font-size:2rem;margin-bottom:.5rem;display:block}
-.section{margin-bottom:1.5rem}
-.section-title{font-size:.8125rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
-#loader{display:flex;align-items:center;justify-content:center;min-height:40vh;flex-direction:column;gap:1rem}
-#loader .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent-primary);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--bg-surface)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-/* Sort & Pagination */
-.sort-bar{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
-.sort-bar label{font-size:.75rem;color:var(--text-muted)}
-.sort-bar select{height:32px;padding:0 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none;cursor:pointer}
-.sort-bar select:focus{border-color:var(--accent-primary)}
-.pagination{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)}
-.pagination button{height:36px;min-width:36px;padding:0 12px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-muted);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s}
-.pagination button:hover:not(:disabled){border-color:var(--accent-primary);color:var(--accent-primary)}
-.pagination button:disabled{opacity:.4;cursor:not-allowed}
-.pagination button.active{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
-.pagination .page-info{font-size:.75rem;color:var(--text-muted);padding:0 8px}
-/* Favorite */
-.fav-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px;line-height:1;opacity:.3;transition:opacity .15s;color:var(--accent-primary)}
-.card:hover .fav-btn,.fav-btn.active{opacity:1}
-.fav-btn.active{opacity:1;color:var(--accent-primary)}
-/* Cross-refs */
-.cross-refs{display:flex;gap:3px;flex-wrap:wrap;margin-top:.3rem}
-.cross-ref{padding:1px 4px;border:1px solid var(--border);border-radius:3px;font-size:.625rem;color:var(--text-code);background:var(--bg-surface);cursor:help}
+/* Swatches */
+.swatch-row{display:flex;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
+.swatch{display:flex;align-items:center;gap:4px;font-size:.625rem;color:var(--text-muted)}
+.swatch-dot{width:20px;height:20px;border:0.5px solid var(--border);flex-shrink:0}
+
 /* Source badge */
-.source-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.625rem;color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border)}
-@media(max-width:640px){.grid{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:1fr}.layout{padding:.75rem}.header h1{font-size:1.125rem}.phil-grid{grid-template-columns:1fr 1fr}.contras-grid{grid-template-columns:1fr}}
-#references-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:.75rem}
-.ref-card{transition:border-color .15s}
-.ref-card:hover{border-color:var(--accent)}
-.process-flow{display:flex;flex-direction:column;gap:0;align-items:center}
-.process-stage{background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:1.25rem;width:100%;max-width:36rem;cursor:pointer;transition:border-color .15s,background .15s}
-.process-stage:hover{border-color:var(--accent)}
-.process-stage-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem}
-.process-icon{font-size:1.5rem}
-.process-stage h3{margin:0;font-size:1rem;color:var(--text-primary)}
-.process-desc{margin:0 0 .75rem 1.75rem;font-size:.8125rem;color:var(--text-muted)}
-.process-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-left:1.75rem}
-.process-skill-tag{padding:2px 8px;font-size:.75rem;border:1px solid var(--border);border-radius:4px;color:var(--text-code);cursor:pointer;transition:background .15s,border-color .15s}
-.process-skill-tag:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-.process-arrow{color:var(--text-muted);font-size:1.25rem;padding:.25rem 0;opacity:.5}
-.process-stage.expanded{border-color:var(--accent);background:var(--bg-surface)}
-.process-stage.expanded .process-skills{display:flex}
-.process-skills{display:none}
-.process-stage.expanded .process-desc{display:block}
-.process-desc{display:none}
+.source-badge{display:inline-block;padding:2px 8px;font-size:.5625rem;color:var(--text-muted);background:var(--bg-paper);text-transform:uppercase;letter-spacing:.3px}
+
+/* Checkbox */
+input[type="checkbox"]{accent-color:var(--text-primary)}
+label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px}
+
+/* Preview frame */
+.preview-frame{border:0.5px solid var(--border);margin-top:.75rem}
+.preview-frame .pf-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px}
+.preview-frame .pf-logo{font-size:.75rem;font-weight:600}
+.preview-frame .pf-nav{display:flex;gap:8px}
+.preview-frame .pf-nav-item{font-size:.625rem;padding:2px 8px}
+.preview-frame .pf-body{padding:10px 14px;display:flex;gap:8px;flex-direction:column}
+.preview-frame .pf-card{padding:8px 12px;display:flex;gap:6px;flex-direction:column}
+.preview-frame .pf-card-title{font-size:.75rem;font-weight:600}
+.preview-frame .pf-card-text{font-size:.625rem;opacity:.7}
+.preview-frame .pf-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 14px;font-size:.625rem;font-weight:500;border:none;cursor:pointer}
+.preview-frame .pf-btn-outline{background:transparent;border:0.5px solid}
+.preview-frame .pf-stats{display:flex;gap:8px;margin-top:4px}
+.preview-frame .pf-stat{flex:1;padding:6px;text-align:center}
+.preview-frame .pf-stat-val{font-size:.8125rem;font-weight:700}
+.preview-frame .pf-stat-lbl{font-size:.5625rem;opacity:.7}
+
+/* About page */
+.about-section{max-width:40rem}
+.about-section ol,.about-section ul{color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem}
+
+/* Tools grid */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(22rem,1fr));gap:1px;background:var(--border)}
+.tool-section{padding:1.5rem;background:var(--bg-surface);animation:cardEnter .35s ease both}
+
+/* Tokens viewer */
+.tokens-viewer{padding:1.25rem;background:var(--bg-paper);font-size:.8125rem;color:var(--text-muted);transition:opacity .15s}
+.token-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.token-meta{font-size:.6875rem;color:var(--text-dim)}
+.token-swatches{display:flex;flex-wrap:wrap;gap:.75rem}
+.token-swatch{display:flex;align-items:center;gap:8px;font-size:.75rem;padding:6px 10px;background:var(--bg-surface);border:0.5px solid var(--border)}
+.token-swatch .swatch-dot{width:24px;height:24px;flex-shrink:0}
+.token-key{color:var(--text-muted);min-width:5rem}
+.token-val{font-family:var(--font-mono);font-size:.6875rem;color:var(--text-primary)}
+.token-ds-item{padding:8px 12px;font-size:.75rem;cursor:pointer;border-bottom:0.5px solid var(--border);transition:background .15s}
+.token-ds-item:hover{background:var(--bg-hover)}
+.token-ds-item:last-child{border-bottom:none}
+
+
+/* Badge on DS cards */
+.ds-badge{position:absolute;top:.75rem;right:.75rem}
+
+/* Favorite filter */
+.fav-filter-wrap{display:flex;align-items:center;gap:6px}
+
+/* Layout sections for tools page */
+.tools-layout{display:grid;grid-template-columns:repeat(auto-fill,minmax(24rem,1fr));gap:1px;background:var(--border)}
+.tools-layout>.tool-section{background:var(--bg-surface);padding:1.5rem}
+.tools-layout>.tool-section.full{grid-column:1/-1}
+
+@media(max-width:640px){
+.grid,.grid-3,.grid-4{grid-template-columns:1fr}
+.header-logo h1{font-size:1rem}
+.nav a{margin-right:1rem;font-size:.75rem}
+.phil-grid{grid-template-columns:1fr 1fr}
+.contras-grid{grid-template-columns:1fr}
+.tools-layout{grid-template-columns:1fr}
+.compare-grid.c2,.compare-grid.c3,.compare-grid.c4{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <div class="layout">
   <header class="header">
-    <div class="header-top">
-      <div>
-        <h1>DesignX <small>v2</small></h1>
-        <p class="sub">Skill & Design System Matcher · подбор AI-agent навыков и DESIGN.md дизайн-систем</p>
-      </div>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <div class="stats" id="stats-bar"><span>⋯ навыков</span><span>⋯ дизайн-систем</span></div>
-        <button class="export-btn" onclick="pickRandom()" style="padding:4px 12px;font-size:.75rem">🎲 Random</button>
-      </div>
+    <a class="header-logo" href="/">
+      <h1>DesignX</h1>
+      <small>v2</small>
+    </a>
+    <div class="header-right">
+      <div class="header-stats" id="stats-bar"><span>0 skills</span><span>0 systems</span></div>
+      <button class="btn btn-sm btn-outline" onclick="pickRandom()">Random</button>
     </div>
-    <nav class="header-nav" id="main-nav">
-      <a class="active" data-panel="browse">Обзор</a>
-      <a data-panel="favorites" onclick="showFavorites()">★ Избранное</a>
-      <a data-panel="matcher">Подбор</a>
-      <a data-panel="systems">Дизайн-системы</a>
-      <a data-panel="philosophies">Философии</a>
-      <a data-panel="tools">Инструменты</a>
-      <a data-panel="process">Процесс</a>
-      <a data-panel="references">Референсы</a>
-      <a data-panel="about">О проекте</a>
-    </nav>
   </header>
 
-  <div id="loader"><div class="spinner"></div><p style="color:var(--text-muted);font-size:.8125rem">Загрузка каталога...</p></div>
+  <nav class="nav" id="main-nav">
+    <a class="active" data-panel="browse">Browse</a>
+    <a data-panel="favorites">Favorites</a>
+    <a data-panel="matcher">Matcher</a>
+    <a data-panel="systems">Design Systems</a>
+    <a data-panel="philosophies">Philosophies</a>
+    <a data-panel="tools">Tools</a>
+    <a data-panel="about">About</a>
+  </nav>
+
+  <div id="loader"><div class="spinner"></div><p style="color:var(--text-muted);font-size:.75rem">Loading catalog</p></div>
 
   <!-- PANEL: Browse -->
   <div id="panel-browse" class="panel">
-    <div class="search-bar"><input type="text" id="skill-search" placeholder="Поиск навыков по названию, тегам, описанию..." oninput="filterSkills()"></div>
-    <div class="section"><h3>Категория</h3><div class="filter-scroll" id="category-filters"></div></div>
+    <div class="search-wrap">
+      <span class="search-icon">/</span>
+      <input type="text" id="skill-search" placeholder="Search skills by name, tags, description..." oninput="filterSkills()" title="Press / to search">
+    </div>
+
+    <div class="section"><h3>Category</h3><div class="filter-scroll" id="category-filters"></div></div>
     <div class="section">
-      <h3>Сложность</h3>
+      <h3>Level</h3>
       <div class="filter-bar" id="complexity-filters">
-        <button class="filter-btn active" onclick="setComplexity('all')">Любая</button>
-        <button class="filter-btn" onclick="setComplexity('beginner')">Начальный</button>
-        <button class="filter-btn" onclick="setComplexity('intermediate')">Средний</button>
-        <button class="filter-btn" onclick="setComplexity('advanced')">Продвинутый</button>
+        <button class="filter-btn active" onclick="setComplexity('all')">All</button>
+        <button class="filter-btn" onclick="setComplexity('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="setComplexity('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="setComplexity('advanced')">Advanced</button>
       </div>
     </div>
-    <div class="section"><h3>Тип продукта</h3><div class="filter-scroll" id="product-type-filters"></div></div>
-    <div class="section"><h3>Источник</h3><div class="filter-scroll" id="source-filters"></div></div>
-    <div class="section"><h3>Рейтинг</h3><div class="filter-bar" id="rating-filters">
-      <button class="filter-btn active" onclick="setRating(0)">Любой</button>
-      <button class="filter-btn" onclick="setRating(4)">★ 4+</button>
-      <button class="filter-btn" onclick="setRating(3)">★ 3+</button>
+    <div class="section"><h3>Product type</h3><div class="filter-scroll" id="product-type-filters"></div></div>
+    <div class="section"><h3>Source</h3><div class="filter-scroll" id="source-filters"></div></div>
+    <div class="section"><h3>Rating</h3><div class="filter-bar" id="rating-filters">
+      <button class="filter-btn active" onclick="setRating(0)">Any</button>
+      <button class="filter-btn" onclick="setRating(4)">4+</button>
+      <button class="filter-btn" onclick="setRating(3)">3+</button>
     </div></div>
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem" id="filter-summary">
-      <span style="font-size:.8125rem;color:var(--text-muted)" id="result-count"></span>
-      <span style="font-size:.6875rem;color:var(--text-code)" id="active-filters"></span>
-      <div style="display:flex;gap:.5rem;align-items:center;margin-left:auto">
-        <label style="font-size:.75rem;color:var(--text-muted);cursor:pointer"><input type="checkbox" id="fav-filter" onchange="filterSkills()" style="accent-color:var(--accent-primary)"> ★ Избранное</label>
-        <button class="export-btn secondary" onclick="exportSelected()" style="padding:4px 12px;font-size:.75rem">Экспорт</button>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="result-count" id="result-count"></span>
+        <span style="font-size:.6875rem;color:var(--text-muted)" id="active-filters"></span>
+      </div>
+      <div class="toolbar-right">
+        <label class="check-label"><input type="checkbox" id="fav-filter" onchange="filterSkills()"> Favorites</label>
+        <span style="color:var(--text-dim)">|</span>
+        <span style="font-size:.6875rem;color:var(--text-dim)">HEX:</span>
+        <input type="text" id="hex-search" placeholder="#2965f6" style="width:100px;height:32px;padding:0 10px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" oninput="filterSkills()" title="Search systems by hex color. Results in Design Systems tab">
+        <select class="sort-select" id="sort-select" onchange="filterSkills()">
+          <option value="name-asc">Name ↑</option>
+          <option value="name-desc">Name ↓</option>
+          <option value="rating-desc">Rating ↓</option>
+          <option value="rating-asc">Rating ↑</option>
+        </select>
+        <button class="btn btn-sm btn-ghost" onclick="exportSelected()">Export</button>
       </div>
     </div>
-    <div class="sort-bar">
-      <label>Сортировка:</label>
-      <select id="sort-select" onchange="filterSkills()">
-        <option value="name-asc">По имени ↑</option>
-        <option value="name-desc">По имени ↓</option>
-        <option value="rating-desc">По рейтингу ↓</option>
-        <option value="rating-asc">По рейтингу ↑</option>
-      </select>
-      <label style="margin-left:.5rem" title="Найти дизайн-системы по hex-цвету">🎨 HEX:</label>
-      <input type="text" id="hex-search" placeholder="#4da3ff" style="width:110px;height:32px;padding:0 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" oninput="filterSkills()" title="Поиск систем по hex-цвету. Результаты — во вкладке Дизайн-системы">
-    </div>
+
     <div id="skills-grid" class="grid"></div>
     <div class="pagination" id="pagination-controls">
       <button onclick="goPage(0)" id="page-first" disabled>«</button>
       <button onclick="goPage(page-1)" id="page-prev" disabled>‹</button>
-      <span class="page-info" id="page-info">1 / 1</span>
+      <span class="page-info" id="page-info"></span>
       <button onclick="goPage(page+1)" id="page-next">›</button>
       <button onclick="goPage(totalPages-1)" id="page-last">»</button>
     </div>
   </div>
 
+  <!-- PANEL: Favorites -->
+  <div id="panel-favorites" class="panel">
+    <div class="toolbar">
+      <h2>Favorites</h2>
+      <button class="btn btn-sm btn-ghost" onclick="clearFavorites()" id="clear-favs-btn" style="display:none">Clear all</button>
+    </div>
+    <div id="favorites-grid" class="grid"></div>
+    <div class="empty" id="favorites-empty" style="display:none">Nothing saved yet. Click ★ on a skill to add it.</div>
+  </div>
+
   <!-- PANEL: Matcher -->
   <div id="panel-matcher" class="panel">
-    <div class="step"><span class="step-num">1</span><h3>Что вы строите?</h3><div class="product-select" id="matcher-product-types" style="margin-top:.75rem"></div></div>
-    <div class="step" id="matcher-step2" style="display:none"><span class="step-num">2</span><h3>Какая эстетика?</h3><div class="phil-grid" id="matcher-philosophies" style="margin-top:.75rem"></div></div>
-    <div class="step" id="matcher-step3" style="display:none"><span class="step-num">3</span><h3>Рекомендуемые навыки</h3><p style="color:var(--text-muted);font-size:.75rem;margin:.5rem 0" id="matcher-reason"></p><div class="grid" id="matcher-skills"></div></div>
-    <div class="step" id="matcher-step4" style="display:none"><span class="step-num">4</span><h3>Дизайн-системы</h3><div class="grid grid-3" id="matcher-systems"></div></div>
-    <div id="matcher-step5" style="display:none" class="step" style="text-align:center"><button class="export-btn" onclick="exportSelected()">📦 Экспортировать набор</button></div>
+    <div class="step"><span class="step-num">1</span><h3>What are you building?</h3><div class="product-select" id="matcher-product-types"></div></div>
+    <div class="step" id="matcher-step2" style="display:none"><span class="step-num">2</span><h3>Which aesthetic?</h3><div class="phil-grid" id="matcher-philosophies"></div></div>
+    <div class="step" id="matcher-step3" style="display:none"><span class="step-num">3</span><h3>Recommended skills</h3><p style="color:var(--text-muted);font-size:.75rem;margin:.5rem 0" id="matcher-reason"></p><div class="grid" id="matcher-skills"></div></div>
+    <div class="step" id="matcher-step4" style="display:none"><span class="step-num">4</span><h3>Design systems</h3><div class="grid grid-3" id="matcher-systems"></div></div>
+    <div id="matcher-step5" style="display:none" class="step" style="text-align:center"><button class="btn" onclick="exportSelected()">Export set</button></div>
   </div>
 
   <!-- PANEL: Design Systems -->
   <div id="panel-systems" class="panel">
-    <div class="section"><h3>Фильтр по эстетике</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
-    <div class="section"><h3>Фильтр по типу продукта</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
-    <div class="sort-bar">
-      <label>Сортировка:</label>
-      <select id="ds-sort-select" onchange="renderAllSystems()">
-        <option value="name-asc">По имени ↑</option>
-        <option value="name-desc">По имени ↓</option>
-        <option value="rating-desc">По рейтингу ↓</option>
-      </select>
-      <span style="font-size:.75rem;color:var(--text-muted);margin-left:auto" id="ds-result-count"></span>
-      <span id="ds-hex-badge" style="display:none;font-size:.6875rem;padding:2px 8px;background:var(--accent-primary);color:var(--bg-surface);border-radius:var(--radius)"></span>
+    <div class="section"><h3>Filter by philosophy</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
+    <div class="section"><h3>Filter by product type</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <select class="sort-select" id="ds-sort-select" onchange="renderAllSystems()">
+          <option value="name-asc">Name ↑</option>
+          <option value="name-desc">Name ↓</option>
+          <option value="rating-desc">Rating ↓</option>
+        </select>
+        <span class="result-count" id="ds-result-count"></span>
+        <span id="ds-hex-badge" style="display:none;font-size:.6875rem;padding:2px 10px;background:var(--text-primary);color:var(--bg-surface)"></span>
+      </div>
     </div>
     <div class="grid grid-3" id="systems-grid"></div>
     <div class="pagination" id="ds-pagination">
       <button onclick="goDsPage(0)" id="ds-page-first" disabled>«</button>
       <button onclick="goDsPage(dsPage-1)" id="ds-page-prev" disabled>‹</button>
-      <span class="page-info" id="ds-page-info">1 / 1</span>
+      <span class="page-info" id="ds-page-info"></span>
       <button onclick="goDsPage(dsPage+1)" id="ds-page-next">›</button>
       <button onclick="goDsPage(totalDsPages-1)" id="ds-page-last">»</button>
     </div>
@@ -320,189 +397,79 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 
   <!-- PANEL: Philosophies -->
   <div id="panel-philosophies" class="panel">
-    <div class="section">
-      <h2>Философии дизайна</h2>
-      <p style="color:var(--text-muted);font-size:.8125rem;margin-bottom:1rem">
-        15 эстетических направлений для ИИ-агентов. Каждая философия задаёт визуальный язык и атмосферу интерфейса.
-      </p>
-      <div class="grid grid-4" id="philosophies-grid"></div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem">
+      <h2 style="margin:0">Design philosophies</h2>
+      <span id="phil-count" style="font-size:.75rem;color:var(--text-dim)"></span>
     </div>
+    <p style="color:var(--text-muted);font-size:.8125rem;margin-bottom:1rem">55 aesthetic directions for AI agents. Each philosophy defines a visual language and atmosphere.</p>
+    <div class="filter-bar" id="phil-categories" style="margin-bottom:1.25rem"></div>
+    <div class="grid grid-4" id="philosophies-grid"></div>
   </div>
 
   <!-- PANEL: Tools -->
   <div id="panel-tools" class="panel">
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(24rem,1fr));gap:1.5rem">
-      <!-- Contrast Checker -->
-      <div class="step">
-        <h3 style="margin-bottom:.75rem">🎨 WCAG Contrast Checker</h3>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
-          Проверка цветового контраста по стандарту WCAG 2.2 (AA: 4.5:1, AAA: 7:1)
-        </p>
+    <div class="tools-layout">
+      <div class="tool-section">
+        <h2 style="margin-bottom:.75rem">WCAG Contrast Checker</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Color contrast checker per WCAG 2.2 (AA: 4.5:1, AAA: 7:1)</p>
         <div class="contras-grid">
-          <div><label style="font-size:.6875rem;color:var(--text-muted)">Текст / цвет</label><input id="contrast-fg" value="#e8ebf0" oninput="checkContrast()"></div>
-          <div><label style="font-size:.6875rem;color:var(--text-muted)">Фон</label><input id="contrast-bg" value="#0a0b0f" oninput="checkContrast()"></div>
+          <div><label>Text color</label><input id="contrast-fg" value="#0d0d0d" oninput="checkContrast()"></div>
+          <div><label>Background</label><input id="contrast-bg" value="#f7f5f3" oninput="checkContrast()"></div>
         </div>
-        <div id="contrast-result" class="contras-result pass">
-          Ratio: 10.2:1 · WCAG AA ✅ · WCAG AAA ✅
+        <div id="contrast-result" class="contras-result pass">Ratio: 10.2:1 · AA ✓ · AAA ✓</div>
+        <div id="contrast-sample" class="contras-sample" style="color:#0d0d0d;background:#f7f5f3">Sample text for readability check</div>
+      </div>
+
+      <div class="tool-section">
+        <h2 style="margin-bottom:.75rem">Design Principles (NN/g)</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">10 Nielsen Norman Group heuristics + 5 visual design principles</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)" id="nn-grid"></div>
+      </div>
+
+      <div class="tool-section full">
+        <h2 style="margin-bottom:.75rem">Design Tokens Viewer</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Visualize tokens from any DESIGN.md. Type to search, then select a system:</p>
+        <div class="filter-bar" id="tokens-ds-filters" style="margin-bottom:.75rem">
+          <input type="text" id="tokens-search" placeholder="Search design systems..." oninput="filterTokensSystems()" style="flex:1">
         </div>
-        <div id="contrast-sample" class="contras-sample">Пример текста для проверки читаемости</div>
+        <div id="tokens-ds-list" style="display:none;max-height:200px;overflow-y:auto;border:0.5px solid var(--border);margin-bottom:.75rem;background:var(--bg-surface)"></div>
+        <div id="tokens-viewer" class="tokens-viewer">Select a design system to view tokens</div>
       </div>
 
-      <!-- Design Principles -->
-      <div class="step">
-        <h3 style="margin-bottom:.75rem">📐 Принципы дизайна (NN/g)</h3>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
-          10 эвристик Nielsen Norman Group + 5 принципов визуального дизайна
-        </p>
-        <div class="grid" style="grid-template-columns:1fr 1fr;gap:.5rem">
-          <div class="principle-card"><h4>1. Visibility of Status</h4><p>Система всегда должна информировать пользователя о том, что происходит.</p></div>
-          <div class="principle-card"><h4>2. Match Real World</h4><p>Говорите на языке пользователя, а не системными терминами.</p></div>
-          <div class="principle-card"><h4>3. User Control</h4><p>Пользователь должен иметь возможность отменить или повторить действие.</p></div>
-          <div class="principle-card"><h4>4. Consistency</h4><p>Одни и те же термины, элементы и паттерны — везде.</p></div>
-          <div class="principle-card"><h4>5. Error Prevention</h4><p>Лучше предотвратить ошибку, чем показывать красивое сообщение о ней.</p></div>
-          <div class="principle-card"><h4>6. Recognition</h4><p>Минимизируйте нагрузку на память — делайте элементы видимыми.</p></div>
-          <div class="principle-card"><h4>7. Flexibility</h4><p>Ускорения для опытных пользователей, не ломая базовый опыт.</p></div>
-          <div class="principle-card"><h4>8. Aesthetic Design</h4><p>Минималистичный дизайн без нерелевантной информации.</p></div>
-          <div class="principle-card"><h4>9. Error Recovery</h4><p>Сообщайте об ошибках понятным языком и предлагайте решение.</p></div>
-          <div class="principle-card"><h4>10. Help & Docs</h4><p>Документация должна быть легко находимой и сфокусированной на задачах.</p></div>
-        </div>
+      <div class="tool-section full">
+        <h2 style="margin-bottom:.75rem">Design Tools Map</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Categorized reference of real services and tools for UI/UX design</p>
+        <div id="tools-map" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:1px;background:var(--border)"></div>
       </div>
 
-      <!-- Gestalt Principles -->
-      <div class="step" style="grid-column:1/-1">
-        <h3 style="margin-bottom:.75rem">🧩 Gestalt-принципы в UI-дизайне</h3>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
-          Принципы гештальтпсихологии, объясняющие, как люди воспринимают визуальные композиции
-        </p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.75rem">
-          <div class="principle-card">
-            <h4>Близость (Proximity)</h4>
-            <p>Объекты, расположенные близко друг к другу, воспринимаются как группа. Используйте отступы для группировки связанных элементов.</p>
-            <div style="display:flex;gap:4px;margin-top:6px">
-              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px;opacity:.3"></span>
-              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px;opacity:.3"></span>
-              <span style="width:12px"></span>
-              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px"></span>
-              <span style="flex:1;height:20px;background:var(--accent-primary);border-radius:2px"></span>
-            </div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Две группы по 2 элемента → воспринимаются как 2 блока</p>
-          </div>
-          <div class="principle-card">
-            <h4>Сходство (Similarity)</h4>
-            <p>Похожие элементы воспринимаются как связанные. Цвет, форма, размер — сигналы принадлежности к группе.</p>
-            <div style="display:flex;gap:6px;margin-top:6px;justify-content:center">
-              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
-              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
-              <span style="width:16px;height:16px;border:2px solid var(--accent-primary);border-radius:50%"></span>
-              <span style="width:16px;height:16px;background:var(--accent-primary);border-radius:50%"></span>
-              <span style="width:16px;height:16px;border:2px solid var(--accent-primary);border-radius:50%"></span>
-            </div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Сплошные = одно, outline = другое</p>
-          </div>
-          <div class="principle-card">
-            <h4>Фигура/Фон (Figure/Ground)</h4>
-            <p>Восприятие разделяет изображение на объект (фигуру) и фон. Карточки и тени создают чёткое разделение.</p>
-            <div style="display:flex;align-items:center;justify-content:center;height:36px;margin-top:6px;background:var(--bg-surface);border-radius:4px;padding:4px">
-              <span style="width:28px;height:28px;background:var(--bg-elevated);border-radius:4px;border:1px solid var(--border);box-shadow:0 2px 4px rgba(0,0,0,.2)"></span>
-            </div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Карточка = фигура, фон страницы = ground</p>
-          </div>
-          <div class="principle-card">
-            <h4>Замыкание (Closure)</h4>
-            <p>Мозг достраивает неполные формы до целых. Используется в логотипах и иконках.</p>
-            <div style="display:flex;gap:6px;margin-top:6px;justify-content:center;font-size:1.25rem;letter-spacing:4px;color:var(--text-code)">◡◡◡◡</div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Разрывы воспринимаются как контур целой формы</p>
-          </div>
-          <div class="principle-card">
-            <h4>Единая область (Common Region)</h4>
-            <p>Элементы внутри замкнутой области воспринимаются как группа. Это основа карточек и панелей.</p>
-            <div style="display:flex;gap:6px;margin-top:6px">
-              <span style="flex:1;border:1px solid var(--border);border-radius:4px;padding:4px;display:flex;flex-direction:column;gap:2px">
-                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:60%"></span>
-                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:80%"></span>
-              </span>
-              <span style="flex:1;border:1px solid var(--border);border-radius:4px;padding:4px;display:flex;flex-direction:column;gap:2px">
-                <span style="height:4px;background:var(--text-muted);border-radius:2px;width:50%"></span>
-              </span>
-            </div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Карточки группируют контент</p>
-          </div>
-          <div class="principle-card">
-            <h4>Продолжение (Continuation)</h4>
-            <p>Глаз следует по линии, даже если она прерывается. Используется в степах, прогресс-барах.</p>
-            <div style="display:flex;gap:0;margin-top:6px;align-items:center">
-              <span style="width:20px;height:20px;border-radius:50%;background:var(--accent-primary);display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">1</span>
-              <span style="flex:1;height:2px;background:var(--accent-primary);opacity:.5"></span>
-              <span style="width:16px;height:16px;border-radius:50%;background:var(--accent-primary);opacity:.5;display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">2</span>
-              <span style="flex:1;height:2px;background:var(--border)"></span>
-              <span style="width:16px;height:16px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--text-muted)">3</span>
-            </div>
-            <p style="font-size:.625rem;color:var(--text-muted);margin-top:4px">Stepper: глаз продолжает линию через круги</p>
-          </div>
-        </div>
+      <div class="tool-section full">
+        <h2 style="margin-bottom:.75rem">Gestalt Principles in UI</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Gestalt psychology principles explaining how people perceive visual compositions</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:1px;background:var(--border)" id="gestalt-grid"></div>
       </div>
-
-      <!-- Tokens Viewer -->
-      <div class="step" style="grid-column:1/-1">
-        <h3 style="margin-bottom:.75rem">🏷 Design Tokens Viewer</h3>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
-          Визуализация токенов из любой DESIGN.md. Выберите дизайн-систему ниже:
-        </p>
-        <div class="filter-bar" id="tokens-ds-filters" style="margin-bottom:.75rem"></div>
-        <div id="tokens-viewer">Выберите дизайн-систему для просмотра токенов</div>
-      </div>
-
-      <!-- Design Tools Resource Map -->
-      <div class="step" style="grid-column:1/-1">
-        <h3 style="margin-bottom:.75rem">🛠 Карта инструментов дизайнера</h3>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">
-          Категоризированный справочник реальных сервисов и инструментов для UI/UX-дизайна
-        </p>
-        <div id="tools-map" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:.75rem"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PANEL: Process -->
-  <div id="panel-process" class="panel">
-    <div class="section" style="max-width:50rem">
-      <h2>UX/UI процесс</h2>
-      <p style="color:var(--text-muted);margin-bottom:2rem;font-size:.8125rem">Карта полного цикла дизайн-разработки: от исследования до запуска. Нажми на этап — откроются подходящие навыки.</p>
-      <div id="process-pipeline"></div>
-    </div>
-  </div>
-
-  <!-- PANEL: References -->
-  <div id="panel-references" class="panel">
-    <div class="section" style="max-width:55rem">
-      <h2>📎 Референсы и визуальный контекст</h2>
-      <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:.8125rem">Подборка референсов по визуальным стилям. Источники: Behance, Dribbble, Awwwards, Tilda Publishing, Кириллица Дизайн.</p>
-      <div id="references-grid"></div>
     </div>
   </div>
 
   <!-- PANEL: About -->
   <div id="panel-about" class="panel">
-    <div class="section" style="max-width:40rem">
+    <div class="about-section">
       <h2>DesignX v2</h2>
-      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">
-        Самый большой открытый каталог UI/UX design skills и DESIGN.md систем дизайна для ИИ-агентов.
-      </p>
-      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">
-        <strong>Отличие от Open Design:</strong> DesignX — каталог-рекомендатель, а не генератор артефактов. 
-        Мы помогаем понять, какие навыки и дизайн-системы нужны вашему проекту.
-      </p>
-      <h3>Как использовать</h3>
-      <ol style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem">
-        <li>Выберите тип продукта → DesignX подберет навыки + дизайн-систему</li>
-        <li>Выберите философию дизайна → уточните стиль</li>
-        <li>Экспортируйте набор → SKILL.md + DESIGN.md в корень репозитория</li>
-        <li>ИИ-агент прочитает файлы и будет следовать системе дизайна</li>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">The largest open catalog of UI/UX design skills and DESIGN.md design systems for AI agents.</p>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem"><strong>Difference from Open Design:</strong> DesignX is a recommendation catalog, not an artifact generator. We help you understand which skills and design systems your project needs.</p>
+      <h3>How to use</h3>
+      <ol>
+        <li>Select product type → DesignX picks skills + design system</li>
+        <li>Select design philosophy → refine the style</li>
+        <li>Export set → SKILL.md + DESIGN.md to repo root</li>
+        <li>AI agent reads files and follows the design system</li>
       </ol>
-      <h3 style="margin-top:1rem">Статистика</h3>
-      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem" id="about-stats"></ul>
-      <h3 style="margin-top:1rem">Источники (${CATALOG?.meta?.sources?.length || 15})</h3>
-      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem" id="about-sources"></ul>
+      <h3 style="margin-top:1rem">Statistics</h3>
+      <ul id="about-stats"></ul>
+      <h3 style="margin-top:1rem">Recommended for DesignX</h3>
+      <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Skills that built DesignX itself — Cosmos-inspired aesthetic.</p>
+      <div id="about-recommended" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+      <h3 style="margin-top:1rem">Sources</h3>
+      <ul id="about-sources"></ul>
     </div>
   </div>
 </div>
@@ -510,19 +477,19 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 <!-- Detail Overlay -->
 <div id="detail-overlay" onclick="if(event.target===this)closeDetail()">
   <div id="detail-panel">
-    <button class="close" onclick="closeDetail()">✕</button>
+    <button class="close" onclick="closeDetail()">Close</button>
     <div id="detail-content"></div>
   </div>
 </div>
 
 <!-- Export Bar -->
 <div class="export-bar" id="export-bar">
-  <div class="layout">
-    <span class="export-count" id="export-count">Выбрано: 0</span>
+  <div class="export-inner">
+    <span class="export-count" id="export-count">Selected: 0</span>
     <div class="export-actions">
-      <button class="export-btn secondary" id="compare-btn" onclick="compareSkills()" style="display:none">⇄ Сравнить</button>
-      <button class="export-btn secondary" onclick="clearSelection()">Очистить</button>
-      <button class="export-btn" onclick="exportSelected()">📦 Экспорт</button>
+      <button class="btn btn-sm btn-outline" id="compare-btn" onclick="compareSkills()" style="display:none">Compare</button>
+      <button class="btn btn-sm btn-ghost" onclick="clearSelection()">Clear</button>
+      <button class="btn btn-sm" onclick="exportSelected()">Export</button>
     </div>
   </div>
 </div>
@@ -530,18 +497,11 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 <script>
 let CATALOG = null;
 const CAT_COLORS={
-  'visual-design':'#4da3ff','ux-research':'#9cdcfe','prototyping':'#dcdcaa','design-system':'#4ec990',
-  'critique':'#f14c4c','brand':'#c9a84c','motion':'#b388ff','typography':'#e8ebf0','color-theory':'#ff6b6b',
-  'layout-composition':'#7a8290','interaction':'#00e5ff','mobile':'#8b5cf6','responsive':'#4ec990',
-  'frontend-dev':'#9cdcfe','data-viz':'#f0a060','accessibility':'#4da3ff','game-ui':'#ff6600',
-  'design-tools':'#7a8290','ai-tools':'#b388ff','design-ops':'#4da3ff'
-};
-const CAT_ICONS={
-  'visual-design':'🎨','ux-research':'🔬','prototyping':'📐','design-system':'🏗️',
-  'critique':'🔍','brand':'™️','motion':'✨','typography':'Aa','color-theory':'🌈',
-  'layout-composition':'📐','interaction':'👆','mobile':'📱','responsive':'🔄',
-  'frontend-dev':'⚡','data-viz':'📊','accessibility':'♿','game-ui':'🎮',
-  'design-tools':'🛠️','ai-tools':'🤖','design-ops':'⚙️'
+  'visual-design':'#2965f6','ux-research':'#6e6a69','prototyping':'#9a9796','design-system':'#00af5d',
+  'critique':'#bd3c1f','brand':'#6e6a69','motion':'#9a9796','typography':'#0d0d0d','color-theory':'#bd3c1f',
+  'layout-composition':'#6e6a69','interaction':'#2965f6','mobile':'#9a9796','responsive':'#00af5d',
+  'frontend-dev':'#e8a838','data-viz':'#2965f6','accessibility':'#00af5d','game-ui':'#bd3c1f',
+  'design-tools':'#6e6a69','ai-tools':'#2965f6','design-ops':'#0d0d0d'
 };
 let selectedSkillIds = new Set();
 let selectedSystemIds = new Set();
@@ -555,7 +515,7 @@ let favorites = new Set(JSON.parse(localStorage.getItem('designx-favs') || '[]')
   const paths = ['src/data/catalog.json', '../src/data/catalog.json', 'data/catalog.json'];
   function tryPath(i) {
     if (i >= paths.length) {
-      document.getElementById('loader').innerHTML = '<p style=\"color:var(--error)\">Ошибка загрузки</p><p style=\"color:var(--text-muted);font-size:.8125rem\">Запустите <code style=\"color:var(--text-code)\">npx serve .</code></p>';
+      document.getElementById('loader').innerHTML = '<p style="color:var(--error)">Error loading catalog</p><p style="color:var(--text-muted);font-size:.8125rem">Run <code style="font-family:var(--font-mono);color:var(--text-primary)">npx serve .</code></p>';
       return;
     }
     fetch(paths[i]).then(r => { if (!r.ok) throw Error(); return r.json(); })
@@ -567,42 +527,39 @@ let favorites = new Set(JSON.parse(localStorage.getItem('designx-favs') || '[]')
 
 function init() {
   const c = CATALOG;
-  // Ensure source_short for skills
   c.skills.forEach(s=>{if(!s.source_short)s.source_short=s.source?s.source.split('/')[0]:'DesignX'});
-  document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span><span>★ ${favorites.size}</span>`;
-  document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');if(a.dataset.panel==='systems')renderAllSystems();};});
+  document.getElementById('stats-bar').innerHTML = `<span>${c.skills.length} skills</span><span>${(c.design_systems||[]).length} systems</span><span>${(c.design_philosophies||[]).length} philosophies</span><span>${favorites.size} saved</span>`;
+  document.querySelectorAll('.nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const panel=document.getElementById('panel-'+a.dataset.panel);if(panel)panel.classList.add('active');if(a.dataset.panel==='systems')renderAllSystems();if(a.dataset.panel==='favorites')showFavorites();};});
   document.getElementById('panel-browse').classList.add('active');
   initFilters(); initDsFilters(); filterSkills(); updateExportBar();
-  // Keyboard shortcut: '/' to focus search
   document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(e.target.tagName)){e.preventDefault();document.getElementById('skill-search')?.focus()}});
-  requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();renderReferences();buildProcessPipeline();updateStats();});
+  requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();updateStats();});
 }
 
 function initFilters() {
   const counts={}; CATALOG.skills.forEach(s=>{counts[s.category]=(counts[s.category]||0)+1});
-  document.getElementById('category-filters').innerHTML = `<button class="filter-btn active" onclick="setCategory('all')">Все (${CATALOG.skills.length})</button>` +
+  document.getElementById('category-filters').innerHTML = `<button class="filter-btn active" onclick="setCategory('all')">All (${CATALOG.skills.length})</button>` +
     CATALOG.categories.map(c=>`<button class="filter-btn" onclick="setCategory('${c.id}')">${c.name} (${counts[c.id]||0})</button>`).join('');
-  document.getElementById('product-type-filters').innerHTML = `<button class="filter-btn${!productFilter?' active':''}" onclick="setProductFilter(null)">Все продукты</button>` +
-    CATALOG.product_types.map(pt=>`<button class="filter-btn${productFilter===pt.id?' active':''}" onclick="setProductFilter('${pt.id}')">${pt.icon||'📁'} ${pt.name}</button>`).join('');
-  // Source filters from design systems
+  document.getElementById('product-type-filters').innerHTML = `<button class="filter-btn${!productFilter?' active':''}" onclick="setProductFilter(null)">All products</button>` +
+    CATALOG.product_types.map(pt=>`<button class="filter-btn${productFilter===pt.id?' active':''}" onclick="setProductFilter('${pt.id}')">${pt.name}</button>`).join('');
   const srcCounts={}; (CATALOG.design_systems||[]).forEach(ds=>{const s=ds.source_short||ds.source;if(s)srcCounts[s]=(srcCounts[s]||0)+1});
-  document.getElementById('source-filters').innerHTML = `<button class="filter-btn${!sourceFilter?' active':''}" onclick="setSource(null)">Все</button>` +
+  document.getElementById('source-filters').innerHTML = `<button class="filter-btn${!sourceFilter?' active':''}" onclick="setSource(null)">All</button>` +
     Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).map(([s,c])=>`<button class="filter-btn${sourceFilter===s?' active':''}" onclick="setSource('${s.replace(/'/g,"\\'")}')">${s} (${c})</button>`).join('');
 }
 
-function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'Все':CATALOG.categories.find(c=>c.id===cat)?.name)));page=0;filterSkills()}
-function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'Любая':{beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[val])));page=0;filterSkills()}
-function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.val===id));page=0;filterSkills()}
-function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'Все')));page=0;filterSkills()}
-function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Любой':val+'+')));page=0;filterSkills()}
-function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsPhilosophyFilter||'Все')));dsPage=0;renderAllSystems()}
-function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsProductFilter||'Все')));dsPage=0;renderAllSystems()}
+function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'All':CATALOG.categories.find(c=>c.id===cat)?.name)));page=0;filterSkills()}
+function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'All':{beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced'}[val])));page=0;filterSkills()}
+function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(productFilter||'All')));page=0;filterSkills()}
+function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'All')));page=0;filterSkills()}
+function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Any':val+'+')));page=0;filterSkills()}
+function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsPhilosophyFilter||'All')));dsPage=0;renderAllSystems()}
+function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsProductFilter||'All')));dsPage=0;renderAllSystems()}
 
 function initDsFilters(){
   const el=document.getElementById('ds-philosophy-filters');
-  if(el)el.innerHTML=`<button class="filter-btn active" onclick="setDsPhilosophy(null)">Все</button>`+(CATALOG.design_philosophies||[]).map(p=>`<button class="filter-btn" onclick="setDsPhilosophy('${p.id}')">${p.name}</button>`).join('');
+  if(el)el.innerHTML=`<button class="filter-btn active" onclick="setDsPhilosophy(null)">All</button>`+(CATALOG.design_philosophies||[]).map(p=>`<button class="filter-btn" onclick="setDsPhilosophy('${p.id}')">${p.name}</button>`).join('');
   const el2=document.getElementById('ds-product-filters');
-  if(el2)el2.innerHTML=`<button class="filter-btn active" onclick="setDsProduct(null)">Все</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" onclick="setDsProduct('${pt.id}')">${pt.icon||'📁'} ${pt.name}</button>`).join('');
+  if(el2)el2.innerHTML=`<button class="filter-btn active" onclick="setDsProduct(null)">All</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" onclick="setDsProduct('${pt.id}')">${pt.name}</button>`).join('');
 }
 
 // Skills
@@ -615,383 +572,426 @@ function filterSkills() {
   if(categoryFilter!=='all')skills=skills.filter(s=>s.category===categoryFilter);
   if(complexityFilter!=='all')skills=skills.filter(s=>s.complexity===complexityFilter);
   if(productFilter)skills=skills.filter(s=>s.for_product_types?.includes(productFilter));
-  if(search)skills=skills.filter(x=>x.name.toLowerCase().includes(search)||(x.tags||[]).some(t=>t.includes(search))||x.summary.toLowerCase().includes(search));
+  if(sourceFilter)skills=skills.filter(s=>(s.source_short||s.source||'')===sourceFilter);
   if(ratingFilter>0)skills=skills.filter(s=>(s.rating||0)>=ratingFilter);
-  if(sourceFilter)skills=skills.filter(s=>(s.source_short||s.source||'').startsWith(sourceFilter));
+  if(search)skills=skills.filter(s=>(s.name+' '+s.description+' '+s.tags?.join(' ')).toLowerCase().includes(search));
   if(document.getElementById('fav-filter')?.checked)skills=skills.filter(s=>favorites.has(s.id));
 
-  // Hex color search: find skills/DS matching a hex color
-  let hexDsCount=0;
+  // Hex search redirects to DS tab
   if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
-    const h=hexSearch.toLowerCase();
-    skills=skills.filter(s=>(s.tags||[]).some(t=>t.toLowerCase().includes(h)));
-    // Count matching DS (shown in the DS tab)
-    hexDsCount=(CATALOG.design_systems||[]).filter(ds=>{
-      const tc=ds.tokens_css; if(!tc)return false;
-      return Object.values(tc).some(v=>typeof v==='string'&&v.toLowerCase()===h);
-    }).length;
+    const dsCopy=[...(CATALOG.design_systems||[])].filter(ds=>{
+      const cols=[ds.colors?.primary,ds.colors?.secondary,ds.colors?.accent,...(ds.colors?.palette||[])];
+      return cols.some(c=>c?.toLowerCase()===hexSearch.toLowerCase());
+    });
+    const badge=document.getElementById('ds-hex-badge');
+    if(badge){badge.textContent=`🎨 ${dsCopy.length} systems with ${hexSearch}`;badge.style.display='inline-block'}
+    document.getElementById('ds-result-count').textContent=`${dsCopy.length} systems`;
+  }else{
+    const badge=document.getElementById('ds-hex-badge');
+    if(badge)badge.style.display='none';
   }
 
-  // Sort
   sortBy=document.getElementById('sort-select')?.value||'name-asc';
   skills.sort((a,b)=>{
-    switch(sortBy){
-      case 'name-desc': return b.name.localeCompare(a.name);
-      case 'rating-desc': return (b.rating||0)-(a.rating||0)||a.name.localeCompare(b.name);
-      case 'rating-asc': return (a.rating||0)-(b.rating||0)||a.name.localeCompare(b.name);
-      default: return a.name.localeCompare(b.name);
-    }
+    if(sortBy==='name-asc')return a.name.localeCompare(b.name);
+    if(sortBy==='name-desc')return b.name.localeCompare(a.name);
+    if(sortBy==='rating-desc')return (b.rating||0)-(a.rating||0);
+    if(sortBy==='rating-asc')return (a.rating||0)-(b.rating||0);
+    return 0;
   });
 
   const total=skills.length;
-  const totalPages=Math.ceil(total/pageSize)||1;
-  if(page>=totalPages)page=totalPages-1;
+  const totalPages=Math.ceil(total/pageSize);
+  if(page>=totalPages)page=Math.max(0,totalPages-1);
   const start=page*pageSize;
-  const pageSkills=skills.slice(start,start+pageSize);
+  const paged=skills.slice(start,start+pageSize);
 
-  document.getElementById('result-count').textContent=`Найдено: ${total} из ${CATALOG.skills.length}${hexDsCount?` · 🎨 ${hexDsCount} дизайн-систем`:''}`;
-  // Active filters summary
-  const activeFilters=[];
-  if(categoryFilter!=='all')activeFilters.push(CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter);
-  if(complexityFilter!=='all')activeFilters.push({beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[complexityFilter]);
-  if(productFilter)activeFilters.push(CATALOG.product_types.find(p=>p.id===productFilter)?.name||productFilter);
-  if(sourceFilter)activeFilters.push(`📦${sourceFilter}`);
-  if(ratingFilter>0)activeFilters.push(`★${ratingFilter}+`);
-  if(document.getElementById('fav-filter')?.checked)activeFilters.push('★Избранное');
-  if(hexSearch)activeFilters.push(`🎨${hexSearch}`);
-  document.getElementById('active-filters').innerHTML=activeFilters.length?`⚡ ${activeFilters.join(' · ')} <a href="#" onclick="resetAllFilters();return false" style="color:var(--error);font-size:.6875rem;text-decoration:none">✕</a>`:'';
-  document.getElementById('skills-grid').innerHTML=pageSkills.length?
-    pageSkills.map(s=>renderCard(s)).join('')+
-    (total>pageSize?`<div class="empty" style="grid-column:1/-1;padding:1rem;font-size:.75rem">Показано ${start+1}–${Math.min(start+pageSize,total)} из ${total}</div>`:'')
-    :'<div class="empty"><span class="icon">🔍</span>Ничего не найдено</div>';
+  document.getElementById('result-count').textContent=`${total} skills`;
+  document.getElementById('active-filters').textContent=[categoryFilter!=='all'?CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter:'',complexityFilter!=='all'?complexityFilter:'',productFilter||'',sourceFilter||'',ratingFilter>0?ratingFilter+'+':'',document.getElementById('fav-filter')?.checked?'★ fav':''].filter(Boolean).join(' · ');
 
-  // Pagination buttons
-  const pc=document.getElementById('pagination-controls');
-  if(pc){
-    document.getElementById('page-first').disabled=page===0;
-    document.getElementById('page-prev').disabled=page===0;
-    document.getElementById('page-next').disabled=page>=totalPages-1;
-    document.getElementById('page-last').disabled=page>=totalPages-1;
-    document.getElementById('page-info').textContent=`${page+1} / ${totalPages}`;
+  const grid=document.getElementById('skills-grid');
+  if(paged.length===0){
+    grid.innerHTML=`<div class="empty">Nothing found<br><button class="btn btn-sm btn-outline" onclick="resetFilters()" style="margin-top:.75rem">Reset filters</button></div>`;
+  }else{
+    grid.innerHTML=paged.map((s,i)=>renderSkillCard(s,i)).join('');
   }
+
+  // Pagination
+  const firstBtn=document.getElementById('page-first'),prevBtn=document.getElementById('page-prev');
+  const nextBtn=document.getElementById('page-next'),lastBtn=document.getElementById('page-last');
+  const info=document.getElementById('page-info');
+  if(firstBtn){firstBtn.disabled=page===0;prevBtn.disabled=page===0;nextBtn.disabled=page>=totalPages-1;lastBtn.disabled=page>=totalPages-1;}
+  if(info)info.textContent=`${page+1} / ${totalPages}`;
+  window.page=page;window.totalPages=totalPages;
 }
 
-function resetAllFilters(){
+function resetFilters() {
   categoryFilter='all';complexityFilter='all';productFilter=null;sourceFilter=null;ratingFilter=0;
-  document.getElementById('skill-search').value='';document.getElementById('hex-search').value='';
+  document.getElementById('skill-search').value='';
   document.getElementById('fav-filter').checked=false;
-  document.querySelectorAll('#category-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.querySelectorAll('#complexity-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.querySelectorAll('#product-type-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.querySelectorAll('#source-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.querySelectorAll('#rating-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('#category-filters .filter-btn:first-child')?.classList.add('active');
+  document.querySelector('#complexity-filters .filter-btn:first-child')?.classList.add('active');
+  document.querySelector('#product-type-filters .filter-btn:first-child')?.classList.add('active');
+  document.querySelector('#source-filters .filter-btn:first-child')?.classList.add('active');
+  document.querySelector('#rating-filters .filter-btn:first-child')?.classList.add('active');
   page=0;filterSkills();
 }
 
-function goPage(p){
-  page=p;
-  filterSkills();
-  document.getElementById('skills-grid').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function dateBadge(item){
-  if(!item.createdAt)return'';
-  const created=item.createdAt;
-  const updated=item.updatedAt;
-  const isUpdated=updated&&updated!==created;
-  const today=new Date().toISOString().split('T')[0];
-  const isRecent=today===updated||today===created;
-  const updatedLabel=isUpdated?'обновлено':'создано';
-  const dateStr=isUpdated?updated:created;
-  const cls=isUpdated?'badge-updated':'badge-created';
-  const label=isUpdated?'ОБНОВЛЕНО':'НОВОЕ';
-  const showLabel=isRecent||isUpdated;
-  return showLabel?`<span class="date-badge ${cls}" title="${updatedLabel}: ${dateStr}">${label}</span>`:`<span class="date-badge date-muted" title="${updatedLabel}: ${dateStr}">${dateStr}</span>`;
-}
-
-function renderCard(s){
-  const sel=selectedSkillIds.has(s.id);
-  const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;
-  const cc=CAT_COLORS[s.category]||'var(--border)';
-  const ci=CAT_ICONS[s.category]||'📁';
-  const fav=favorites.has(s.id)?' active':'';
-  const hasCrossRef=s.cross_references&&s.cross_references.length>0;
-  const src=s.source_short||(s.source?s.source.split('/')[0]:'DesignX');
-  const db=dateBadge(s);
-  return `<div class="card${sel?' selected':''}" onclick="toggleSkill('${s.id}')" ondblclick="showSkillDetail('${s.id}')"><div class="card-accent" style="background:${cc}"></div><div style="display:flex;justify-content:space-between;align-items:flex-start"><h4>${s.name}</h4><span><span class="fav-btn${fav}" onclick="event.stopPropagation();toggleFav('${s.id}')" title="Избранное">${fav?'★':'☆'}</span><span class="select-star" style="opacity:${sel?1:.3}">${sel?'✦':'◇'}</span></span></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">${db}</div><div class="tags">${(s.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}</div><p>${s.summary}</p><div class="meta"><span class="${s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced'}">${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}</span><span class="cat-badge">${ci} ${cn}</span><span>${src}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}</div></div>`;
-}
-
-// Design Systems
-let dsPhilosophyFilter=null,dsProductFilter=null;
-let dsPage=0,dsPageSize=36;
-let totalDsPages=1;
-
-function renderAllSystems() {
-  if(!CATALOG)return;
-  let systems=CATALOG.design_systems||[];
-
-  // Apply hex color filter if present
-  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
-  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
-    const h=hexSearch.toLowerCase();
-    systems=systems.filter(ds=>{
-      const tc=ds.tokens_css;
-      if(!tc)return false;
-      return Object.values(tc).some(v=>typeof v==='string'&&v.toLowerCase()===h);
-    });
-  }
-  if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.aesthetic===dsPhilosophyFilter);
-  if(dsProductFilter)systems=systems.filter(ds=>ds.product_types?.includes(dsProductFilter));
-
-  const dsSort=document.getElementById('ds-sort-select')?.value||'name-asc';
-  systems.sort((a,b)=>{
-    switch(dsSort){
-      case 'name-desc': return b.name.localeCompare(a.name);
-      case 'rating-desc': return (b.rating||0)-(a.rating||0)||a.name.localeCompare(b.name);
-      default: return a.name.localeCompare(b.name);
-    }
-  });
-
-  const total=systems.length;
-  totalDsPages=Math.ceil(total/dsPageSize)||1;
-  if(dsPage>=totalDsPages)dsPage=totalDsPages-1;
-  const start=dsPage*dsPageSize;
-  const pageSystems=systems.slice(start,start+dsPageSize);
-
-  document.getElementById('systems-grid').innerHTML=pageSystems.length?pageSystems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';
-  document.getElementById('ds-result-count').textContent=`${total} систем`;
-  const hexBadge=document.getElementById('ds-hex-badge');
-  const hexVal=(document.getElementById('hex-search')?.value||'').trim();
-  if(hexVal&&/^#[0-9a-f]{3,8}$/i.test(hexVal)&&hexBadge){
-    hexBadge.style.display='inline-block';
-    hexBadge.innerHTML=`🔍 ${hexVal} · ${total} систем`;
-    hexBadge.onclick=()=>{document.getElementById('hex-search').value='';renderAllSystems();};
-    hexBadge.title='Очистить HEX-фильтр';
-    hexBadge.style.cursor='pointer';
-  }else if(hexBadge){hexBadge.style.display='none';}
-
-  const pc=document.getElementById('ds-pagination');
-  if(pc){
-    document.getElementById('ds-page-first').disabled=dsPage===0;
-    document.getElementById('ds-page-prev').disabled=dsPage===0;
-    document.getElementById('ds-page-next').disabled=dsPage>=totalDsPages-1;
-    document.getElementById('ds-page-last').disabled=dsPage>=totalDsPages-1;
-    document.getElementById('ds-page-info').textContent=`${dsPage+1} / ${totalDsPages}`;
-  }
-}
-
-function goDsPage(p){dsPage=p;renderAllSystems();document.getElementById('systems-grid').scrollIntoView({behavior:'smooth',block:'start'});}
-function renderDsCard(ds){
-  const sel=selectedSystemIds.has(ds.id);
-  const tc=ds.tokens_css;
-  const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
-  const cardStyle=tc?`--card-bg:${tc.bg};--card-txt:${tc.text};--card-acc:${tc.accent};--card-rad:${tc.radius||'6px'};--card-font:${tc.font||'JetBrains Mono'};--card-brd:${tc.border};--card-elev:${tc.bg_elevated};--card-muted:${tc.text_muted}`:'';
-  const crossHtml=ds.cross_references&&ds.cross_references.length>0?`<div class="cross-refs">${ds.cross_references.slice(0,3).map(s=>`<span class="cross-ref" title="Также в: ${s}">${s.split('/')[0]}</span>`).join('')}${ds.cross_references.length>3?`<span class="cross-ref">+${ds.cross_references.length-3}</span>`:''}</div>`:'';
-  const db=dateBadge(ds);
-  return `<div class="card${sel?' selected':''}" style="${cardStyle}" onclick="toggleDs('${ds.id}')" ondblclick="openDsPreview('${ds.id}')">${tc?`<div class="card-accent" style="background:${tc.accent};margin:-1rem -1rem .5rem -1rem;height:3px;border-radius:6px 6px 0 0"></div>`:''}<div style="display:flex;justify-content:space-between;align-items:flex-start"><h4>${ds.name}</h4><span class="select-star" style="opacity:${sel?1:.3}">${sel?'✦':'◇'}</span></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">${db}</div><div class="meta"><span>🎨 ${philName}</span><span class="source-badge">${ds.source_short||ds.source||''}</span></div>${crossHtml}${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
-}
-function renderMiniPreview(tc){
-  return `<div class="preview-frame" style="background:${tc.bg};color:${tc.text};font-family:${tc.font}">
-    <div class="pf-header" style="background:${tc.accent};color:${tc.bg}"><span class="pf-logo">Logo</span><div class="pf-nav"><span class="pf-nav-item" style="background:rgba(255,255,255,.2)">Home</span><span class="pf-nav-item">About</span></div></div>
-    <div class="pf-body"><div class="pf-card" style="background:${tc.bg_elevated};border:1px solid ${tc.border}"><div class="pf-card-title">Dashboard</div><div class="pf-card-text">Last 30 days performance metrics and insights.</div><div class="pf-stats"><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.accent}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Users</div></div><div class="pf-stat" style="background:${tc.bg}"><div class="pf-stat-val" style="color:${tc.success||tc.accent2}">${Math.floor(Math.random()*90+10)}</div><div class="pf-stat-lbl">Revenue</div></div></div></div>
-    <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:4px"><span class="pf-btn" style="background:${tc.accent};color:${tc.bg}">Action</span><span class="pf-btn" style="border:1px solid ${tc.border};color:${tc.text_muted};background:transparent">Cancel</span></div>
-    ${renderPalette(tc)}</div></div>`;
-}
-function renderPalette(tc){return `<div class="swatch-row">${[{c:tc.bg,l:'bg'},{c:tc.bg_elevated,l:'elev'},{c:tc.accent,l:'acc'},{c:tc.accent2,l:'acc2'},{c:tc.text,l:'txt'},{c:tc.text_muted,l:'muted'},{c:tc.border,l:'bord'}].map(({c,l})=>`<span class="swatch"><span class="swatch-dot" style="background:${c}"></span>${l}</span>`).join('')}</div>`;}
-
-// Philosophies Page
-function renderPhilosophiesPage() {
-  if(!CATALOG||!CATALOG.design_philosophies)return;
-  const philStyles={'industrial-minimal':{c:'#4da3ff',bg:'#0a0b0f',txt:'#e8ebf0'},'brutally-minimal':{c:'#ffffff',bg:'#000',txt:'#fff'},'retro-futuristic':{c:'#ff00ff',bg:'#0a0b1a',txt:'#f0f0ff'},'luxury-refined':{c:'#c9a84c',bg:'#fef9e7',txt:'#1a1a2e'},'editorial-magazine':{c:'#cc3333',bg:'#fff',txt:'#1a1a1a'},'soft-pastel':{c:'#8b5cf6',bg:'#faf5ff',txt:'#2d1b4e'},'art-deco-geometric':{c:'#c9a84c',bg:'#fef9e7',txt:'#1a1a2e'},'brutalist-raw':{c:'#ff0000',bg:'#000',txt:'#fff'},'playful':{c:'#ff6b6b',bg:'#fff8e7',txt:'#2d2d2d'},'japanese-minimal':{c:'#bf4a3a',bg:'#faf7f2',txt:'#2c2c2c'},'scandinavian':{c:'#b8a88a',bg:'#f8f8f6',txt:'#2d2d2d'},'cyberpunk':{c:'#ff00ff',bg:'#0a0a1a',txt:'#e0e0ff'},'glassmorphism':{c:'#00e5ff',bg:'#0a0a0f',txt:'#f0f0f5'},'neumorphism':{c:'#4a90d9',bg:'#e0e5ec',txt:'#4a4a4a'},'maximalist-chaos':{c:'#ff6600',bg:'#1a0a2e',txt:'#f0e0ff'}};
-  document.getElementById('philosophies-grid').innerHTML = CATALOG.design_philosophies.map(p => {
-    const s=philStyles[p.id]||{c:'#4da3ff',bg:'#0a0b0f',txt:'#e8ebf0'};
-    return `<div class="card" onclick="showPhilosophyDetail('${p.id}')">
-      <h4>${p.name}</h4>
-      <div class="phil-mini" style="border-color:${s.c};background:${s.bg};color:${s.txt}">
-        <strong style="font-size:.7rem">${p.name}</strong><br>
-        <span>Aa — ${p.id}</span>
-      </div>
-      <p>${p.description}</p>
-      <div class="meta"><span>🎨 ${(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===p.id).length} дизайн-систем</span></div>
-    </div>`;
-  }).join('');
-}
-
-function showPhilosophyDetail(id) {
-  const p=CATALOG.design_philosophies?.find(x=>x.id===id);
-  if(!p)return;
-  const systems=(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===id);
-  document.getElementById('detail-content').innerHTML=`
-    <h2>${p.name}</h2><div class="source">design-philosophy</div>
-    <p style="margin:.75rem 0;color:var(--text-muted)">${p.description}</p>
-    <h3>Дизайн-системы в этой философии</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">
-      ${systems.map(ds=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();openDsPreview('${ds.id}')">${ds.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет привязанных систем</span>'}
+function renderSkillCard(s,idx=0) {
+  const complexityLabel={beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced'}[s.complexity]||'';
+  const catName=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;
+  const isFav=favorites.has(s.id);
+  const isSelected=selectedSkillIds.has(s.id);
+  const rating=s.rating?`<span>★ ${s.rating.toFixed(1)}</span>`:'';
+  const catColor=CAT_COLORS[s.category]||'#6e6a69';
+  return `<div class="card${isSelected?' selected':''}" onclick="selectSkill('${s.id}')" style="border-left:3px solid ${catColor};animation-delay:${idx*30}ms" data-id="${s.id}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
+      <h4>${s.name}</h4>
+      <button class="fav-btn${isFav?' active':''}" onclick="event.stopPropagation();toggleFav('${s.id}')" title="Save">★</button>
     </div>
-    <h3 style="margin-top:1rem">Ключевые характеристики</h3>
-    <ul class="principles">
-      ${p.id==='industrial-minimal'?'<li>Строгая сетка и много whitespace</li><li>Минимум декора — максимум контента</li><li>Акцент на типографику и функциональность</li><li>Темная тема с высокой контрастностью</li>':''}
-      ${p.id==='brutally-minimal'?'<li>Только то, что необходимо. Ничего лишнего</li><li>Максимальное пустое пространство</li><li>Один accent цвет, без градиентов</li>':''}
-      ${p.id==='retro-futuristic'?'<li>Неон, сетки, моноширинные шрифты</li><li>Ностальгия по прошлым представлениям о будущем</li><li>Градиенты и glitch-эффекты</li>':''}
-      ${p.id==='luxury-refined'?'<li>Элегантная типографика, тонкие линии</li><li>Сдержанная палитра, премиальные материалы</li><li>Внимание к мельчайшим деталям</li>':''}
-      ${p.id==='playful'?'<li>Яркие цвета, игровая типографика</li><li>Иллюстрации и неожиданные взаимодействия</li><li>Bounce-анимации, elastic overshoot</li>':''}
-    </ul>`;
-  document.getElementById('detail-overlay').classList.add('open');
+    ${s.tags?.length?`<div class="tags">${s.tags.slice(0,5).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`:''}
+    ${s.description?`<p>${s.description}</p>`:''}
+    <div class="meta">
+      ${complexityLabel?`<span class="complexity comp-${s.complexity}">${complexityLabel}</span>`:''}
+      ${rating}
+      ${s.source_short?`<span>${s.source_short}</span>`:''}
+      <span style="font-size:.625rem;color:${catColor}">${catName}</span>
+    </div>
+  </div>`;
 }
 
-// Matcher
-function renderMatcher() {
-  document.getElementById('matcher-product-types').innerHTML = CATALOG.product_types.map(pt=>
-    `<div class="product-item${matcherProduct===pt.id?' selected':''}" onclick="selectMatcherProduct('${pt.id}')"><span class="icon">${pt.icon||'📁'}</span><span class="label">${pt.name}</span></div>`).join('');
-  document.getElementById('matcher-philosophies').innerHTML = (CATALOG.design_philosophies||[]).map(p=>
-    `<div class="phil-item" onclick="selectMatcherPhilosophy('${p.id}')">${p.name}</div>`).join('');
-}
-function selectMatcherProduct(id){matcherProduct=matcherProduct===id?null:id;renderMatcher();document.getElementById('matcher-step2').style.display=matcherProduct?'block':'none';if(!matcherProduct){document.getElementById('matcher-step3').style.display='none';document.getElementById('matcher-step4').style.display='none';document.getElementById('matcher-step5').style.display='none'}matcherPhilosophy=null;updateMatcher()}
-function selectMatcherPhilosophy(id){matcherPhilosophy=matcherPhilosophy===id?null:id;document.querySelectorAll('#matcher-philosophies .phil-item').forEach(p=>p.classList.toggle('selected',p.textContent.trim()===(CATALOG.design_philosophies?.find(x=>x.id===id)?.name)));updateMatcher()}
+function goPage(p){if(p>=0&&p<window.totalPages){page=p;filterSkills()}}
+function goDsPage(p){if(p>=0&&p<window.totalDsPages){dsPage=p;renderAllSystems()}}
 
-const PR={'web-app':{reason:'Веб-приложению нужна полная дизайн-система: от токенов до компонентов и доступности.',cats:['visual-design','design-system','typography','color-theory','layout-composition','prototyping','critique','accessibility','interaction','frontend-dev'],syss:['corporate-saas','material-design-3']},'dashboard':{reason:'Дашборду нужны data viz, темная тема, адаптивная сетка.',cats:['data-viz','visual-design','typography','color-theory','layout-composition','frontend-dev','accessibility','prototyping'],syss:['analytics-dashboard','dark-glass']},'landing':{reason:'Лендингу нужна смелая эстетика, анимация, motion.',cats:['visual-design','typography','color-theory','motion','brand','layout-composition','prototyping'],syss:['landing-retro-future','scandinavian-light','playful-colorful']},'saas':{reason:'B2B SaaS требует целостной ДС, research, доступности.',cats:['visual-design','design-system','ux-research','critique','typography','color-theory','accessibility','prototyping','interaction'],syss:['corporate-saas','material-design-3','luxury-minimal']},'mobile':{reason:'Mobile — платформенные гайдлайны, жесты, touch targets.',cats:['mobile','visual-design','interaction','prototyping','typography','color-theory','accessibility','motion'],syss:['consumer-mobile','apple-hig','material-design-3']},'ecommerce':{reason:'E-commerce — конверсия, каталог, карточки товаров.',cats:['visual-design','typography','color-theory','layout-composition','interaction','prototyping','accessibility','design-system'],syss:['ecommerce-marketplace','scandinavian-light','playful-colorful']},'desktop':{reason:'Десктоп — плотные интерфейсы, системные контролы.',cats:['visual-design','design-system','typography','critique','accessibility','layout-composition','interaction'],syss:['dev-tool','brutalist-dark','apple-hig']},'marketing':{reason:'Маркетинг — бренд, визуалы, motion, email.',cats:['brand','visual-design','motion','typography','color-theory','layout-composition'],syss:['landing-retro-future','scandinavian-light','editorial-magazine']},'game':{reason:'Game UI — HUD, меню, инвентарь, анимации.',cats:['game-ui','visual-design','motion','color-theory','typography','interaction'],syss:['cyberpunk-neon','retro-80s','playful-colorful']},'design-tool':{reason:'Design tool — плагины, интеграции, производительность.',cats:['design-system','visual-design','frontend-dev','typography','interaction','accessibility'],syss:['dev-tool','corporate-saas','brutalist-dark']}};
-
-function updateMatcher(){if(!matcherProduct)return;const r=PR[matcherProduct];if(!r)return;document.getElementById('matcher-reason').textContent=r.reason;document.getElementById('matcher-step3').style.display='block';let skills=CATALOG.skills.filter(s=>r.cats.includes(s.category));if(matcherPhilosophy){const philSys=(CATALOG.design_systems||[]).filter(ds=>ds.aesthetic===matcherPhilosophy);const philP=[...new Set(philSys.flatMap(ds=>ds.product_types||[]))];if(philP.length>0){const f=skills.filter(s=>s.for_product_types?.some(pt=>philP.includes(pt)));if(f.length>=3)skills=f}}document.getElementById('matcher-skills').innerHTML=skills.length?skills.map(s=>renderCard(s)).join(''):'<div class="empty"><span class="icon">📭</span>Нет навыков</div>';document.getElementById('matcher-step4').style.display='block';let systems=(CATALOG.design_systems||[]).filter(ds=>r.syss.includes(ds.id));if(matcherPhilosophy){const f=systems.filter(ds=>ds.aesthetic===matcherPhilosophy);if(f.length>0)systems=f}document.getElementById('matcher-systems').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';document.getElementById('matcher-step5').style.display='block'}
-
-// Random
-function pickRandom() {
-  if(!CATALOG)return;
-  const skill = CATALOG.skills[Math.floor(Math.random() * CATALOG.skills.length)];
-  const ds = CATALOG.design_systems[Math.floor(Math.random() * CATALOG.design_systems.length)];
-  selectedSkillIds.clear(); selectedSystemIds.clear();
-  selectedSkillIds.add(skill.id); selectedSystemIds.add(ds.id);
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-browse').classList.add('active');
-  document.querySelectorAll('.header-nav a').forEach(a=>a.classList.toggle('active',a.dataset.panel==='browse'));
-  filterSkills(); renderAllSystems(); updateExportBar();
-  showSkillDetail(skill.id);
-}
-// Selection
-function toggleSkill(id){if(selectedSkillIds.has(id))selectedSkillIds.delete(id);else selectedSkillIds.add(id);filterSkills();updateExportBar()}
-function toggleDs(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);renderAllSystems();updateExportBar()}
-function clearSelection(){selectedSkillIds.clear();selectedSystemIds.clear();filterSkills();renderAllSystems();updateExportBar()}
-function updateExportBar(){const t=selectedSkillIds.size+selectedSystemIds.size;const bar=document.getElementById('export-bar');if(t>0){bar.classList.add('visible');document.getElementById('export-count').textContent=`Выбрано: ${selectedSkillIds.size} навыков, ${selectedSystemIds.size} дизайн-систем`;const cb=document.getElementById('compare-btn');if(cb)cb.style.display=selectedSkillIds.size>=2?'inline-block':'none'}else{bar.classList.remove('visible')}}
-
-// Compare
-function compareSkills(){const ids=[...selectedSkillIds];if(ids.length<2)return;const skills=ids.map(id=>CATALOG.skills.find(s=>s.id===id)).filter(Boolean);const n=Math.min(skills.length,4);document.getElementById('detail-panel').classList.add('wide');const cols=skills.map(s=>{const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cc=CAT_COLORS[s.category]||'var(--border)';const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cco=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';return `<div class="compare-col"><div class="acc-bar" style="background:${cc}"></div><h3>${s.name}</h3><div class="detail-meta"><span class="${cco}">${cl}</span><span>📁 ${cn}</span></div><div class="cm-section"><div class="cm-label">Описание</div><div class="cm-value">${(s.description||s.summary||'').substring(0,150)}${(s.description||s.summary||'').length>150?'...':''}</div></div>${s.key_principles?`<div class="cm-section"><div class="cm-label">Принципы</div><div class="cm-value"><ul style="margin:0;padding-left:1rem;font-size:.75rem;color:var(--text-muted);line-height:1.6">${s.key_principles.slice(0,4).map(p=>`<li>${p}</li>`).join('')}</ul></div></div>`:''}${s.tags?.length?`<div class="cm-section"><div class="cm-label">Теги</div><div class="cm-tags">${s.tags.slice(0,6).map(t=>`<span class="cm-tag">${t}</span>`).join('')}</div></div>`:''}<div class="cm-section"><div class="cm-label">Продукты</div><div class="cm-value">${s.for_product_types?.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')||'—'}</div></div></div>`}).join('');document.getElementById('detail-content').innerHTML=`<h2>Сравнение навыков (${skills.length})</h2><div class="compare-grid c${n}">${cols}</div>`;document.getElementById('detail-overlay').classList.add('open')}
-
-function showFavorites(){
-  document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelector('[data-panel=browse]').classList.add('active');
-  document.getElementById('panel-browse').classList.add('active');
-  document.getElementById('fav-filter').checked=true;
-  filterSkills();
-}
-
+// Favorites
 function toggleFav(id){
   if(favorites.has(id))favorites.delete(id);else favorites.add(id);
   localStorage.setItem('designx-favs',JSON.stringify([...favorites]));
-  document.getElementById('stats-bar').innerHTML = CATALOG?`<span>📚 ${CATALOG.skills.length} навыков</span><span>🎨 ${(CATALOG.design_systems||[]).length} систем дизайна</span><span>🏛 ${(CATALOG.design_philosophies||[]).length} философий</span><span>★ ${favorites.size}</span>`:'';
   filterSkills();
+  const stats=document.getElementById('stats-bar');
+  if(stats)stats.innerHTML=stats.innerHTML.replace(/★ \d+ saved/,'★ '+favorites.size+' saved');
+}
+function showFavorites(){
+  if(!CATALOG)return;
+  const favs=CATALOG.skills.filter(s=>favorites.has(s.id));
+  const grid=document.getElementById('favorites-grid');
+  const empty=document.getElementById('favorites-empty');
+  const clearBtn=document.getElementById('clear-favs-btn');
+  if(favs.length===0){
+    if(grid)grid.innerHTML='';
+    if(empty)empty.style.display='block';
+    if(clearBtn)clearBtn.style.display='none';
+  }else{
+    if(grid)grid.innerHTML=favs.map(s=>renderSkillCard(s)).join('');
+    if(empty)empty.style.display='none';
+    if(clearBtn)clearBtn.style.display='inline-flex';
+  }
+}
+function clearFavorites(){favorites.clear();localStorage.setItem('designx-favs','[]');showFavorites();filterSkills();}
+
+// Selection & Export
+function selectSkill(id){
+  if(selectedSkillIds.has(id))selectedSkillIds.delete(id);else selectedSkillIds.add(id);
+  updateExportBar();filterSkills();
+}
+function clearSelection(){selectedSkillIds.clear();selectedSystemIds.clear();updateExportBar();filterSkills();}
+function updateExportBar(){
+  const bar=document.getElementById('export-bar');
+  const count=document.getElementById('export-count');
+  const total=selectedSkillIds.size+selectedSystemIds.size;
+  if(total>0){bar.classList.add('visible');count.textContent=`Selected: ${total}`}else{bar.classList.remove('visible')}
+  const cmp=document.getElementById('compare-btn');
+  if(cmp)cmp.style.display=selectedSkillIds.size>=2?'inline-flex':'none';
+}
+function exportSelected(){
+  const skills=CATALOG.skills.filter(s=>selectedSkillIds.has(s.id));
+  const systems=(CATALOG.design_systems||[]).filter(s=>selectedSystemIds.has(s.id));
+  const data={skills,systems};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='designx-export.json';a.click();
+}
+function pickRandom(){
+  if(!CATALOG)return;
+  const s=CATALOG.skills[Math.floor(Math.random()*CATALOG.skills.length)];
+  selectedSkillIds.add(s.id);updateExportBar();filterSkills();
+  showDetail(s);
+}
+function compareSkills(){
+  const ids=[...selectedSkillIds].slice(0,6);
+  const skills=CATALOG.skills.filter(s=>ids.includes(s.id));
+  showCompare(skills);
 }
 
-// Detail
-function showSkillDetail(id){const s=CATALOG.skills.find(x=>x.id===id);if(!s)return;const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cc=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';
-  document.getElementById('detail-content').innerHTML=`<h2>${s.name} ${favorites.has(s.id)?'★':''}</h2><div class="source">${s.source?formatSource(s.source).replace(/[`]/g,''):'DesignX Catalog'}</div><p style="margin:.75rem 0;color:var(--text-muted);font-size:.875rem">${s.description||s.summary}</p>${s.key_principles?`<h3>Ключевые принципы</h3><ul class="principles">${s.key_principles.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}<div class="detail-meta"><span class="${cc}">${cl}</span><span>📁 ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}${s.frameworks?.length?`<span>🛠 ${s.frameworks.join(', ')}</span>`:''}</div>${s.for_product_types?.length?`<p style="color:var(--text-muted);font-size:.75rem;margin-top:.5rem">Подходит для: ${s.for_product_types.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')}</p>`:''}<div class="tags" style="margin-top:.75rem">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;document.getElementById('detail-overlay').classList.add('open')}
-function closeDetail(){document.getElementById('detail-overlay').classList.remove('open');document.getElementById('detail-panel').classList.remove('wide')}
+// Detail overlay
+function showDetail(item) {
+  const overlay=document.getElementById('detail-overlay');
+  const content=document.getElementById('detail-content');
+  const tags=item.tags?.map(t=>`<span class="tag">${t}</span>`).join('')||'';
+  const principles=item.principles?.map(p=>`<li>${p}</li>`).join('')||'';
+  const rating=item.rating?`<span>★ ${item.rating.toFixed(1)}</span>`:'';
+  content.innerHTML=`
+    <h2>${item.name}</h2>
+    <div class="detail-meta">
+      ${rating}
+      ${item.complexity?`<span class="complexity comp-${item.complexity}">${item.complexity}</span>`:''}
+      ${item.source?`<span>${item.source}</span>`:''}
+    </div>
+    ${item.description?`<p style="color:var(--text-muted);font-size:.8125rem;margin:.5rem 0">${item.description}</p>`:''}
+    ${tags?`<div style="display:flex;gap:4px;flex-wrap:wrap;margin:.5rem 0">${tags}</div>`:''}
+    ${principles?`<ol class="principles">${principles}</ol>`:''}
+    ${item.for_product_types?.length?`<div style="margin-top:.5rem"><span style="font-size:.6875rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Product types:</span><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">${item.for_product_types.map(pt=>`<span class="tag">${pt}</span>`).join('')}</div></div>`:''}
+    ${item.colors?`<div class="swatch-row">${Object.entries(item.colors).filter(([k])=>k!=='palette').map(([k,v])=>`<div class="swatch"><span class="swatch-dot" style="background:${v}"></span>${k}</div>`).join('')}${item.colors.palette?.map(c=>`<div class="swatch"><span class="swatch-dot" style="background:${c}"></span></div>`).join('')||''}</div>`:''}
+  `;
+  overlay.classList.add('open');
+  if (item.principles) overlay.querySelector('.principles')?.classList.add('principles');
+}
+function closeDetail(){document.getElementById('detail-overlay').classList.remove('open')}
+function showCompare(skills){
+  showDetail({name:'Compare',description:'',tags:[]});
+  const content=document.getElementById('detail-content');
+  const cols=Math.min(skills.length,4);
+  content.innerHTML=`<div class="compare-grid c${cols}">${skills.map(s=>{
+    const col=`<div class="compare-col">
+      <div class="acc-bar" style="background:${CAT_COLORS[s.category]||'#6e6a69'}"></div>
+      <h3>${s.name}</h3>
+      ${s.description?`<div class="cm-section"><div class="cm-label">Description</div><div class="cm-value">${s.description}</div></div>`:''}
+      ${s.tags?.length?`<div class="cm-section"><div class="cm-label">Tags</div><div class="cm-tags">${s.tags.map(t=>`<span class="cm-tag">${t}</span>`).join('')}</div></div>`:''}
+      ${s.principles?.length?`<div class="cm-section"><div class="cm-label">Principles</div><div class="cm-value">${s.principles.join(', ')}</div></div>`:''}
+    </div>`;
+    return col;
+  }).join('')}</div>`;
+}
 
-// DS Preview
-function openDsPreview(id){const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds)return;const tc=ds.tokens_css;const pn=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';const crossSrc=ds.cross_references&&ds.cross_references.length>0?`<div class="detail-meta" style="margin-top:.5rem"><span>📚 Также в источниках: ${ds.cross_references.join(', ')}</span></div>`:'';let html=`<h2>${ds.name}</h2><div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem"><span class="source-badge">${ds.source_short||ds.source||'DesignX'}</span><span class="source">${pn}</span></div>${crossSrc}<p style="margin:.75rem 0;color:var(--text-muted)">${ds.description||''}</p>`;if(tc){html+=`<h3>Превью</h3>${renderMiniPreview(tc)}<h3 style="margin-top:1rem">Design Tokens</h3><div class="swatch-row">${[{c:tc.bg,l:'bg-surface',v:tc.bg},{c:tc.bg_elevated,l:'bg-elevated',v:tc.bg_elevated},{c:tc.accent,l:'accent',v:tc.accent},{c:tc.accent2,l:'accent2',v:tc.accent2},{c:tc.text,l:'text',v:tc.text},{c:tc.text_muted,l:'text-muted',v:tc.text_muted},{c:tc.border,l:'border',v:tc.border}].map(({c,l,v})=>`<span class="swatch"><span class="swatch-dot" style="background:${c};${tc.dark?'border-color:rgba(255,255,255,.15)':''}"></span><span style="display:flex;flex-direction:column;gap:0"><span>${l}</span><span style="font-size:.5625rem;opacity:.5">${v}</span></span></span>`).join('')}</div><div class="detail-meta" style="margin-top:.75rem"><span>Font: ${tc.font||'JetBrains Mono'}</span><span>Radius: ${tc.radius||'6px'}</span><span>Scheme: ${tc.dark?'🌙 Dark':'☀️ Light'}</span></div>`;}html+=`<h3 style="margin-top:1rem">Связанные навыки</h3><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">${CATALOG.skills.filter(s=>s.for_product_types?.some(pt=>(ds.product_types||[]).includes(pt))).slice(0,6).map(s=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();showSkillDetail('${s.id}')">${s.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет связанных</span>'}</div>`;document.getElementById('detail-content').innerHTML=html;document.getElementById('detail-overlay').classList.add('open')}
+// Design Systems
+let dsPhilosophyFilter=null,dsProductFilter=null,dsPage=0,dsPageSize=24;
+function renderAllSystems(){
+  if(!CATALOG||!CATALOG.design_systems)return;
+  let systems=[...CATALOG.design_systems];
+  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
+  if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.philosophy===dsPhilosophyFilter);
+  if(dsProductFilter)systems=systems.filter(ds=>ds.for_product_types?.includes(dsProductFilter));
+  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
+    systems=systems.filter(ds=>{
+      const cols=[ds.colors?.primary,ds.colors?.secondary,ds.colors?.accent,...(ds.colors?.palette||[])];
+      return cols.some(c=>c?.toLowerCase()===hexSearch.toLowerCase());
+    });
+  }
+  const sort=document.getElementById('ds-sort-select')?.value||'name-asc';
+  systems.sort((a,b)=>{
+    if(sort==='name-asc')return a.name.localeCompare(b.name);
+    if(sort==='name-desc')return b.name.localeCompare(a.name);
+    if(sort==='rating-desc')return (b.rating||0)-(a.rating||0);
+    return 0;
+  });
+  const total=systems.length;
+  window.totalDsPages=Math.ceil(total/dsPageSize);
+  if(dsPage>=window.totalDsPages)dsPage=Math.max(0,window.totalDsPages-1);
+  const start=dsPage*dsPageSize;
+  const paged=systems.slice(start,start+dsPageSize);
+  document.getElementById('ds-result-count').textContent=`${total} systems`;
+  document.getElementById('systems-grid').innerHTML=paged.length?paged.map((ds,i)=>{
+    const catColor=ds.colors?.primary||'#6e6a69';
+    const isSelected=selectedSystemIds.has(ds.id);
+    return `<div class="card${isSelected?' selected':''}" onclick="selectSystem('${ds.id}')" style="border-left:3px solid ${catColor};animation-delay:${i*30}ms">
+      <h4>${ds.name}</h4>
+      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem;transition:color .15s">${ds.description||''}</p>
+      <div class="meta" style="margin-top:.5rem">
+        ${ds.philosophy?`<span class="tag">${CATALOG.design_philosophies?.find(p=>p.id===ds.philosophy)?.name||ds.philosophy}</span>`:''}
+        ${ds.rating?`<span>★ ${ds.rating.toFixed(1)}</span>`:''}
+      </div>
+    </div>`;
+  }).join(''):'<div class="empty">No systems found</div>';
+
+  document.getElementById('ds-page-first').disabled=dsPage===0;
+  document.getElementById('ds-page-prev').disabled=dsPage===0;
+  document.getElementById('ds-page-next').disabled=dsPage>=window.totalDsPages-1;
+  document.getElementById('ds-page-last').disabled=dsPage>=window.totalDsPages-1;
+  document.getElementById('ds-page-info').textContent=`${dsPage+1} / ${window.totalDsPages}`;
+}
+function selectSystem(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);updateExportBar();renderAllSystems();}
+
+// Philosophies
+// Philosophies
+const _philCategories=[
+  {id:'minimal',name:'Minimal & Clean',items:['brutally-minimal','industrial-minimal','japanese-minimal','scandinavian','japanese-zen','nordic-hygge','minimalist-color','monochrome','borderless','airy-light','corporate-professional','modernist','typographic']},
+  {id:'refined',name:'Classic & Refined',items:['luxury-refined','editorial-magazine','art-deco-geometric','art-nouveau','victorian-ornate','bauhaus','swiss-international','dark-academia','storytelling']},
+  {id:'expressive',name:'Bold & Colorful',items:['maximalist-chaos','playful','soft-pastel','colorful-vibrant','gradient-heavy','memphis-postmodern','korean-style','flat-2.0','folk-ethnic','handmade-artisanal','cottagecore']},
+  {id:'raw',name:'Edgy & Raw',items:['brutalist-raw','grunge-distressed','neo-brutalism','glitch-error','retro-futuristic','cyberpunk','vaporwave-synthwave','y2k-futuristic','noir-dark']},
+  {id:'retro',name:'Retro & Nostalgic',items:['retro-vintage','pixel-art','steampunk','skeuomorphism']},
+  {id:'futuristic',name:'Futuristic & Tech',items:['space-cosmic','generative-algorithmic','kinetic-motion','material-design','data-dashboard','solarpunk','organic-biophilic']},
+  {id:'effects',name:'Modern Effects',items:['glassmorphism','neumorphism']}
+];
+let _philActive=new Set();
+function renderPhilosophiesPage(){
+  if(!CATALOG||!CATALOG.design_philosophies)return;
+  const catBar=document.getElementById('phil-categories');
+  if(catBar)catBar.innerHTML=`<button class="tag${!_philActive.size?' active':''}" onclick="togglePhilCategory('all')">All</button>${_philCategories.map(c=>`<button class="tag${_philActive.has(c.id)?' active':''}" onclick="togglePhilCategory('${c.id}')">${c.name}</button>`).join('')}`;
+  let list=_philActive.size?CATALOG.design_philosophies.filter(p=>_philCategories.some(c=>_philActive.has(c.id)&&c.items.includes(p.id))):CATALOG.design_philosophies;
+  const countEl=document.getElementById('phil-count');
+  if(countEl)countEl.textContent=`${list.length} of ${CATALOG.design_philosophies.length} philosophies`;
+  const grid=document.getElementById('philosophies-grid');
+  if(grid)grid.innerHTML=list.map((p,i)=>{
+    const cat=_philCategories.find(c=>c.items.includes(p.id));
+    return `<div class="card" onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})" style="animation-delay:${i*30}ms">
+      <h4>${p.name}</h4>
+      ${cat?`<span class="phil-cat-badge">${cat.name}</span>`:''}
+      <p>${p.description||''}</p>
+    </div>`;
+  }).join('');
+}
+function togglePhilCategory(cat){
+  if(cat==='all'){_philActive.clear();renderPhilosophiesPage();return}
+  if(_philActive.has(cat))_philActive.delete(cat);else _philActive.add(cat);
+  renderPhilosophiesPage();
+}
+
+// Matcher
+function renderMatcher(){
+  if(!CATALOG)return;
+  const ptEl=document.getElementById('matcher-product-types');
+  if(ptEl)ptEl.innerHTML=CATALOG.product_types.map(pt=>`<div class="product-item" onclick="selectMatcherProduct('${pt.id}')">${pt.name}</div>`).join('');
+}
+function selectMatcherProduct(id){
+  matcherProduct=id;
+  document.querySelectorAll('#matcher-product-types .product-item').forEach(el=>el.classList.toggle('selected',el.textContent.trim()===CATALOG.product_types.find(pt=>pt.id===id)?.name));
+  document.getElementById('matcher-step2').style.display='block';
+  const philGrid=document.getElementById('matcher-philosophies');
+  if(philGrid)philGrid.innerHTML=CATALOG.design_philosophies.map(p=>`<div class="phil-item" data-id="${p.id}" onclick="selectMatcherPhilosophy('${p.id}')">${p.name}</div>`).join('');
+}
+function selectMatcherPhilosophy(id){
+  matcherPhilosophy=id;
+  document.querySelectorAll('#matcher-philosophies .phil-item').forEach(el=>el.classList.toggle('selected',el.dataset.id===id));
+  // Show results
+  const skills=CATALOG.skills.filter(s=>s.for_product_types?.includes(matcherProduct));
+  const systems=(CATALOG.design_systems||[]).filter(ds=>ds.philosophy===id);
+  document.getElementById('matcher-step3').style.display='block';
+  const skillGrid=document.getElementById('matcher-skills');
+  if(skillGrid)skillGrid.innerHTML=skills.slice(0,12).map((s,i)=>renderSkillCard(s,i)).join('');
+  document.getElementById('matcher-reason').textContent=`${skills.length} skills recommended for ${CATALOG.product_types.find(pt=>pt.id===matcherProduct)?.name||matcherProduct}`;
+  document.getElementById('matcher-step4').style.display='block';
+  const sysGrid=document.getElementById('matcher-systems');
+  if(sysGrid)sysGrid.innerHTML=systems.slice(0,12).map((ds,i)=>{
+    const catColor=ds.colors?.primary||'#6e6a69';
+    return `<div class="card" style="border-left:3px solid ${catColor};animation-delay:${i*30}ms">
+      <h4>${ds.name}</h4>
+      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem">${ds.description||''}</p>
+    </div>`;
+  }).join('');
+  document.getElementById('matcher-step5').style.display='block';
+}
 
 // Tools
 function renderTools(){
-  // Tokens DS filters
-  const tEl=document.getElementById('tokens-ds-filters');if(tEl)tEl.innerHTML=(CATALOG.design_systems||[]).map(ds=>`<button class="filter-btn" onclick="showTokens('${ds.id}')">${ds.name}</button>`).join('');
+  if(typeof checkContrast==='function')checkContrast();
+  initTokensViewer();
+  renderNng();
+  renderGestalt();
+}
+function checkContrast(){
+  const fg=document.getElementById('contrast-fg')?.value||'#0d0d0d';
+  const bg=document.getElementById('contrast-bg')?.value||'#f7f5f3';
+  const hexToRgb=h=>{const r=h.replace('#','');return [parseInt(r.substr(0,2),16),parseInt(r.substr(2,2),16),parseInt(r.substr(4,2),16)]};
+  const lum=(r,g,b)=>{const [R,G,B]=[r,g,b].map(c=>{c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)});return 0.2126*R+0.7152*G+0.0722*B};
+  try{
+    const [r1,g1,b1]=hexToRgb(fg);const [r2,g2,b2]=hexToRgb(bg);
+    const l1=lum(r1,g1,b1),l2=lum(r2,g2,b2);
+    const ratio=(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+    const result=document.getElementById('contrast-result');
+    const sample=document.getElementById('contrast-sample');
+    if(result)result.className='contras-result '+(ratio>=4.5?'pass':'fail');
+    if(result)result.textContent=`Ratio: ${ratio.toFixed(1)}:1 · AA ${ratio>=4.5?'✓':'✗'} · AAA ${ratio>=7?'✓':'✗'}`;
+    if(sample){sample.style.color=fg;sample.style.background=bg;sample.textContent='Sample text for readability check'}
+  }catch(e){}
+}
+// Tokens Viewer
+let _allTokenSystems=[];
+function initTokensViewer(){
+  if(!CATALOG||!_allTokenSystems.length)_allTokenSystems=CATALOG.design_systems.filter(ds=>ds.tokens_css).map(ds=>({id:ds.id,name:ds.name,tokens:ds.tokens_css}));
+}
+function filterTokensSystems(){
+  initTokensViewer();
+  const q=document.getElementById('tokens-search')?.value?.toLowerCase()||'';
+  const list=document.getElementById('tokens-ds-list');
+  if(!list)return;
+  if(!q){list.style.display='none';return}
+  const matches=_allTokenSystems.filter(ds=>ds.name.toLowerCase().includes(q));
+  list.style.display='block';
+  list.innerHTML=matches.map(ds=>`<div class="token-ds-item" onclick="selectTokenSystem('${ds.id}')">${ds.name}</div>`).join('');
+  if(!matches.length)list.innerHTML='<div style="padding:8px 12px;color:var(--text-dim);font-size:.75rem">No systems found</div>';
+}
+let _selectedTokenSystem=null;
+function selectTokenSystem(id){
+  initTokensViewer();
+  const ds=_allTokenSystems.find(d=>d.id===id);
+  if(!ds)return;
+  _selectedTokenSystem=ds;
+  document.getElementById('tokens-search').value=ds.name;
+  document.getElementById('tokens-ds-list').style.display='none';
+  const viewer=document.getElementById('tokens-viewer');
+  if(!viewer)return;
+  const t=ds.tokens;
+  let swatches=Object.entries(t).filter(([k])=>!['font','radius','dark'].includes(k)&&typeof t[k]==='string'&&t[k].startsWith('#')).map(([k,v])=>`<div class="token-swatch"><span class="swatch-dot" style="background:${v}"></span><span class="token-key">${k}</span><span class="token-val">${v}</span></div>`).join('');
+  viewer.innerHTML=`<div class="token-header">
+    <h4 style="font-size:.8125rem;margin:0">${ds.name}</h4>
+    <span class="token-meta">${t.dark?'Dark':'Light'} · ${t.font||'—'} · radius ${t.radius||'—'}</span>
+  </div>
+  <div class="token-swatches">${swatches||'<span style="color:var(--text-dim)">No color tokens</span>'}</div>`;
 }
 
-function showTokens(id){
-  const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds||!ds.tokens_css)return;
-  const tc=ds.tokens_css;const el=document.getElementById('tokens-viewer');
-  el.innerHTML=`<h4 style="margin-bottom:.5rem">${ds.name} — Design Tokens</h4>${renderMiniPreview(tc)}<div style="margin-top:.75rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.5rem">${Object.entries(tc).filter(([k])=>k!=='preview_demo').map(([k,v])=>`<div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:4px;padding:.5rem .75rem;display:flex;align-items:center;gap:.5rem"><span style="width:16px;height:16px;border-radius:3px;background:${v};border:1px solid rgba(255,255,255,.1);flex-shrink:0"></span><span style="flex:1;font-size:.6875rem;color:var(--text-code)">--${k}</span><span style="font-size:.6875rem;color:var(--text-muted)">${String(v).substring(0,30)}</span></div>`).join('')}</div>`;
+// NN/g Principles
+const _nnPrinciples=[
+  {n:'Visibility of Status',d:'System always informs users about what is happening.'},
+  {n:'Match Real World',d:'Speak the user language, not system terms.'},
+  {n:'User Control',d:'Users can undo or redo actions.'},
+  {n:'Consistency',d:'Same terms, elements, patterns everywhere.'},
+  {n:'Error Prevention',d:'Prevent errors rather than show messages.'},
+  {n:'Recognition',d:'Minimize memory load — make elements visible.'},
+  {n:'Flexibility',d:'Shortcuts for power users without breaking basics.'},
+  {n:'Aesthetic Design',d:'Minimalist design with no irrelevant info.'},
+  {n:'Error Recovery',d:'Clear error messages with solutions.'},
+  {n:'Help & Docs',d:'Easy to find, task-focused documentation.'}
+];
+function renderNng(){
+  const el=document.getElementById('nn-grid');
+  if(el)el.innerHTML=_nnPrinciples.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*30}ms"><h4>${i+1}. ${p.n}</h4><p>${p.d}</p></div>`).join('');
 }
 
-// Contrast Checker
-function hexToLuminance(h){const r=parseInt(h.slice(1,3),16)/255;const g=parseInt(h.slice(3,5),16)/255;const b=parseInt(h.slice(5,7),16)/255;const f=n=>{n=n/255;return n<=.03928?n/12.92:Math.pow((n+.055)/1.055,2.4)};return 0.2126*r+0.7152*g+0.0722*b}
-function checkContrast(){const fg=document.getElementById('contrast-fg').value;const bg=document.getElementById('contrast-bg').value;const el=document.getElementById('contrast-result');const sample=document.getElementById('contrast-sample');if(!/^#[0-9a-f]{6}$/i.test(fg)||!/^#[0-9a-f]{6}$/i.test(bg)){el.textContent='Введите HEX цвета (#RRGGBB)';el.className='contras-result fail';return}const l1=hexToLuminance(fg)+.05;const l2=hexToLuminance(bg)+.05;const ratio=Math.max(l1,l2)/Math.min(l1,l2);const aa=ratio>=4.5;const aaa=ratio>=7;const large=ratio>=3;el.textContent=`Ratio: ${ratio.toFixed(1)}:1 · WCAG AA: ${aa?'✅':'❌'} · WCAG AAA: ${aaa?'✅':'❌'} · Large text: ${large?'✅':'❌'}`;el.className=`contras-result ${ratio>=4.5?'pass':'fail'}`;sample.style.background=bg;sample.style.color=fg}
+// Gestalt Principles
+const _gestaltPrinciples=[
+  {n:'Proximity',d:'Objects close together are perceived as a group. Use spacing for grouping.',v:'<div style="display:flex;gap:4px;margin-top:6px"><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="width:12px"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span></div>'},
+  {n:'Similarity',d:'Similar elements are perceived as related. Color, shape, size signal group belonging.',v:'<div style="display:flex;gap:6px;margin-top:6px;justify-content:center"><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span></div>'},
+  {n:'Figure/Ground',d:'Perception separates image into object (figure) and background.',v:'<div style="display:flex;align-items:center;justify-content:center;height:36px;margin-top:6px;background:var(--bg-paper);padding:4px"><span style="width:28px;height:28px;background:var(--bg-surface);border:0.5px solid var(--border)"></span></div>'},
+  {n:'Closure',d:'The brain completes incomplete forms. Used in logos and icons.',v:'<div style="display:flex;gap:6px;margin-top:6px;justify-content:center;font-size:1.25rem;letter-spacing:4px;color:var(--text-primary)">&#x25E1;&#x25E1;&#x25E1;&#x25E1;</div>'},
+  {n:'Common Region',d:'Elements inside a bounded area are perceived as a group. The basis of cards.',v:'<div style="display:flex;gap:6px;margin-top:6px"><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:60%"></span><span style="height:4px;background:var(--text-muted);width:80%"></span></span><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:50%"></span></span></div>'},
+  {n:'Continuation',d:'The eye follows a line even if interrupted. Used in steps, progress bars.',v:'<div style="display:flex;gap:0;margin-top:6px;align-items:center"><span style="width:20px;height:20px;border-radius:50%;background:var(--text-primary);display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">1</span><span style="flex:1;height:2px;background:var(--text-primary);opacity:.5"></span><span style="width:16px;height:16px;border-radius:50%;background:var(--text-primary);opacity:.5;display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">2</span><span style="flex:1;height:2px;background:var(--border)"></span><span style="width:16px;height:16px;border-radius:50%;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--text-muted)">3</span></div>'}
+];
+function renderGestalt(){
+  const el=document.getElementById('gestalt-grid');
+  if(el)el.innerHTML=_gestaltPrinciples.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*40}ms"><h4>${p.n}</h4><p>${p.d}</p>${p.v}</div>`).join('');
+}
 
+function renderToolsMap(){
+  const tools={Design:'Figma,Sketch,Adobe XD',Prototyping:'Framer,ProtoPie,Principle',Research:'Maze,UserTesting,Hotjar',Dev:'VS Code,Storybook,Chrome DevTools',Accessibility:'axe,WAVE,Stark',Icons:'Phosphor,Feather,Radix'};
+  const el=document.getElementById('tools-map');
+  if(el)el.innerHTML=Object.entries(tools).map(([cat,items],i)=>`<div class="card" style="cursor:default;animation-delay:${i*40}ms"><h4 style="font-size:.8125rem">${cat}</h4><div class="tags" style="margin-top:.35rem">${items.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('')}</div></div>`).join('');
+}
 // About
-function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего навыков: <strong>${CATALOG.skills.length}</strong></li>`;h+=`<li>📁 Категорий: <strong>${CATALOG.categories.length}</strong></li>`;h+=`<li>🎨 Дизайн-систем: <strong>${(CATALOG.design_systems||[]).length}</strong></li>`;h+=`<li>🎯 Типов продуктов: <strong>${CATALOG.product_types.length}</strong></li>`;h+=`<li>🏛 Философий дизайна: <strong>${CATALOG.design_philosophies?.length||0}</strong></li>`;h+=`<li>🔄 Всего тегов: <strong>${new Set(CATALOG.skills.flatMap(s=>s.tags||[])).size}</strong></li>`;const step={beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'};const dist=CATALOG.skills.reduce((a,s)=>{a[step[s.complexity]]=(a[step[s.complexity]]||0)+1;return a},{});h+=`<li>📊 Сложность: ${Object.entries(dist).map(([k,v])=>`${k}: ${v}`).join(' · ')}</li>`;document.getElementById('about-stats').innerHTML=h;
-const srcHtml=(CATALOG.meta?.sources||[]).map(s=>`<li>📦 ${s}</li>`).join('');document.getElementById('about-sources').innerHTML=srcHtml;}
-
-// ── Original file fetching ──────────────────────────────────────
-// Tries to load original upstream SKILL.md/DESIGN.md/README.md from src/originals/
-// Supports multiple directory naming conventions across all sources.
-async function fetchOriginal(item) {
-  if (!item.source || !item.id) return null;
-  const files = ['SKILL.md', 'DESIGN.md', 'CLAUDE.md', 'README.md'];
-
-  // Known ID prefixes to strip for subdirectory lookup
-  const prefixes = ['design-md-', 'skill-design-', 'ndroussi-', 'soulcore-', 'dimabraven-', 'mae-', 'mitsuhiko-'];
-  let stripped = item.id;
-  for (const pfx of prefixes) { if (stripped.startsWith(pfx)) { stripped = stripped.slice(pfx.length); break; } }
-
-  // Special ID-to-subdir overrides
-  const specialSubdir = { 'ui-engine': 'ui', 'cc-design': 'cc-design' };
-  if (specialSubdir[item.id]) stripped = specialSubdir[item.id];
-
-  // Compute base path: works on both local dev (/) and GitHub Pages (/repo-name/)
-  const basePath = document.querySelector('base')?.getAttribute('href') || 
-    window.location.pathname.replace(/\/[^/]*$/, '/');
-  const originalsBase = basePath.replace(/\/$/, '') + '/src/originals/';
-
-  // Collect candidate base directories (de-duplicated)
-  const bases = [`${originalsBase}${item.source}/`];
-  if (item.source.includes('/')) {
-    bases.push(`${originalsBase}${item.source.replace('/', '-')}/`);  // new sources
-    const [org, repo] = item.source.split('/');
-    bases.push(`${originalsBase}${org}/${repo}/`);                   // old sources
-    bases.push(`${originalsBase}${org}/`);                           // some old sources
-  }
-
-  // File candidates per base: subdir/file, root/file, subdir as .md
-  for (const base of [...new Set(bases)]) {
-    for (const file of files) {
-      try {
-        const resp = await fetch(base + stripped + '/' + file);
-        if (resp.ok) return await resp.text();
-      } catch {}
-    }
-    try { // dimabraven-style: subdir.md
-      const resp = await fetch(base + stripped + '/' + stripped + '.md');
-      if (resp.ok) return await resp.text();
-    } catch {}
-  }
-  return null;
+function updateStats(){
+  if(!CATALOG)return;
+  const el=document.getElementById('about-stats');
+  if(el)el.innerHTML=`<li>${CATALOG.skills.length} skills</li><li>${(CATALOG.design_systems||[]).length} design systems</li><li>${(CATALOG.design_philosophies||[]).length} design philosophies</li><li>${CATALOG.categories.length} categories</li><li>${CATALOG.product_types.length} product types</li>`;
+  const srcEl=document.getElementById('about-sources');
+  if(srcEl)srcEl.innerHTML=(CATALOG.meta?.sources||['Open Design','DesignX curated']).map(s=>`<li>${s}</li>`).join('');
+  const recEl=document.getElementById('about-recommended');
+  if(recEl&&CATALOG.skills)recEl.innerHTML=CATALOG.skills.filter(s=>['Design Research','Visual Design','Design Systems','Prototyping','Typography'].includes(s.name)).map(s=>`<span class="tag" style="cursor:pointer" onclick="selectSkill('${s.id}');updateExportBar()">${s.name}</span>`).join('');
 }
 
-// Export
-async function exportSelected(){
-  const skills=CATALOG.skills.filter(s=>selectedSkillIds.has(s.id));
-  const systems=(CATALOG.design_systems||[]).filter(ds=>selectedSystemIds.has(ds.id));
-
-  // Single item → try original first
-  if(skills.length===1&&systems.length===0){
-    const original=await fetchOriginal(skills[0]);
-    if(original){downloadMd(original,'SKILL.md');return}
-  }
-  if(systems.length===1&&skills.length===0){
-    const original=await fetchOriginal(systems[0]);
-    if(original){downloadMd(original,'DESIGN.md');return}
-  }
-
-  const md=await buildMd(skills,systems);
-  let filename='designx-export.md';
-  if(skills.length===1&&systems.length===0)filename='SKILL.md';
-  else if(systems.length===1&&skills.length===0)filename='DESIGN.md';
-  downloadMd(md,filename)
-}
-function formatSource(src){const special={'custom':'`DesignX Catalog`','DesignX Catalog':'`DesignX Catalog`','designx':'`DesignX`','research':'`Research`'};if(special[src])return special[src];if(src.includes('RESOURCES.md'))return `\`${src}\``;const repo={'designer-skills':'Owl-Listener/designer-skills','awesome-agent-skills':'VoltAgent/awesome-agent-skills'};return `\`${src}\` · [GitHub](https://github.com/${repo[src]||src})`}
-async function buildMd(skills,systems){let md;if(skills.length===1&&systems.length===0){const s=skills[0];const srcUrl=s.source?formatSource(s.source):'—';const tags=(s.tags||[]).filter(t=>typeof t==='string').join(', ')||'—';const pts=s.for_product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')||'—';const catName=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const fw=s.frameworks?.length?'\n'+s.frameworks.map(f=>`- ${f}`).join('\n'):'';md=`# SKILL: ${s.name}\n\n## Source\n${srcUrl}\n\n## Purpose\n${s.summary||s.description||''}\n\n## When to Use\n- Категория: ${catName}\n- Сложность: ${cl}\n- Типы продуктов: ${pts}\n\n## Behavior\n${s.key_principles?.map((p,i)=>`${i+1}. ${p}`).join('\n')||'—'}\n\n## Tags\n${tags}\n\n## For Product Types\n${pts}${fw?`\n\n## Frameworks${fw}`:''}`;return md}if(systems.length===1&&skills.length===0){const ds=systems[0];const tc=ds.tokens_css||{};const aest=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'—';const pts=ds.product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')||'—';md=`# DESIGN.md — ${ds.name}\n\n## Brand & Tone\nСистема дизайна для ${ds.name}. Эстетика: ${aest}. Тон: соответствует философии ${aest}.\n\n## Visual Aesthetic\n**${aest}** — системный подход к визуальному языку. Все токены централизованы, компоненты унифицированы.\n\n## Color Tokens\n`;const cmap={bg:'color-bg-surface',bg_elevated:'color-bg-elevated',border:'color-border',text:'color-text-primary',text_muted:'color-text-muted',accent:'color-accent-primary',accent2:'color-accent-secondary',success:'color-success',error:'color-error'};Object.entries(cmap).forEach(([k,v])=>{if(tc[k])md+=`- ${v}: ${tc[k]}\n`});if(tc.font)md+=`\n## Typography\n- UI Font: **${tc.font}**\n- Code Font: **JetBrains Mono**\n`;if(tc.radius)md+=`\n## Border Radius\n- Base radius: **${tc.radius}**\n`;md+=`\n## Design Tokens (CSS)\n`;Object.entries(tc).filter(([k])=>k!=='preview_demo').forEach(([k,v])=>md+=`- --${k}: ${v}\n`);md+=`\n## Product Types\n${pts}\n`;if(tc.dark!==undefined)md+=`\n## Color Scheme\n- Mode: ${tc.dark?'**Dark** 🌙':'**Light** ☀️'}\n`;return md}md=`# DesignX Export\n\n> Exported: ${new Date().toISOString().split('T')[0]} · DesignX v2\n\n`;if(skills.length){md+=`## Skills (${skills.length})\n\n`;skills.forEach(s=>{const pts=s.for_product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')||'—';const tags=(s.tags||[]).filter(t=>typeof t==='string').join(', ');md+=`### ${s.name}\n- **Source:** ${s.source?formatSource(s.source).replace(/[`]/g,''):'DesignX Catalog'}\n- **Category:** ${CATALOG.categories.find(c=>c.id===s.category)?.name||s.category}\n- **Complexity:** ${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}\n- **Tags:** ${tags||'—'}\n- **Products:** ${pts}\n\n${s.description||s.summary||''}\n\n`;if(s.key_principles?.length){md+=`**Principles:**\n`;s.key_principles.forEach(p=>md+=`- ${p}\n`);md+='\n'}md+='---\n\n'})}if(systems.length){md+=`## Design Systems (${systems.length})\n\n`;systems.forEach(ds=>{const aest=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic;md+=`### ${ds.name}\n- **Aesthetic:** ${aest}\n- **Products:** ${ds.product_types?.map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}\n\n${ds.description||''}\n\n`;if(ds.tokens_css){const tc=ds.tokens_css;md+=`**Tokens:**\n`;Object.entries(tc).filter(([k])=>k!=='preview_demo').forEach(([k,v])=>md+=`- --${k}: ${v}\n`);md+='\n'}md+='---\n\n'})}md+=`## How to Use\n\n1. Copy SKILL.md files to your AI agent's skills directory\n2. Copy DESIGN.md to the root of your repository\n3. Your AI agent will read DESIGN.md and follow the design system\n4. Use skills with Claude Code, Cursor, Codex, OpenCode\n\n*Generated by DesignX*`;return md}
-function downloadMd(md,filename){const b=new Blob([md],{type:'text/markdown'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=filename||'designx-export.md';a.click();URL.revokeObjectURL(u)}
-function renderReferences(){const refs=[{aesthetic:'industrial-minimal',title:'Industrial / Minimal',icon:'🏭',ds:['corporate-saas','crm-enterprise','productivity-notes','admin-panel'],links:[{name:'B2B SaaS Dashboard — Behance',url:'https://www.behance.net/search/projects?search=b2b+saas+dashboard'},{name:'Minimal Web Design — Dribbble',url:'https://dribbble.com/search/minimal-web-design'},{name:'Enterprise UI Kit — Behance',url:'https://www.behance.net/search/projects?search=enterprise+ui+kit'}]},{aesthetic:'cyberpunk',title:'Cyberpunk / Neon',icon:'🌆',ds:['cyberpunk-neon','crypto-web3','gaming-ui'],links:[{name:'Cyberpunk Interfaces — Dribbble',url:'https://dribbble.com/search/cyberpunk-interface'},{name:'Neon UI Design — Behance',url:'https://www.behance.net/search/projects?search=neon+ui'},{name:'Crypto Dashboard — Behance',url:'https://www.behance.net/search/projects?search=crypto+dashboard+ui'}]},{aesthetic:'playful',title:'Playful / Colorful',icon:'🌈',ds:['playful-colorful','dating-app','elearning-gamified'],links:[{name:'Colorful UI — Dribbble',url:'https://dribbble.com/search/colorful-ui-design'},{name:'Dating App UI — Behance',url:'https://www.behance.net/search/projects?search=dating+app+ui'},{name:'Gamified Learning — Behance',url:'https://www.behance.net/search/projects?search=gamified+learning+ui'}]},{aesthetic:'scandinavian',title:'Scandinavian / Light',icon:'🌿',ds:['scandinavian-light','booking-reservation','travel-hospitality'],links:[{name:'Scandinavian Design — Dribbble',url:'https://dribbble.com/search/scandinavian-design'},{name:'Travel Booking UI — Behance',url:'https://www.behance.net/search/projects?search=travel+booking+ui'},{name:'Airbnb Style UI — Behance',url:'https://www.behance.net/search/projects?search=airbnb+style+ui'}]},{aesthetic:'brutalist-raw',title:'Brutalist / Raw',icon:'🏗️',ds:['brutalist-dark','api-docs-portal','dashboard-analytics-v2','terminal-cli'],links:[{name:'Brutalist Web Design — Awwwards',url:'https://www.awwwards.com/websites/brutalist/'},{name:'Dark Dashboard — Dribbble',url:'https://dribbble.com/search/dark-dashboard'},{name:'Dev Tool UI — Behance',url:'https://www.behance.net/search/projects?search=developer+tool+ui'}]},{aesthetic:'luxury',title:'Luxury / Premium',icon:'💎',ds:['luxury-minimal','art-deco-luxury','ecommerce-luxury-dark'],links:[{name:'Luxury Brand UI — Behance',url:'https://www.behance.net/search/projects?search=luxury+brand+ui'},{name:'Premium E-commerce — Dribbble',url:'https://dribbble.com/search/luxury-ecommerce'},{name:'Fashion Brand Site — Awwwards',url:'https://www.awwwards.com/websites/luxury/'}]},{aesthetic:'retro',title:'Retro / Nostalgic',icon:'📼',ds:['retro-80s','vaporwave-synthwave','pixel-art-retro','steampunk-victorian'],links:[{name:'Synthwave UI — Dribbble',url:'https://dribbble.com/search/synthwave-ui'},{name:'80s Retro Design — Behance',url:'https://www.behance.net/search/projects?search=80s+retro+design'},{name:'Pixel Art UI — Dribbble',url:'https://dribbble.com/search/pixel-art-ui'}]},{aesthetic:'nature',title:'Nature / Eco',icon:'🌱',ds:['biophilic-nature','solarpunk-eco','nonprofit-ngo'],links:[{name:'Biophilic Design — Behance',url:'https://www.behance.net/search/projects?search=biophilic+design'},{name:'Eco Branding — Dribbble',url:'https://dribbble.com/search/eco-branding'},{name:'Non-Profit UI — Behance',url:'https://www.behance.net/search/projects?search=nonprofit+website+design'}]},{aesthetic:'glass',title:'Glassmorphism / Modern',icon:'🪟',ds:['dark-glass','ai-chat-interface','music-audio-app'],links:[{name:'Glassmorphism UI — Dribbble',url:'https://dribbble.com/search/glassmorphism'},{name:'Chat Interface Design — Behance',url:'https://www.behance.net/search/projects?search=chat+interface+ui'},{name:'Music Player UI — Behance',url:'https://www.behance.net/search/projects?search=music+player+ui'}]},{aesthetic:'swiss',title:'Swiss / Bauhaus',icon:'📐',ds:['swiss-international','bauhaus-de-stijl','memphis-postmodern'],links:[{name:'Swiss Style UI — Behance',url:'https://www.behance.net/search/projects?search=swiss+style+ui'},{name:'Bauhaus Design — Dribbble',url:'https://dribbble.com/search/bauhaus-design'},{name:'Grid-Based Layout — Awwwards',url:'https://www.awwwards.com/websites/grid-layout/'}]}];const container=document.getElementById('references-grid');if(!container)return;let html='';refs.forEach(r=>{const matches=(CATALOG?.design_systems||[]).filter(ds=>r.ds.includes(ds.id)).map(ds=>ds.name_ru||ds.name).join(', ');html+='<div class="ref-card" style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:1rem">';html+='<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem"><span style="font-size:1.25rem">'+r.icon+'</span><h3 style="margin:0;font-size:.9375rem">'+r.title+'</h3></div>';if(matches)html+='<p style="font-size:.6875rem;color:var(--text-muted);margin-bottom:.75rem">🎯 '+matches+'</p>';html+='<div style="display:flex;flex-direction:column;gap:.35rem">';r.links.forEach(l=>{html+='<a href="'+l.url+'" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--text-code);text-decoration:none;padding:3px 8px;border:1px solid var(--border);border-radius:4px;transition:border-color .15s;display:block" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">🔗 '+l.name+'</a>'});html+='</div></div>'});container.innerHTML=html}
-function renderToolsMap(){const cats=[{cat:'Цвет',icon:'🎨',tools:[{name:'Coolors.co',desc:'Генератор палитр, экспорт в CSS/SCSS',url:'https://coolors.co'},{name:'Adobe Color',desc:'Цветовые правила, accessibility-проверка',url:'https://color.adobe.com'},{name:'Chroma',desc:'Цветовые градиенты и шкалы',url:'https://chroma.spencerkelly.com'},{name:'ColorSpace',desc:'Генератор градиентов и палитр',url:'https://mycolor.space'}]},{cat:'Типографика',icon:'🔤',tools:[{name:'Google Fonts',desc:'Бесплатные шрифты с веб-хостингом',url:'https://fonts.google.com'},{name:'Fontjoy',desc:'AI-подбор шрифтовых пар',url:'https://fontjoy.com'},{name:'Typescale',desc:'Калькулятор типографической шкалы',url:'https://typescale.com'}]},{cat:'Иконки',icon:'🔲',tools:[{name:'Lucide Icons',desc:'Open-source набор, outline, 1000+',url:'https://lucide.dev'},{name:'Phosphor Icons',desc:'6 весов, душевный дизайн',url:'https://phosphoricons.com'},{name:'Gravity UI',desc:'Яндекс-набор, открытая лицензия',url:'https://gravity-ui.com/icons'},{name:'Iconsax',desc:'Variety icon set, 24 000+',url:'https://iconsax.io'}]},{cat:'Прототипирование',icon:'📱',tools:[{name:'Figma',desc:'Главный инструмент, community, плагины',url:'https://figma.com'},{name:'Flowmapp',desc:'User flow и карты сайта',url:'https://flowmapp.com'},{name:'Whimsical',desc:'Wireframes, диаграммы, mind maps',url:'https://whimsical.com'},{name:'Marvel App',desc:'Быстрое прототипирование',url:'https://marvelapp.com'}]},{cat:'Коллаборация',icon:'👥',tools:[{name:'Miro',desc:'Miro — доски для ресерча и воркшопов',url:'https://miro.com'},{name:'Notion',desc:'Документация, wiki, задачи',url:'https://notion.so'},{name:'MURAL',desc:'Фасилитация дизайн-спринтов',url:'https://mural.co'},{name:'Jira',desc:'Трекинг задач и багов',url:'https://atlassian.com/software/jira'}]},{cat:'Референсы',icon:'✨',tools:[{name:'Behance',desc:'Портфолио и кейсы студий',url:'https://behance.net'},{name:'Dribbble',desc:'Шоты, тренды, инспирация',url:'https://dribbble.com'},{name:'Awwwards',desc:'Лучшие сайты года, номинации',url:'https://awwwards.com'},{name:'Pinterest',desc:'Визуальный поиск, мудборды',url:'https://pinterest.com'}]},{cat:'Генерация (AI)',icon:'🤖',tools:[{name:'Midjourney',desc:'Генерация визуалов и концептов',url:'https://midjourney.com'},{name:'Galileo AI',desc:'UI-генерация из промпта',url:'https://usegalileo.ai'},{name:'Uizard',desc:'Wireframe → дизайн за минуты',url:'https://uizard.io'},{name:'Screenshot AI',desc:'Из скриншота в код',url:'https://screenshot.ai'}]},{cat:'Тестирование',icon:'🧪',tools:[{name:'PageSpeed',desc:'Performance audit от Google',url:'https://pagespeed.web.dev'},{name:'WAVE',desc:'Accessibility evaluation tool',url:'https://wave.webaim.org'},{name:'Lighthouse',desc:'Аудит PWA, SEO, a11y',url:'https://developer.chrome.com/docs/lighthouse'},{name:'Hotjar',desc:'Heatmaps, записи, опросы',url:'https://hotjar.com'}]}];const container=document.getElementById('tools-map');if(!container)return;let html='';cats.forEach(c=>{html+='<div class="principle-card"><h4 style="margin-bottom:.5rem">'+c.icon+' '+c.cat+'</h4><div style="display:flex;flex-direction:column;gap:.35rem">';c.tools.forEach(t=>{html+='<a href="'+t.url+'" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--text-code);text-decoration:none;padding:2px 6px;border:1px solid var(--border);border-radius:4px;transition:border-color .15s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'"><strong>'+t.name+'</strong><span style="color:var(--text-muted);margin-left:4px">— '+t.desc+'</span></a>'});
-html+='</div></div>'});container.innerHTML=html}
-function buildProcessPipeline(){const stages=[{id:'research',icon:'🔍',title:'Исследование',desc:'User research, интервью, анализ конкурентов',skills:['user-interviews','competitive-analysis','diary-studies','contextual-inquiry','ethnographic-research','focus-groups','survey-design','design-research','jobs-to-be-done']},{id:'analysis',icon:'📊',title:'Анализ',desc:'CJM, сервис-блюпринт, data-driven решения',skills:['journey-mapping','service-blueprinting','cognitive-mapping','analytics-driven-design','heatmap-analysis','ux-metrics','product-analytics-ux','ab-testing','card-sorting','tree-testing','ux-kpis-dashboard']},{id:'design',icon:'📐',title:'Проектирование',desc:'Wireframes, IA, user flows, сценарии',skills:['wireframing-lowfi','wireframing-hifi','wireframing','user-personas','interaction-design','mobile-first','adaptive-design','onboarding-flows','auth-flows','form-design','navigation-patterns','search-filter']},{id:'visual',icon:'🎨',title:'Визуальный дизайн',desc:'Сетка, типографика, цвет, компоненты, бренд',skills:['visual-hierarchy','layout-composition','color-theory-palette','typography-design','brand-identity','component-design','visual-consistency','white-space','grid-systems-advanced','dark-light-mode','color-mode-theme','icon-design','illustration-style']},{id:'prototype',icon:'⚡',title:'Прототипирование',desc:'Интерактивные прототипы, motion, анимация',skills:['interactive-prototyping','prototyping','micro-interactions','motion-design-principles','lottie-rive-animation','scroll-based-animation','page-transitions-advanced','canvas-design','hyperframes']},{id:'test',icon:'🧪',title:'Тестирование',desc:'Юзабилити-тесты, A/B, экспертиза, доступность',skills:['usability-testing','cognitive-walkthrough','heuristic-evaluation','accessibility-audit','screen-reader-ux','visual-regression-testing','design-qa','usability-benchmarking','color-contrast-advanced','a-b-testing-analysis']},{id:'dev',icon:'🚀',title:'Разработка',desc:'Design-to-code, frontend, адаптивность, доступность',skills:['design-to-code','frontend-design','responsive-design','semantic-html','css-custom-properties','design-tokens','component-library','storybook','design-system-architect','performance-web-vitals','pwa-design']}];const container=document.getElementById('process-pipeline');if(!container)return;let html='<div class="process-flow">';stages.forEach((s,i)=>{html+='<div class="process-stage" data-stage="'+s.id+'">';html+='<div class="process-stage-header"><span class="process-icon">'+s.icon+'</span><h3>'+s.title+'</h3></div>';html+='<p class="process-desc">'+s.desc+'</p>';html+='<div class="process-skills">';s.skills.forEach(sid=>{const skill=CATALOG?.skills.find(sk=>sk.id===sid);if(skill){html+='<span class="process-skill-tag" data-skill="'+sid+'">'+skill.name_ru+'</span>'}});html+='</div></div>';if(i<stages.length-1)html+='<div class="process-arrow">↓</div>'});html+='</div>';container.innerHTML=html;container.querySelectorAll('.process-skill-tag').forEach(el=>{el.onclick=()=>{const sid=el.dataset.skill;if(sid){switchPanel('browse');setTimeout(()=>{const input=document.getElementById('skill-search');if(input){input.value=sid;filterSkills()}},100)}}});container.querySelectorAll('.process-stage').forEach(el=>{el.onclick=(e)=>{if(e.target.closest('.process-skill-tag'))return;el.classList.toggle('expanded')}})}
+// Export for hex search (maintain compatibility)
+document.addEventListener('DOMContentLoaded',()=>{
+  const hexInput=document.getElementById('hex-search');
+  if(hexInput)hexInput.addEventListener('input',filterSkills);
+});
 </script>
 </body>
 </html>

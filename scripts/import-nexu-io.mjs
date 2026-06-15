@@ -39,16 +39,22 @@ function parseYaml(text) {
   if (!m) return {};
   const lines = m[1].split('\n');
   const result = {};
+  let multiKey = null;
   for (const line of lines) {
     const kv = line.match(/^(\w[\w-]*):\s*(.*)$/);
     if (kv) {
+      multiKey = null;
       let val = kv[2].trim().replace(/^["']|["']$/g, '');
-      if (val === '|') {
-        // Multi-line — skip for now
-        result[kv[1]] = '';
+      if (val === '|' || val === '>-') {
+        multiKey = kv[1];
+        result[multiKey] = '';
       } else {
         result[kv[1]] = val;
       }
+    } else if (multiKey && line.startsWith('  ')) {
+      result[multiKey] += (result[multiKey] ? ' ' : '') + line.trim();
+    } else {
+      multiKey = null;
     }
   }
   return result;
