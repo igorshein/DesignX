@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -22,35 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
-          node-version: 18
-
-      - name: Update catalog from originals
-        run: |
-          node scripts/generate-missing-entries.mjs 2>/dev/null || true
-          node scripts/parse-originals.mjs 2>/dev/null || true
-
-      - name: Build site
-        run: |
-          mkdir -p _site/src/data _site/src/originals
-          cp -f public/index.html _site/index.html
-          cp -f src/data/catalog.json _site/src/data/catalog.json
-          for dir in src/originals/*/; do
-            name=$(basename "$dir")
-            mkdir -p "_site/src/originals/$name"
-            cp -r "$dir"/* "_site/src/originals/$name/"
-          done
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site
-
-      - name: Deploy to Pages
-        id: deployment
+          path: '.'
+      - id: deployment
         uses: actions/deploy-pages@v4
