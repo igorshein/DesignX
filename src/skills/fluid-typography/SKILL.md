@@ -1,7 +1,7 @@
 # SKILL: Fluid Typography
 
 ## Source
-DesignX Catalog · typography
+`DesignX Catalog`
 
 ## Purpose
 Fluid типографика: clamp(min, preferred, max), vw-based scaling, типографика без медиа-запросов. Формула: clamp(1rem, 0.5rem + 1vw, 2rem).

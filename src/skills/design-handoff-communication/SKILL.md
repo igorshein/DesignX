@@ -1,7 +1,7 @@
 # SKILL: Design Handoff Communication
 
 ## Source
-DesignX Catalog · design-ops
+`DesignX Catalog`
 
 ## Purpose
 Коммуникация передачи дизайна разработке: specs, annotation, design review, developer handoff, collision avoidance.

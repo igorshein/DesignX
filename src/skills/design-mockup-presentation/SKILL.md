@@ -1,7 +1,7 @@
 # SKILL: Design Mockup Presentation
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Презентация дизайн-макетов: mockup presentation, case study, портфолио, сторителлинг через визуальные решения.

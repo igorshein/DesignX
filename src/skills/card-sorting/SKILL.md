@@ -1,7 +1,7 @@
 # SKILL: Card Sorting
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Открытая и закрытая карточная сортировка: пользователи создают категории или раскладывают по готовым. Анализ через дендрограммы и матрицы сходства.

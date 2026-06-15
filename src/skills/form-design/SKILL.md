@@ -1,7 +1,7 @@
 # SKILL: Form Design Patterns
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Эффективные формы: top-aligned labels (3x быстрее), inline validation после blur, input masking, autocomplete, мобильная оптимизация клавиатур.

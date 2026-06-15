@@ -1,7 +1,7 @@
 # Design Storytelling
 
 ## Source
-DesignX Catalog · brand
+`ghaida/intent` · [GitHub](https://github.com/ghaida/intent)
 
 ## Purpose
 Four canonical narrative patterns: protagonist-arc, choreography, situation/complication/resolution, what-is/what-could-be.

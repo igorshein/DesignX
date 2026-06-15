@@ -1,7 +1,7 @@
 # SKILL: Widget Design
 
 ## Source
-DesignX Catalog · mobile
+`DesignX Catalog`
 
 ## Purpose
 Дизайн виджетов: home screen widgets, lock screen widgets, glanceable UI, widget families, iOS/Android conventions.

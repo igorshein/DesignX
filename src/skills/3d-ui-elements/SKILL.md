@@ -1,7 +1,7 @@
 # SKILL: 3D UI Elements
 
 ## Source
-DesignX Catalog · visual-design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Интеграция 3D-элементов в интерфейсы: isometric дизайн (изометрические иконки, иллюстрации, дашборды), depth и z-space в UI, 3D-объекты через Three.js и Spline, параллакс слоёв, 3D-трансформации элементов, производительность 3D в вебе.

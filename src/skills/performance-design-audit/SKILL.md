@@ -1,7 +1,7 @@
 # SKILL: Performance Design Audit
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Аудит влияния дизайн-решений на производительность: LCP (шрифты, изображения), CLS (layout shifts от шрифтов/баннеров), INP (сложные анимации), bundle size, font loading.

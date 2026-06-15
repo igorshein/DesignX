@@ -1,7 +1,7 @@
 # SKILL: Data Visualization Design
 
 ## Source
-DesignX Catalog · data-viz
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проектирование data-heavy интерфейсов: дашборды, KPI-панели, графики, таблицы. Выбор правильного типа визуализации под задачу, иерархия данных, адаптивность, доступность.

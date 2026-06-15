@@ -1,7 +1,7 @@
 # UX Writing & Content Strategy
 
 ## Source
-DesignX Catalog · brand
+`ghaida/intent` · [GitHub](https://github.com/ghaida/intent)
 
 ## Purpose
 Voice and tone frameworks, error message design, empty states, CTA hierarchy, microcopy patterns, content models, inclusive language.

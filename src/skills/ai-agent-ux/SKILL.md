@@ -1,7 +1,7 @@
 # AI Agent UX
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк AUTONOMY: Users supervise, AI executes. Autonomy controls, consent, action previews, undo/rollback, audit trails, interruptability.

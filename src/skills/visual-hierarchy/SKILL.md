@@ -1,7 +1,7 @@
 # SKILL: Visual Hierarchy
 
 ## Source
-DesignX Catalog · layout-composition
+`DesignX Catalog`
 
 ## Purpose
 Построение визуальной иерархии: F-pattern для текста, Z-pattern для лендингов, 60-30-10 rule: размер (60%), цвет (30%), позиция (10%).

@@ -1,7 +1,7 @@
 # Performance & Web Vitals
 
 ## Source
-DesignX Catalog · frontend-dev
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Lighthouse audit, LCP under 2.5s, CLS under 0.1, INP under 200ms, image optimization, font loading, JS bundle optimization, perceived performance.

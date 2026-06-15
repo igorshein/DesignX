@@ -1,7 +1,7 @@
 # SKILL: Dark Mode Strategy
 
 ## Source
-DesignX Catalog · color-theory
+`DesignX Catalog`
 
 ## Purpose
 Стратегия тёмной темы: не просто инверсия цветов, а осмысленный dark mode с правильной иерархией, контрастом и доступностью.

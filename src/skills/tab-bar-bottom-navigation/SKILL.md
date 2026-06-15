@@ -1,7 +1,7 @@
 # SKILL: Tab Bar & Bottom Navigation
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Дизайн мобильной навигации: tab bar, bottom navigation, iOS/Android conventions, active states, badges.

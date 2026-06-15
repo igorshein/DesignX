@@ -1,7 +1,7 @@
 # SKILL: Push Notification UX
 
 ## Source
-DesignX Catalog · notifications
+`DesignX`
 
 ## Purpose
 Стратегия push-уведомлений: timing, персонализация, permission requests, opt-in оптимизация, frequency capping.

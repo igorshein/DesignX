@@ -1,7 +1,7 @@
 # SKILL: Inclusive Design
 
 ## Source
-DesignX Catalog · inclusive-design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Дизайн для всего спектра человеческого разнообразия: нейроразнообразие (ADHD, аутизм, дислексия), когнитивная доступность, временные и ситуационные ограничения, equity-first подход, inclusive language, репрезентация в визуальных материалах.

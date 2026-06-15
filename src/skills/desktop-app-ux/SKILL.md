@@ -1,7 +1,7 @@
 # SKILL: Desktop App UX
 
 ## Source
-DesignX Catalog · interaction
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Дизайн нативных desktop-приложений: menu bar и context menu, multi-window management, drag-and-drop, keyboard shortcuts, system tray, window chrome customization, Electron vs Tauri UX различия, desktop-specific паттерны (Preferences, About, updates).

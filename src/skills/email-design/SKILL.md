@@ -1,7 +1,7 @@
 # SKILL: Email Design Systems
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Email дизайн: MjML/HTML email framework, responsive (table-based), email clients (Outlook, Gmail, Apple Mail), dark mode, accessibility, tracking, A/B тестирование.

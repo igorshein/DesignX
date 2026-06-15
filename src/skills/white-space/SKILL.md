@@ -1,7 +1,7 @@
 # SKILL: White Space Management
 
 ## Source
-DesignX Catalog · layout-composition
+`DesignX Catalog`
 
 ## Purpose
 Осознанное использование пустого пространства: микро (gap 8-24px), макро (секции 48-96px), внутренний padding карточек (16-24px), 8px base unit.

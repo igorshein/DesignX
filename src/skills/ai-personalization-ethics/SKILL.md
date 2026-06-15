@@ -1,7 +1,7 @@
 # AI Personalization & Ethics
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк ADAPT: Personalization is a power dynamic. Adaptive interfaces, privacy balance, filter bubble prevention, ethical AI design.

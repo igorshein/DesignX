@@ -1,7 +1,7 @@
 # SKILL: Color Contrast Advanced
 
 ## Source
-DesignX Catalog · accessibility
+`DesignX Catalog`
 
 ## Purpose
 Продвинутый контраст цветов: APCA, WCAG 3.0, perceptual contrast, accessibility color systems, non-visual contrast.

@@ -1,7 +1,7 @@
 # SKILL: Texture & Pattern Design
 
 ## Source
-DesignX Catalog · visual-design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Дизайн и применение текстур и паттернов в интерфейсах: CSS-паттерны, SVG-паттерны, noise texture, paper texture, fabric texture, geometric patterns, organic patterns, seamless tile generation, performance-optimised текстуры для веба.

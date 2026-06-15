@@ -1,7 +1,7 @@
 # SKILL: Storybook Documentation
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Storybook для дизайн-систем: stories (controls, actions), docs (MDX), theming (addon-themes), visual testing (Chromatic), accessibility (a11y addon).

@@ -1,7 +1,7 @@
 # SKILL: Canvas Design
 
 ## Source
-DesignX Catalog · visual-design
+`anthropics/skills` · [GitHub](https://github.com/anthropics/skills)
 
 ## Purpose
 Навык создания визуального дизайна и иллюстраций с использованием canvas. Экспорт в PNG для веб и PDF для печати. Подходит для визуалов, бренд-материалов, иконок и инфографики.

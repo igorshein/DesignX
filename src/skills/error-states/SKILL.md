@@ -1,7 +1,7 @@
 # SKILL: Error States Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Inline validation, toast/banner, full-page error (404/500). Структура: что пошло не так, почему, что делать. Recovery: retry, fallback, поддержка.

@@ -1,7 +1,7 @@
 # SKILL: Illustration Style Guide
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Разработка единого стиля иллюстраций: техника (flat, isometric, hand-drawn, 3D), палитра, пропорции персонажей, level of detail.

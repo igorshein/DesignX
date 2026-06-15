@@ -1,7 +1,7 @@
 # SKILL: Design-to-Code Handoff
 
 ## Source
-DesignX Catalog · design-system
+`plugin87/ux-ui-agent-skills` · [GitHub](https://github.com/plugin87/ux-ui-agent-skills)
 
 ## Purpose
 Handoff процесс: дизайн-спецификации (redlines, measurements), Figma Dev Mode, auto-layout, naming layers, экспорт assets, design tokens, консистентность.

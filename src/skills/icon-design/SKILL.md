@@ -1,7 +1,7 @@
 # SKILL: Icon Design Principles
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Создание системы иконок: SVG, единая сетка 24x24, optical weight (stroke vs fill), семантика, accessibility (aria-label).

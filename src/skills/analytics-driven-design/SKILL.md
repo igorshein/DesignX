@@ -1,7 +1,7 @@
 # SKILL: Analytics-Driven Design
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Использование аналитики для обоснования дизайна: funnel analysis, cohort, segmentation, impact-effort матрица, data-informed подход.

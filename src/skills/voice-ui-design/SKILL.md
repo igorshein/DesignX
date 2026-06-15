@@ -1,7 +1,7 @@
 # SKILL: Voice UI Design
 
 ## Source
-DesignX Catalog · voice
+`DesignX`
 
 ## Purpose
 Голосовые интерфейсы: conversation design, VUI patterns, speech recognition UX, voice feedback, multimodal voice+screen.

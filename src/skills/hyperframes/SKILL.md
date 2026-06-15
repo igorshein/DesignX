@@ -1,7 +1,7 @@
 # SKILL: HyperFrames Motion
 
 ## Source
-DesignX Catalog · motion
+`DesignX Catalog`
 
 ## Purpose
 Создание анимированной motion-графики через HTML+CSS+GSAP, рендер в MP4 через headless Chrome + FFmpeg.

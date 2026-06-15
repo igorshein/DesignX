@@ -1,7 +1,7 @@
 # SKILL: In-App Messaging
 
 ## Source
-DesignX Catalog · notifications
+`DesignX`
 
 ## Purpose
 In-app уведомления: тосты, snackbar, banners, modal notifications, notification center, приоритетная система.

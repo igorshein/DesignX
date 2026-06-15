@@ -1,7 +1,7 @@
 # SKILL: Web Artifacts Builder
 
 ## Source
-DesignX Catalog · prototyping
+`anthropics/skills` · [GitHub](https://github.com/anthropics/skills)
 
 ## Purpose
 Навык создания сложных веб-артефактов с React и Tailwind CSS. Включает сборку многостраничных интерфейсов, дашбордов, лендингов и компонентов.

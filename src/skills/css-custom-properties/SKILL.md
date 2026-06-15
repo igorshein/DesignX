@@ -1,7 +1,7 @@
 # SKILL: CSS Custom Properties Architecture
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Архитектура CSS-переменных: global (цвета, шрифты), semantic (bg, text, border), component, theme (light/dark). @property, fallback, data-attribute темы.

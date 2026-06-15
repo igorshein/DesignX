@@ -1,7 +1,7 @@
 # SKILL: Presentation Design
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Дизайн презентаций: структура (проблема → решение → доказательство → CTA), визуальная иерархия, data slides, master slides, accessibility, формат (16:9, 4:3).

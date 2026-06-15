@@ -1,7 +1,7 @@
 # SKILL: Mood Board Creation
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Коллажи из референсов, палитр, шрифтов и текстур для согласования визуального направления с командой и стейкхолдерами.

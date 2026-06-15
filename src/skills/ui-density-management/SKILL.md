@@ -1,7 +1,7 @@
 # UI Density Management
 
 ## Source
-DesignX Catalog · layout-composition
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Match UI density to platform and user type. Compact vs comfortable spacing, data density options, user-controlled density, platform conventions.

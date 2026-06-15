@@ -1,7 +1,7 @@
 # SKILL: Competitive Analysis
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Конкурентный анализ: прямые и косвенные конкуренты, UX-паттерны, features, SWОT, feature matrix, gap analysis для дифференциации.

@@ -1,7 +1,7 @@
 # SKILL: Accessibility Audit (WCAG)
 
 ## Source
-DesignX Catalog · accessibility
+`DesignX Catalog`
 
 ## Purpose
 Системный аудит доступности по WCAG 2.2: Level A/AA/AAA. Инструменты: axe, Lighthouse, WAVE, screen reader (VoiceOver, NVDA), ручное тестирование клавиатуры.

@@ -1,7 +1,7 @@
 # SKILL: Mobile-First Design
 
 ## Source
-DesignX Catalog · responsive
+`DesignX Catalog`
 
 ## Purpose
 Стратегия mobile-first: начинать с самого маленького экрана, прогрессивно улучшать. min-width media queries, content priority, touch targets, производительность.

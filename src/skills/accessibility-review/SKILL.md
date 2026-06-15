@@ -1,7 +1,7 @@
 # SKILL: Accessibility Review
 
 ## Source
-`designer-skills` · W3C · Material Design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проверка доступности интерфейса в соответствии со стандартами WCAG 2.2.

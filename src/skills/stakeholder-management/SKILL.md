@@ -1,7 +1,7 @@
 # SKILL: Stakeholder Management
 
 ## Source
-DesignX Catalog · design-ops
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Стратегии работы со стейкхолдерами в дизайн-процессе: stakeholder mapping, communication plan, дизайн-презентации (структура, нарратив, визуализация), handling feedback, managing expectations, design-led workshops, building trust и credibility.

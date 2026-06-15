@@ -1,7 +1,7 @@
 # SKILL: Motion Design Principles
 
 ## Source
-DesignX Catalog · motion
+`DesignX Catalog`
 
 ## Purpose
 12 принципов Disney для UI: easing, overshoot, anticipation, staging, follow-through. 150-300ms для UI, 500-1000ms для expressive motion.

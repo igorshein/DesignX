@@ -1,7 +1,7 @@
 # SKILL: Page Transitions Advanced
 
 ## Source
-DesignX Catalog · interaction
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Продвинутые техники переходов между страницами: SPA route transitions, Shared Element Transitions (Material Design), View Transitions API, morphing, clip-path transitions, layout animations, cross-route state preservation, choreography последовательных анимаций.

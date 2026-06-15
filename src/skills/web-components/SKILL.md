@@ -1,7 +1,7 @@
 # SKILL: Web Components Design
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Web Components для дизайн-систем: custom elements, Shadow DOM (изоляция стилей), slots (композиция), HTML templates, CSS parts/theming.

@@ -1,7 +1,7 @@
 # SKILL: Empty States Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Типы: first use (приветствие + CTA), no data (объяснение), search empty, error (повтор). Иконка, объяснение, действие.

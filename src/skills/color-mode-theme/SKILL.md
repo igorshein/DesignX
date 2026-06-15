@@ -1,7 +1,7 @@
 # Color Mode & Theme Design
 
 ## Source
-DesignX Catalog · color-theory
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Light vs dark vs combined mode. Theme selector strategy, color scheme adaptation, semantic token swapping, prefers-color-scheme detection.

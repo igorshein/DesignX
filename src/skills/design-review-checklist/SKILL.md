@@ -1,7 +1,7 @@
 # SKILL: Design Review Checklist
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Структурированный чеклист ревью: визуальная консистентность (цвета, отступы, радиусы), доступность (контраст, фокус, ARIA), specs (именование, export), content (орфография, тон).

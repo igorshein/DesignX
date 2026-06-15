@@ -1,7 +1,7 @@
 # SKILL: Typography Scale & Hierarchy
 
 ## Source
-DesignX Catalog · typography
+`DesignX Catalog`
 
 ## Purpose
 Построение modular type scale (1.25, 1.333), определение ролей в rem, line-height для заголовков и body, Material Design 3 scale как референс.

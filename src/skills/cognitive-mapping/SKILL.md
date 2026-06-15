@@ -1,7 +1,7 @@
 # SKILL: Cognitive Mapping
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Построение ментальных карт пользователей: когнитивные модели, восприятие информации, card sorting, tree testing.

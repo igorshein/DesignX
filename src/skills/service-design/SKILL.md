@@ -1,7 +1,7 @@
 # SKILL: Service Design
 
 ## Source
-DesignX Catalog · design-ops
+`DesignX Catalog`
 
 ## Purpose
 Сервис-дизайн: touchpoints, service blueprint, customer journey, frontstage/backstage, экосистемный подход.

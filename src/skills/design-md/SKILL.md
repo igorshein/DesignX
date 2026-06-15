@@ -1,7 +1,7 @@
 # SKILL: DESIGN.md Creator
 
 ## Source
-`google-labs-code` · [GitHub](https://github.com/VoltAgent/awesome-agent-skills)
+`awesome-agent-skills` · [GitHub](https://github.com/VoltAgent/awesome-agent-skills)
 
 ## Purpose
 Создание и управление файлами DESIGN.md — текстовой системы дизайна для ИИ-агентов.

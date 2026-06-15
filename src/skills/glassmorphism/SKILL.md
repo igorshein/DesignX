@@ -1,7 +1,7 @@
 # SKILL: Glassmorphism Design
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Эффект матового стекла: rgba фон, backdrop-filter: blur(), тонкая светлая рамка, для модальных окон, навигации, карточек.

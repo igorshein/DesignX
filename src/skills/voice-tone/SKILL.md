@@ -1,7 +1,7 @@
 # SKILL: Voice & Tone Definition
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Voice & tone: voice (характер бренда — неизменный), tone (настроение — меняется от контекста). Матрица tone: радость → ошибка → кризис → обычный день. Примеры фраз.

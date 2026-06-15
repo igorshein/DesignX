@@ -1,7 +1,7 @@
 # SKILL: Design-to-Code Automation
 
 ## Source
-DesignX Catalog · automation
+`DesignX`
 
 ## Purpose
 Автоматическая генерация кода из дизайна: design token pipelines, codegen, handoff automation. Устраняет ручной перенос дизайна в код.

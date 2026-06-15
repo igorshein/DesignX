@@ -1,7 +1,7 @@
 # SKILL: Authentication Flows
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Дизайн auth-потоков: sign in/up, OAuth (Google, GitHub), passwordless (magic link, SMS), MFA, reset password, session management. Минимум трения.

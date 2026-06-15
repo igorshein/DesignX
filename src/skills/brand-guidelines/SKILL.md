@@ -1,7 +1,7 @@
 # SKILL: Brand Guidelines Documentation
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Brand guidelines: логотип (правила использования, охранное поле), цвета (HEX, RGB, CMYK, pantone), типографика, фотография/иллюстрации, правила композиции, voice & tone.

@@ -1,7 +1,7 @@
 # SKILL: Menu Navigation Advanced
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Проектирование сложной навигации: mega-menu, breadcrumbs, вертикальная/горизонтальная иерархия, многоуровневые меню.

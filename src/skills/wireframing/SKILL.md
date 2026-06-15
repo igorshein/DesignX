@@ -1,7 +1,7 @@
 # SKILL: Wireframing
 
 ## Source
-DesignX Catalog · prototyping
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Создание вайрфреймов — базовых скелетов приложения: схемы экранов, навигация, ключевые элементы. Серые оттенки, минимум шрифтов, консистентность.

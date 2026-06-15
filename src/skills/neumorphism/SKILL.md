@@ -1,7 +1,7 @@
 # SKILL: Neumorphism Design
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Neumorphic интерфейсы: элементы выглядят выступающими/вдавленными через две тени. Низкий контраст, best для non-critical UI.

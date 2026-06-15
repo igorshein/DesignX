@@ -1,7 +1,7 @@
 # SKILL: Design Research
 
 ## Source
-DesignX Catalog · ux-research
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проведение и анализ пользовательских исследований: планирование интервью, usability-тестирование, анализ данных, journey maps, формулирование инсайтов.

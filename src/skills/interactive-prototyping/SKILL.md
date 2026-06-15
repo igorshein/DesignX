@@ -1,7 +1,7 @@
 # SKILL: Interactive Prototyping
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Настройка связей, smart animate, gestures (swipe, pinch), conditional logic (Figma variables), Protopie. Экспорт в Figma mirror и web.

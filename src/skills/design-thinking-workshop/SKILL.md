@@ -1,7 +1,7 @@
 # SKILL: Design Thinking Workshop
 
 ## Source
-DesignX Catalog · design-ops
+`DesignX Catalog`
 
 ## Purpose
 Фасилитация Design Thinking и Design Sprint: воркшоп-дизайн, методы генерации идей, прототипирование, тестирование с пользователями.

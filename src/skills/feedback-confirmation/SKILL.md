@@ -1,7 +1,7 @@
 # SKILL: Feedback & Confirmation
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Система фидбека: toast (2-3s auto dismiss), snackbar (action), confirmation (destructive/irreversible), success state, inline feedback. Типы: success, error, warning, info.

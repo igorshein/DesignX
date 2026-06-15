@@ -1,7 +1,7 @@
 # SKILL: Grid Systems Advanced
 
 ## Source
-DesignX Catalog · visual-design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Продвинутые техники построения сеток: модульные сетки, golden ratio в композиции, baseline grid для типографики, custom grid generation, responsive grid адаптация, subgrid, grid systems для сложных дашбордов и editorial layouts.

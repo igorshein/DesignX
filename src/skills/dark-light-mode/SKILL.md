@@ -1,7 +1,7 @@
 # SKILL: Dark/Light Mode Design
 
 ## Source
-DesignX Catalog · visual-design
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проектирование тёмных и светлых тем: WCAG-контраст, палитра для тёмного фона, elevation, prefers-color-scheme переключение.

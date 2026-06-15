@@ -1,7 +1,7 @@
 # SKILL: Cross-Platform Consistency
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Обеспечение единого UX на всех платформах: shared tokens, платформенная адаптация (HIG vs MD3), shared components с platform overrides, тестирование consistency.

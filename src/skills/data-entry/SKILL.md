@@ -1,7 +1,7 @@
 # SKILL: Data Entry Design
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Дизайн data entry: клавиатурная навигация (Tab, Enter), auto-save, autofill, validation (inline/deferred), smart defaults, undo/redo, bulk entry.

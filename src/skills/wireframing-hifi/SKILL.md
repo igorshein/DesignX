@@ -1,7 +1,7 @@
 # SKILL: Wireframing (Hi-Fi)
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 High-fidelity вайрфреймы с точными размерами, отступами, реальным контентом, типографикой и иконками. Grey-scale, без цвета, с контрастом.

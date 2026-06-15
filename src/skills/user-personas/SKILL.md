@@ -1,7 +1,7 @@
 # SKILL: User Personas Creation
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Создание пользовательских персон: proto-personas (быстрые), data-driven (из исследований), anti-personas (кого не делаем). Структура: имя, фото, цели, боли.

@@ -1,7 +1,7 @@
 # SKILL: Adaptive Design
 
 ## Source
-DesignX Catalog · responsive
+`DesignX Catalog`
 
 ## Purpose
 Adaptive vs responsive: фиксированные макеты для каждого breakpoint. Feature detection, device-specific UX, server-side adaptation (RESS).

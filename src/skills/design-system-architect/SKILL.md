@@ -1,7 +1,7 @@
 # SKILL: Design System Architect
 
 ## Source
-DesignX Catalog · design-system
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Целостная дизайн-система: от атомарных токенов до сложных паттернов. Структурирование палитры, шкалы типографики, отступов, иконок, анимаций и документации.

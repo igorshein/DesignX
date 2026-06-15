@@ -1,7 +1,7 @@
 # SKILL: Jobs-to-be-Done Framework
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Jobs-to-be-Done: функциональные, эмоциональные, социальные Jobs. Outcome statements, Job Map, Constraints. Фокус на «зачем» пользователь использует продукт.

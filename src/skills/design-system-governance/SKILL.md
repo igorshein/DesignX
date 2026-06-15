@@ -1,7 +1,7 @@
 # SKILL: Design System Governance
 
 ## Source
-DesignX Catalog · governance
+`DesignX`
 
 ## Purpose
 Управление дизайн-системой: contribution model, versioning, change management, DS roadmap, adoption metrics.

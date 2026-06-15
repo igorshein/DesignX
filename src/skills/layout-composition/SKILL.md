@@ -1,7 +1,7 @@
 # SKILL: Layout Composition (Grid Systems)
 
 ## Source
-DesignX Catalog · layout-composition
+`DesignX Catalog`
 
 ## Purpose
 Построение гибких сеток: 12-column grid, gutter 16-24px, responsive breakpoints (4→8→12 колонок), baseline grid на 4px/8px base unit.

@@ -1,7 +1,7 @@
 # SKILL: Focus Groups
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Проведение и модерация фокус-групп: групповая динамика, сценарии модерации, рекрутинг участников, анализ групповых обсуждений.

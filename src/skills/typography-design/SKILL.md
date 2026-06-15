@@ -1,7 +1,7 @@
 # SKILL: Typography Design
 
 ## Source
-DesignX Catalog · typography
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Профессиональная типографика: выбор шрифтовых пар, шкала MD3, межстрочный интервал, контроль контраста, запрет AI-шрифтов (Inter, Arial).

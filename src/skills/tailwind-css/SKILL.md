@@ -1,7 +1,7 @@
 # SKILL: Tailwind CSS Design
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Tailwind CSS в дизайн-системах: конфигурация темы (colors, spacing, fontFamily), custom classes via @apply, responsive prefixes, dark mode, плагины.

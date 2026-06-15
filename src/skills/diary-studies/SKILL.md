@@ -1,7 +1,7 @@
 # SKILL: Diary Studies
 
 ## Source
-DesignX Catalog · ux-research
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Метод дневниковых исследований для сбора контекстуальных данных о поведении пользователей во времени: дизайн дневника, частота записей, триггеры, анализ тематических паттернов, синтез инсайтов из лонгитюдных данных.

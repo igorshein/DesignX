@@ -1,7 +1,7 @@
 # SKILL: Design Pricing & Proposals
 
 ## Source
-DesignX Catalog · design-ops
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Методика оценки и ценообразования дизайн-услуг: value-based pricing vs hourly vs fixed, estimation техники (T-shirt sizing, three-point estimation), структура proposal, RFP responses, scope management, change order process, дизайн-контракты и NDA.

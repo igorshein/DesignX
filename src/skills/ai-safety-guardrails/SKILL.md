@@ -1,7 +1,7 @@
 # AI Safety Guardrails
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк SHIELD: Safety and usability are not opposites. Content moderation, bias detection, harm prevention, refusal design, logging.

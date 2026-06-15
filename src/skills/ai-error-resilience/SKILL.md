@@ -1,7 +1,7 @@
 # AI Error Resilience
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк RECOVER: Treat errors as design material. Hallucination recovery, graceful degradation, safe fallbacks, uncertainty communication.

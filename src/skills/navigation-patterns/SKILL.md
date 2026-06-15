@@ -1,7 +1,7 @@
 # SKILL: Navigation Patterns
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Выбор навигации по типу продукта: sidebar (complex apps), top nav (content), tabs (peer), breadcrumbs (deep), hamburger (mobile), bottom bar (native).

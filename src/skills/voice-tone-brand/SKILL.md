@@ -1,7 +1,7 @@
 # SKILL: Voice & Tone for Brand
 
 ## Source
-DesignX Catalog · voice
+`DesignX`
 
 ## Purpose
 Tone of Voice Guide: brand voice framework, tone matrix, коммуникационные принципы, voice guidelines для UI.

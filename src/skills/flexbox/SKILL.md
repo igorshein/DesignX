@@ -1,7 +1,7 @@
 # SKILL: Flexbox Layout
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Flexbox: flex-direction, justify-content, align-items, flex-wrap, gap, flex-grow/shrink/basis. Для компонентов, навигации, карточек, центрирования.

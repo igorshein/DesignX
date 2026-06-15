@@ -1,7 +1,7 @@
 # SKILL: Microcopy Design
 
 ## Source
-DesignX Catalog · content
+`DesignX`
 
 ## Purpose
 Дизайн UI-текстов: кнопки, error messages, placeholder, tooltips, empty states, confirmation dialogs.

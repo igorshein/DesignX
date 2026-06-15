@@ -1,7 +1,7 @@
 # SKILL: Search & Filter Design
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Дизайн поиска и фильтрации: search bar (постоянный/раскрывающийся), autocomplete/suggestions, faceted filters, результаты, пустое состояние. Главный принцип — мгновенный отклик, нигде не ждём кнопки «Применить».

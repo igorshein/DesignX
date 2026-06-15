@@ -1,7 +1,7 @@
 # SKILL: Prototyping
 
 ## Source
-DesignX Catalog · prototyping
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Создание кликабельных прототипов для тестирования сценариев и демонстрации функциональности: переходы между экранами, состояния, интерактивные элементы.

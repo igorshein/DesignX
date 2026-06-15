@@ -1,7 +1,7 @@
 # SKILL: Checkbox, Radio & Toggle
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Дизайн элементов выбора: checkbox, radio button, toggle/switch. Custom controls, indeterminate state, группа, accessibility.

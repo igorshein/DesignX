@@ -1,7 +1,7 @@
 # SKILL: Usability Benchmarking
 
 ## Source
-DesignX Catalog · testing
+`DesignX`
 
 ## Purpose
 Бенчмаркинг юзабилити: comparative testing, SUS benchmarking, competitive UX analysis, baseline metrics.

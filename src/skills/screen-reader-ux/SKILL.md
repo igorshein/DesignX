@@ -1,7 +1,7 @@
 # SKILL: Screen Reader UX
 
 ## Source
-DesignX Catalog · accessibility
+`DesignX Catalog`
 
 ## Purpose
 Тестирование и дизайн для screen reader: NVDA, VoiceOver, JAWS, ARIA-атрибуты, reading order, keyboard navigation.

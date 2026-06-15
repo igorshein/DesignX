@@ -1,7 +1,7 @@
 # SKILL: AR UX Design
 
 ## Source
-DesignX Catalog · ar-vr
+`DesignX`
 
 ## Purpose
 Дизайн дополненной реальности: spatial interfaces, AR interactions, world-locked UI, environment understanding.

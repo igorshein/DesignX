@@ -1,7 +1,7 @@
 # SKILL: CSS Grid Layout
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 CSS Grid Layout: grid-template-columns/rows, grid-area, auto-fit/auto-fill, minmax(), gap, responsive без media queries, grid placement.

@@ -1,7 +1,7 @@
 # SKILL: Heuristic Evaluation (NN/g)
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Экспертная оценка по 10 эвристикам NN/g: visibility, match, user control, consistency, error prevention, recognition, flexibility, aesthetics, recovery, help.

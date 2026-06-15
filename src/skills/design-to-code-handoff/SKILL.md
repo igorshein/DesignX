@@ -1,7 +1,7 @@
 # Design-to-Code Handoff
 
 ## Source
-DesignX Catalog · design-system
+`plugin87/ux-ui-agent-skills` · [GitHub](https://github.com/plugin87/ux-ui-agent-skills)
 
 ## Purpose
 Complete design-to-engineering bridge: token mapping, 8-state documentation, edge case checklists, animation specs, responsive behavior, accessibility requirements.

@@ -1,7 +1,7 @@
 # SKILL: Responsive Design Principles
 
 ## Source
-DesignX Catalog · responsive
+`DesignX Catalog`
 
 ## Purpose
 Responsive design: breakpoints (576, 768, 992, 1200), fluid grids (%), flexible images, media queries, mobile-first подход, container queries.

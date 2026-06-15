@@ -1,7 +1,7 @@
 # SKILL: Page Transitions
 
 ## Source
-DesignX Catalog · motion
+`DesignX Catalog`
 
 ## Purpose
 Анимированные переходы: shared element transitions, directional (push/slide), loading transition (skeleton → content). 300ms для страницы.

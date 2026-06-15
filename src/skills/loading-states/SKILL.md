@@ -1,7 +1,7 @@
 # SKILL: Loading States Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Состояния загрузки: skeleton (структура до контента), spinner (<3s), progress bar (>3s), shimmer. Perceived performance: показать контент частями.

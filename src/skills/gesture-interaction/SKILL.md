@@ -1,7 +1,7 @@
 # SKILL: Gesture Interaction
 
 ## Source
-DesignX Catalog · gestures
+`DesignX`
 
 ## Purpose
 Жестовое взаимодействие: swipe, pinch, long-press, haptic feedback, multi-touch gestures, discoverability.

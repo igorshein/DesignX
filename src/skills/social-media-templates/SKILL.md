@@ -1,7 +1,7 @@
 # SKILL: Social Media Templates
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Дизайн шаблонов для соцсетей: единый визуальный язык, адаптация под разные платформы (Instagram 1:1, LinkedIn 1.91:1, Twitter 16:9), Stories, карусели, обложки.

@@ -1,7 +1,7 @@
 # SKILL: Design Sprint Facilitation
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 5-дневный Design Sprint: Understand, Diverge (Crazy 8s), Decide (dot voting), Prototype (Figma), Test (5 пользователей). Фасилитация, тайминг.

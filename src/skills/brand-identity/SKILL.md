@@ -1,7 +1,7 @@
 # SKILL: Brand Identity
 
 ## Source
-DesignX Catalog · brand
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Разработка и документирование визуальной идентичности: бренд-гайд, логотип, палитра, типографика, voice & tone правила.

@@ -1,7 +1,7 @@
 # SKILL: Variable Fonts
 
 ## Source
-DesignX Catalog · fonts
+`DesignX`
 
 ## Purpose
 Кастомизация вариативных шрифтов: font axes (wght, wdth, opsz, slnt, ital), оптический размер, производительность, анимация осей.

@@ -1,7 +1,7 @@
 # SKILL: Design Systems Architecture
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Архитектура дизайн-систем для масштабирования: shared vs local tokens, versioning, npm distribution, federation portal, contribution model.

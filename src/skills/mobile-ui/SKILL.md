@@ -1,7 +1,7 @@
 # SKILL: Mobile UI Design
 
 ## Source
-DesignX Catalog · mobile
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проектирование мобильных интерфейсов с учетом Apple HIG и Material Design 3: safe areas, touch targets 44pt, жесты, нативная навигация.

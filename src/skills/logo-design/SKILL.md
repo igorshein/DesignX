@@ -1,7 +1,7 @@
 # SKILL: Logo Design Principles
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Дизайн логотипов: symbol (знак), wordmark (шрифтовой), combination (комбинированный). Принципы: простота, запоминаемость, масштабируемость, релевантность, долговечность.

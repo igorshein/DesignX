@@ -1,7 +1,7 @@
 # SKILL: CSS Variables Architecture
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 @property для typed variables, циклические зависимости, наследование, performance, CSS-layer integration, Houdini API для расширений.

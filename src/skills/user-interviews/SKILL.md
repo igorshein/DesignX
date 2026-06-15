@@ -1,7 +1,7 @@
 # SKILL: User Interviews
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Планирование и проведение глубинных интервью: гайд, active listening, 5 Whys, избегание leading questions, синтез инсайтов.

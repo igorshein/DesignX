@@ -1,7 +1,7 @@
 # AI Output & Multimodal Design
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк RENDER: AI generates output, humans consume meaning. Formatting, hierarchy, cross-modal, streaming, editable results.

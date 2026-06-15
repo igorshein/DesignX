@@ -1,7 +1,7 @@
 # Design Strategy & Framing
 
 ## Source
-DesignX Catalog · ux-research
+`ghaida/intent` · [GitHub](https://github.com/ghaida/intent)
 
 ## Purpose
 Problem framing through the Five Foundational Questions. Research synthesis, opportunity sizing, hypothesis definition, competitive analysis.

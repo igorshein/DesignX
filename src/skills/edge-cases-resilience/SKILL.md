@@ -1,7 +1,7 @@
 # Edge Cases & Resilience
 
 ## Source
-DesignX Catalog · critique
+`ghaida/intent` · [GitHub](https://github.com/ghaida/intent)
 
 ## Purpose
 State inventory (9 states per screen: idle, loading, empty, partial, error, success, warning, disabled, edge case), error recovery, first-run, stress testing.

@@ -1,7 +1,7 @@
 # SKILL: Figma API & Plugins Dev
 
 ## Source
-DesignX Catalog · plugins
+`DesignX`
 
 ## Purpose
 Разработка Figma-плагинов и работа с REST API: автоматизация повторяющихся задач, кастомные плагины, интеграция дизайн-токенов в CI/CD.

@@ -1,7 +1,7 @@
 # SKILL: Moodboard Advanced
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Продвинутые мудборды: ассоциативные карты, concept visualization, эстетическое направление, визуальное исследование.

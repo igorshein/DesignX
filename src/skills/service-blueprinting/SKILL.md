@@ -1,7 +1,7 @@
 # SKILL: Service Blueprinting
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Детальные карты сервиса: frontstage (пользовательский опыт), backstage (внутренние процессы), support systems, line of visibility.

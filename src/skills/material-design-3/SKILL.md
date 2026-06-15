@@ -1,7 +1,7 @@
 # SKILL: Material Design 3 Implementation
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Material Design 3: Dynamic Color (Monet), MD3 type scale, цветовые роли, tonal palette elevation, M3 компоненты (FAB, cards, dialogs).

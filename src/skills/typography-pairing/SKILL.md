@@ -1,7 +1,7 @@
 # SKILL: Typography Pairing
 
 ## Source
-DesignX Catalog · typography
+`DesignX Catalog`
 
 ## Purpose
 Подбор гармоничных шрифтовых пар: контрастное (serif + sans), согласованное (один family, разные weight), иерархическое (display + text + mono).

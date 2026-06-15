@@ -1,7 +1,7 @@
 # SKILL: Modal & Dialog Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Проектирование модальных окон и диалогов: confirmations, alerts, full-screen modals, tray/drawer, focus trapping, animations.

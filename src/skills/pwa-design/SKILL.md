@@ -1,7 +1,7 @@
 # SKILL: PWA Design
 
 ## Source
-DesignX Catalog · mobile
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Дизайн Progressive Web Apps: offline-first архитектура (снабжение контента, очередь действий, синхронизация при подключении), app-shell модель, install prompt UX, push notifications дизайн, splash screen, responsive адаптация, performance budgets для PWA.

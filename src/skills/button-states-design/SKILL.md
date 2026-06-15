@@ -1,7 +1,7 @@
 # SKILL: Button States Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Все состояния кнопок: default, hover, active, focus, disabled, loading, pressed, visited. Системный подход к визуальной обратной связи.

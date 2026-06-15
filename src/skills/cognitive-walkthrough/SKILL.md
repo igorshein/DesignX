@@ -1,7 +1,7 @@
 # SKILL: Cognitive Walkthrough
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Пошаговая оценка задач: цели, действия, понимание, feedback. Фокус на learnability для новых пользователей. 3-5 экспертов на задачу.

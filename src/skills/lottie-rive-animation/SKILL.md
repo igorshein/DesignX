@@ -1,7 +1,7 @@
 # SKILL: Lottie/Rive Animation
 
 ## Source
-DesignX Catalog · motion
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Создание и интеграция векторных анимаций: Lottie (Bodymovin, After Effects → JSON), Rive (State Machine, interactive timelines, run-time), оптимизация размера, кастомные интерактивные элементы, анимация иконок и иллюстраций, кросс-платформенный экспорт.

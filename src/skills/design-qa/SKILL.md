@@ -1,7 +1,7 @@
 # SKILL: Design QA Process
 
 ## Source
-DesignX Catalog · critique
+`DesignX`
 
 ## Purpose
 Процесс QA дизайна: визуальное сравнение (дизайн vs реализация), функциональное тестирование (состояния, переходы), responsive, accessibility, баг-трекинг (bug severity).

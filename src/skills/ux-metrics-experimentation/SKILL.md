@@ -1,7 +1,7 @@
 # UX Metrics & Experimentation
 
 ## Source
-DesignX Catalog · ux-research
+`ghaida/intent` · [GitHub](https://github.com/ghaida/intent)
 
 ## Purpose
 HEART (Happiness, Engagement, Adoption, Retention, Task Success), Goal-Signal-Metric mapping, A/B test design, funnel analysis, qualitative-quantitative triangulation.

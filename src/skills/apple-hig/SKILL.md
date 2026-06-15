@@ -1,7 +1,7 @@
 # SKILL: Apple HIG Implementation
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Интерфейсы по Apple HIG: tab bar, navigation bar, sheets, SF Symbols, Vibrancy, safe areas, Dynamic Type, visionOS адаптация.

@@ -1,7 +1,7 @@
 # SKILL: Brand Color Palette
 
 ## Source
-DesignX Catalog · color-theory
+`DesignX Catalog`
 
 ## Purpose
 Разработка бренд-палитры: primary (основной), secondary (вспомогательный), accent (акцентный), neutral (фоны, текст), semantic (success, error, warning). Шкала 50-900 для каждого.

@@ -1,7 +1,7 @@
 # SKILL: Marketing Collateral Design
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Дизайн маркетинговых материалов с соблюдением бренд-гайда: брошюры (A4, letter), флаеры, буклеты, баннеры (разные размеры), merch, визитки. Print vs digital specs.

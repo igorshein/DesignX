@@ -1,7 +1,7 @@
 # SKILL: Onboarding Flows
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Дизайн онбординга: welcome screens, feature discovery (tooltips, hotspots), activation flow (signup → first success), progressive disclosure, skip option.

@@ -1,7 +1,7 @@
 # SKILL: Semantic HTML
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 Семантический HTML для SEO и доступности: header, nav, main, section, article, aside, footer, figure, details, time. Иерархия заголовков h1-h6.

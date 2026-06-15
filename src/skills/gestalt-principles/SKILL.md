@@ -1,7 +1,7 @@
 # SKILL: Gestalt Principles Application
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Применение законов гештальта: близость, подобие, замыкание, фигура-фон, общая судьба для создания интуитивных интерфейсов.

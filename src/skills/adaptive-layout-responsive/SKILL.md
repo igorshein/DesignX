@@ -1,7 +1,7 @@
 # SKILL: Adaptive Layout & Responsive
 
 ## Source
-DesignX Catalog · responsive
+`DesignX Catalog`
 
 ## Purpose
 Адаптивная вёрстка и responsive design: breakpoints, fluid grids, container queries, mobile-first, content-first.

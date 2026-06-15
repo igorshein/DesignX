@@ -1,7 +1,7 @@
 # SKILL: Survey Design
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Создание UX-опросов: SUS (10 вопросов, 0-100), NPS (0-10), CSAT (1-5), Likert шкалы, ветвление, длина 3-5 минут, пилотирование.

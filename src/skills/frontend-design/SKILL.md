@@ -1,7 +1,7 @@
 # SKILL: Frontend Design
 
 ## Source
-`anthropics/skills` · [GitHub](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md)
+`anthropics/skills` · [GitHub](https://github.com/anthropics/skills)
 
 ## Purpose
 Создание отличительных, production-grade фронтенд-интерфейсов с высоким уровнем дизайна.

@@ -1,7 +1,7 @@
 # SKILL: UX KPIs Dashboard
 
 ## Source
-DesignX Catalog · metrics
+`DesignX`
 
 ## Purpose
 Метрики успеха UX: NPS, SUS, CES, task success rate. Проектирование KPI-дашбордов для продуктовых команд.

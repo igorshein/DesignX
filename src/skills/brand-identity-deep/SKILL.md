@@ -1,7 +1,7 @@
 # SKILL: Brand Identity Deep
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Углублённая проработка бренд-айдентики: brand platform, миссия/видение/ценности, позиционирование, бренд-стратегия.

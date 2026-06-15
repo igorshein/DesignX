@@ -1,7 +1,7 @@
 # SKILL: Component Naming Standards
 
 ## Source
-DesignX Catalog · components
+`DesignX`
 
 ## Purpose
 Стандарты именования компонентов: DS taxonomy, naming conventions, layer organization, auto-layout naming.

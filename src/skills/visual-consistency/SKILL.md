@@ -1,7 +1,7 @@
 # SKILL: Visual Consistency
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Поддержание визуальной консистентности: единые radius, spacing scale, цвета из токенов, проверка 3+ экранов на единый язык.

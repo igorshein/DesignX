@@ -1,7 +1,7 @@
 # SKILL: Scroll-Based Animation
 
 ## Source
-DesignX Catalog · interaction
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проектирование анимаций на основе скролла: parallax эффекты (многослойный, горизонтальный, reverse), ScrollTrigger (GSAP), scroll-driven narratives, scroll-snap, progress-based анимации, Intersection Observer, производительность и jank-free скролл.

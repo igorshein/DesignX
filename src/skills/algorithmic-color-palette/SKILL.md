@@ -1,7 +1,7 @@
 # Algorithmic Color Palette
 
 ## Source
-DesignX Catalog · color-theory
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Derive states and brand-tinted greys algorithmically. 11-shade scale, semantic color derivation, accessible contrast verification.

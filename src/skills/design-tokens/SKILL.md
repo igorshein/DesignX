@@ -1,7 +1,7 @@
 # SKILL: Design Tokens Creation
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Система дизайн-токенов: global → alias → component, консистентный нейминг (color.bg.surface.primary), формат JSON, экспорт в CSS/JSON/Style Dictionary.

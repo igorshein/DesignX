@@ -1,7 +1,7 @@
 # SKILL: Design Critique Facilitation
 
 ## Source
-DesignX Catalog · design-ops
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Методика проведения эффективных дизайн-критик: структура сессии, правила конструктивной обратной связи, I like / I wish / What if, разделение личности и работы, action items и follow-up.

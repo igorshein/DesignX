@@ -1,7 +1,7 @@
 # SKILL: Email Newsletter Design
 
 ## Source
-DesignX Catalog · content
+`DesignX`
 
 ## Purpose
 Email-маркетинг и дизайн рассылок: адаптивная вёрстка писем, конверсия, тёмная тема, email-стратегия.

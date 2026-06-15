@@ -1,7 +1,7 @@
 # SKILL: Heatmap Analysis
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Анализ тепловых карт: клики, скролл, движение мыши (прокси внимания), eye-tracking. Выявление мёртвых зон и неочевидных паттернов.

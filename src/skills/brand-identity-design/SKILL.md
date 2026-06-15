@@ -1,7 +1,7 @@
 # SKILL: Brand Identity Design
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Полный цикл создания бренда: исследование рынка и аудитории, positioning, brand strategy, visual identity (логотип, палитра, типографика, паттерны), brand guidelines.

@@ -1,7 +1,7 @@
 # SKILL: Expert Review
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Экспертный обзор интерфейса силами domain expert: эвристическая оценка, когнитивный walkthrough, предметная экспертиза.

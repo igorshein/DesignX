@@ -1,7 +1,7 @@
 # SKILL: Color Psychology
 
 ## Source
-DesignX Catalog · color-theory
+`DesignX Catalog`
 
 ## Purpose
 Применение психологии цвета в интерфейсах и брендинге: культурные различия, эмоциональное воздействие, ассоциации брендов, адаптация под аудиторию.

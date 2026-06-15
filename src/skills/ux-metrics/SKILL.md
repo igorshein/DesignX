@@ -1,7 +1,7 @@
 # SKILL: UX Metrics & KPIs
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Определение UX-метрик: A.C.T. (Attitude, Cognition, Task), HEART framework (Happiness, Engagement, Adoption, Retention, Task success), baseline + target.

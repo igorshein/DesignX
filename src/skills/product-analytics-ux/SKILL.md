@@ -1,7 +1,7 @@
 # SKILL: Product Analytics for UX
 
 ## Source
-DesignX Catalog · analytics
+`DesignX`
 
 ## Purpose
 Product-аналитика для UX-решений: Amplitude, Mixpanel, funnels, cohorts, product-led growth метрики.

@@ -1,7 +1,7 @@
 # SKILL: Visual Balance & Symmetry
 
 ## Source
-DesignX Catalog · layout-composition
+`DesignX Catalog`
 
 ## Purpose
 Создание сбалансированных композиций: симметрия (стабильная), асимметрия (динамичная), оптическая компенсация веса элементов.

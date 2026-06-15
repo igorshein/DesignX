@@ -1,7 +1,7 @@
 # SKILL: Journey Mapping
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Customer Journey Maps: этапы (awareness→advocacy), touchpoints, эмоциональная кривая, pain points, opportunities. Полный цикл пользователя.

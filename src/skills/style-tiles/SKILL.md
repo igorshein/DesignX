@@ -1,7 +1,7 @@
 # SKILL: Style Tiles
 
 ## Source
-DesignX Catalog · visual-design
+`DesignX Catalog`
 
 ## Purpose
 Промежуточный артефакт между мудбордом и дизайном: цвета, шрифты, текстуры, стиль кнопок/форм/иконок, mood. 3 варианта для обсуждения.

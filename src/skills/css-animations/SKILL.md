@@ -1,7 +1,7 @@
 # SKILL: CSS Animations
 
 ## Source
-DesignX Catalog · frontend-dev
+`DesignX Catalog`
 
 ## Purpose
 CSS анимации: transition (простая), @keyframes (сложная), transform (translate, scale, rotate), will-change, GPU-ускорение, animation-delay/fill-mode.

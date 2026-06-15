@@ -1,7 +1,7 @@
 # SKILL: Redline Specifications
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Создание redline спецификаций для разработчиков: точные размеры, отступы, padding, margin, состояния, responsive поведение. Ручной или через Figma Dev Mode.

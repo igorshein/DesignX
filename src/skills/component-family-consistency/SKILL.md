@@ -1,7 +1,7 @@
 # Component Family Consistency
 
 ## Source
-DesignX Catalog · design-system
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Shared radius, colour, height for related components (buttons, inputs, pills). Visual alignment, consistent padding, font sizes within families.

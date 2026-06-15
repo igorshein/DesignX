@@ -1,7 +1,7 @@
 # SKILL: Remote Design Sprint
 
 ## Source
-DesignX Catalog · process
+`DesignX`
 
 ## Purpose
 Удалённые дизайн-спринты: FigJam facilitation, async collaboration, sprint planning, remote workshop техники.

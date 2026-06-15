@@ -1,7 +1,7 @@
 # SKILL: Design Debt Assessment
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Аудит дизайн-долга: неконсистентные компоненты, устаревшие токены, дублирование, отсутствие документации. Матрица severity + effort для приоритизации рефакторинга.

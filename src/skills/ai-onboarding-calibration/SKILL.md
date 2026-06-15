@@ -1,7 +1,7 @@
 # AI Onboarding & Calibration
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк CALIBRATE: Onboarding is calibration, not tutorial. Progressive disclosure, mental model calibration, expectation setting, trust building.

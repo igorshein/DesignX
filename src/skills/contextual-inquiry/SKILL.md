@@ -1,7 +1,7 @@
 # SKILL: Contextual Inquiry
 
 ## Source
-DesignX Catalog · ux-research
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Метод контекстуального опроса и наблюдения: master-apprentice model, сбор данных в естественной среде пользователя, четыре этапа — контекст, партнёрство, интерпретация, фокус. Анализ артефактов, рабочих процессов и среды.

@@ -1,7 +1,7 @@
 # Generative UI Design
 
 ## Source
-DesignX Catalog · interaction
+`Research`
 
 ## Purpose
 Intent-driven component selection, progressive streaming, context-aware layouts, predictable surface envelopes, user steering, deterministic fallbacks.

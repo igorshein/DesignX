@@ -1,7 +1,7 @@
 # SKILL: Tree Testing
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Проверка IA: пользователи ищут контент в текстовом дереве. Метрики: success rate (>80%), directness, time. Итеративное улучшение до дизайна.

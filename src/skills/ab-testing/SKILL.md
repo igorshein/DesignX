@@ -1,7 +1,7 @@
 # SKILL: A/B Testing Design
 
 ## Source
-DesignX Catalog · ux-research
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Проектирование A/B-тестов: ICE гипотезы, варианты дизайна, primary/secondary метрики, размер выборки, p-value, confidence intervals.

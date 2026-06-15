@@ -1,7 +1,7 @@
 # SKILL: Visual Regression Testing
 
 ## Source
-DesignX Catalog · testing
+`DesignX`
 
 ## Purpose
 Визуальное регрессионное тестирование: Percy, Chromatic, screenshot diff, baseline management, CI-интеграция.

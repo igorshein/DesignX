@@ -1,7 +1,7 @@
 # SKILL: Wireframing (Low-Fi)
 
 ## Source
-DesignX Catalog · prototyping
+`DesignX Catalog`
 
 ## Purpose
 Low-fidelity вайрфреймы: быстрые наброски структуры экрана. Hand-drawn (бумага) для скорости, цифровые (Figma) для удалённой работы. Минимум деталей.

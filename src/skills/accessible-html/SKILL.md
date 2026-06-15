@@ -1,7 +1,7 @@
 # SKILL: Accessible HTML Structure
 
 ## Source
-DesignX Catalog · accessibility
+`DesignX Catalog`
 
 ## Purpose
 Доступный HTML: semantic landmarks (header, nav, main, footer), ARIA (role, aria-label, aria-describedby), focus management (tabindex, :focus-visible), form labels.

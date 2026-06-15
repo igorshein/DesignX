@@ -1,7 +1,7 @@
 # SKILL: Usability Testing
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Организация юзабилити-тестирования: moderated/unmoderated, сценарии задач, метрики (success rate, time, errors), think aloud, отчёт.

@@ -1,7 +1,7 @@
 # SKILL: Design QA Process
 
 ## Source
-DesignX Catalog · testing
+`DesignX`
 
 ## Purpose
 Приёмка дизайна: pixel-perfect проверка, QA checklist, design acceptance criteria, sign-off workflow.

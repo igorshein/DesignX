@@ -1,7 +1,7 @@
 # SKILL: Ethnographic Research
 
 ## Source
-DesignX Catalog · ux-research
+`DesignX Catalog`
 
 ## Purpose
 Этнографическое исследование пользователей: field study, контекстуальное наблюдение, культурные особенности, глубинные инсайты.

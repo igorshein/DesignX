@@ -1,7 +1,7 @@
 # SKILL: UX Review
 
 ## Source
-`designer-skills` · Nielsen Norman Group
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Комплексное UX-ревью на основе эвристик NN/g и принципов визуального дизайна.

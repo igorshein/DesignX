@@ -1,7 +1,7 @@
 # SKILL: UX Roadmap
 
 ## Source
-DesignX Catalog · design-ops
+`DesignX Catalog`
 
 ## Purpose
 UX-стратегия и roadmapping: планирование UX-активностей, OKRs для дизайна, приоритизация, stakeholder alignment.

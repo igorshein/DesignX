@@ -1,7 +1,7 @@
 # SKILL: A/B Testing Analysis
 
 ## Source
-DesignX Catalog · ux-research
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Полный цикл A/B тестирования: формулировка гипотезы, расчёт выборки, duration теста, статистическая значимость (p-value, confidence intervals), practical significance, multiple testing correction, интерпретация результатов и принятие решений.

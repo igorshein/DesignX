@@ -1,7 +1,7 @@
 # SKILL: Gradient Design
 
 ## Source
-DesignX Catalog · color-theory
+`DesignX Catalog`
 
 ## Purpose
 Использование градиентов в UI: линейные и радиальные для фонов, conic для спиннеров, mesh для глубины. Избегание пурпурных AI-паттернов.

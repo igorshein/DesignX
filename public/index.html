@@ -64,6 +64,9 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 .select-star{font-size:1rem;cursor:pointer;user-select:none;opacity:.3;transition:opacity .15s}
 .card:hover .select-star,.card.selected .select-star{opacity:1}
 .card.selected .select-star{color:var(--accent-primary)}
+.card[style*="--card-acc"]:hover{border-color:var(--card-acc)!important}
+.card[style*="--card-acc"].selected{border-color:var(--card-acc)!important;background:color-mix(in srgb,var(--card-acc) 6%,transparent)}
+.card:hover .preview-frame{box-shadow:0 0 0 1px var(--card-acc,rgba(255,255,255,.1))}
 
 /* Color swatches */
 .swatch-row{display:flex;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
@@ -538,8 +541,9 @@ function renderAllSystems() {
   document.getElementById('systems-grid').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';
 }
 let dsPhilosophyFilter=null,dsProductFilter=null;
-function renderDsCard(ds){const sel=selectedSystemIds.has(ds.id);const tc=ds.tokens_css;const style=tc?`--pbg:${tc.bg};--ptxt:${tc.text};--pacc:${tc.accent};--prad:${tc.radius};--pfont:${tc.font};--pborder:${tc.border}`:'';const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
-  return `<div class="card${sel?' selected':''}" onclick="toggleDs('${ds.id}')" ondblclick="openDsPreview('${ds.id}')"><div class="card-header"><h4>${ds.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="meta"><span>🎨 ${philName}</span><span>📁 ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</span></div>${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
+function renderDsCard(ds){const sel=selectedSystemIds.has(ds.id);const tc=ds.tokens_css;const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
+  const cardStyle=tc?`--card-bg:${tc.bg};--card-txt:${tc.text};--card-acc:${tc.accent};--card-rad:${tc.radius||'6px'};--card-font:${tc.font||'JetBrains Mono'};--card-brd:${tc.border};--card-elev:${tc.bg_elevated};--card-muted:${tc.text_muted}`:'';
+  return `<div class="card${sel?' selected':''}" style="${cardStyle}" onclick="toggleDs('${ds.id}")" ondblclick="openDsPreview('${ds.id}')">${tc?`<div class="card-accent" style="background:${tc.accent};margin:-1rem -1rem .5rem -1rem;height:3px;border-radius:6px 6px 0 0"></div>`:''}<div class="card-header"><h4>${ds.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="meta"><span>🎨 ${philName}</span><span>📁 ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</span></div>${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
 }
 function renderMiniPreview(tc){
   return `<div class="preview-frame" style="background:${tc.bg};color:${tc.text};font-family:${tc.font}">
@@ -655,14 +659,46 @@ function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего на�
 
 // ── Original file fetching ──────────────────────────────────────
 // Tries to load original upstream SKILL.md/DESIGN.md/README.md from src/originals/
+// Supports multiple directory naming conventions across all sources.
 async function fetchOriginal(item) {
   if (!item.source || !item.id) return null;
-  const base = `src/originals/${item.source}/${item.id}/`;
-  for (const file of ['SKILL.md', 'DESIGN.md', 'CLAUDE.md', 'README.md']) {
-    try {
-      const resp = await fetch(base + file);
+  const files = ['SKILL.md', 'DESIGN.md', 'CLAUDE.md', 'README.md'];
+
+  // Known ID prefixes to strip for subdirectory lookup
+  const prefixes = ['design-md-', 'skill-design-', 'ndroussi-', 'soulcore-', 'dimabraven-', 'mae-', 'mitsuhiko-'];
+  let stripped = item.id;
+  for (const pfx of prefixes) { if (stripped.startsWith(pfx)) { stripped = stripped.slice(pfx.length); break; } }
+
+  // Special ID-to-subdir overrides
+  const specialSubdir = { 'ui-engine': 'ui', 'cc-design': 'cc-design' };
+  if (specialSubdir[item.id]) stripped = specialSubdir[item.id];
+
+  // Compute base path: works on both local dev (/) and GitHub Pages (/repo-name/)
+  const basePath = document.querySelector('base')?.getAttribute('href') || 
+    window.location.pathname.replace(/\/[^/]*$/, '/');
+  const originalsBase = basePath.replace(/\/$/, '') + '/src/originals/';
+
+  // Collect candidate base directories (de-duplicated)
+  const bases = [`${originalsBase}${item.source}/`];
+  if (item.source.includes('/')) {
+    bases.push(`${originalsBase}${item.source.replace('/', '-')}/`);  // new sources
+    const [org, repo] = item.source.split('/');
+    bases.push(`${originalsBase}${org}/${repo}/`);                   // old sources
+    bases.push(`${originalsBase}${org}/`);                           // some old sources
+  }
+
+  // File candidates per base: subdir/file, root/file, subdir as .md
+  for (const base of [...new Set(bases)]) {
+    for (const file of files) {
+      try {
+        const resp = await fetch(base + stripped + '/' + file);
+        if (resp.ok) return await resp.text();
+      } catch {}
+    }
+    try { // dimabraven-style: subdir.md
+      const resp = await fetch(base + stripped + '/' + stripped + '.md');
       if (resp.ok) return await resp.text();
-    } catch { /* file:// or network error → skip */ }
+    } catch {}
   }
   return null;
 }

@@ -1,7 +1,7 @@
 # SKILL: UX Audit
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Комплексный UX-аудит: heuristic evaluation, task analysis, content audit, accessibility audit, competitive benchmarking. Отчёт с приоритизированными рекомендациями.

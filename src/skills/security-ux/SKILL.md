@@ -1,7 +1,7 @@
 # Security UX Design
 
 ## Source
-DesignX Catalog · interaction
+`Research`
 
 ## Purpose
 MFA flows, password creation/management UI, breach notifications, trust indicators, security settings that users can actually follow.

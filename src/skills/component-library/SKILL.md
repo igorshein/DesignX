@@ -1,7 +1,7 @@
 # SKILL: Component Library Architecture
 
 ## Source
-DesignX Catalog · design-system
+`DesignX Catalog`
 
 ## Purpose
 Архитектура component library: атомарный дизайн, tree-shaking (ESM exports), theming через Context/CSS tokens, типобезопасность (TypeScript), Storybook docs.

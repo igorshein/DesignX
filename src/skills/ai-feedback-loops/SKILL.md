@@ -1,7 +1,7 @@
 # AI Feedback Loops
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк SIGNAL: Feedback is a transaction. RLHF UX, preference ranking, human-in-the-loop, feedback collection, learning signal design.

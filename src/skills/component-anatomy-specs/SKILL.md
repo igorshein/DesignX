@@ -1,7 +1,7 @@
 # Component Anatomy & Specs
 
 ## Source
-DesignX Catalog · design-system
+`plugin87/ux-ui-agent-skills` · [GitHub](https://github.com/plugin87/ux-ui-agent-skills)
 
 ## Purpose
 Design components with full specs: anatomy diagram, variant matrix, state mapping, token references, accessibility requirements, responsive behavior, usage guidelines.

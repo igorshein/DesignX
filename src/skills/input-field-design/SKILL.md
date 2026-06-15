@@ -1,7 +1,7 @@
 # SKILL: Input Field Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Дизайн полей ввода: типы input'ов, валидация, маски ввода, error/success states, autofill, accessibility.

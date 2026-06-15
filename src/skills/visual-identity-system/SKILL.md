@@ -1,7 +1,7 @@
 # SKILL: Visual Identity System
 
 ## Source
-DesignX Catalog · brand
+`DesignX Catalog`
 
 ## Purpose
 Создание системы визуальной идентификации: brand asset system, компонентный подход к айдентике, масштабируемые визуальные элементы.

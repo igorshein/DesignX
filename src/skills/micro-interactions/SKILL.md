@@ -1,7 +1,7 @@
 # SKILL: Micro-interactions Design
 
 ## Source
-DesignX Catalog · interaction
+`DesignX Catalog`
 
 ## Purpose
 Структура: trigger → rules → feedback → loops. 100-300ms, ease-out/spring, haptic feedback. Примеры: like, toggle, pull to refresh.

@@ -1,7 +1,7 @@
 # SKILL: Component Design
 
 ## Source
-DesignX Catalog · design-system
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Дизайн UI-компонентов с состояниями (rest, hover, active, disabled, focus), touch targets 44pt, консистентными отступами и семантикой.

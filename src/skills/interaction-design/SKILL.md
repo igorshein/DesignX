@@ -1,7 +1,7 @@
 # SKILL: Interaction Design
 
 ## Source
-DesignX Catalog · interaction
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Навык проектирования интерактивных продуктов: состояния кнопок, hover-эффекты, анимации переходов, загрузки, ошибки, пустые состояния и микровзаимодействия.

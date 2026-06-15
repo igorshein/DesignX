@@ -1,7 +1,7 @@
 # SKILL: Mobile Gestures & Haptics
 
 ## Source
-DesignX Catalog · mobile
+`DesignX Catalog`
 
 ## Purpose
 Тактильная обратная связь и системные жесты в мобильных интерфейсах: haptic feedback, gesture recognition, iOS/Android patterns.

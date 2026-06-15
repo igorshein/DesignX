@@ -1,7 +1,7 @@
 # SKILL: Typography for Readability
 
 ## Source
-DesignX Catalog · typography
+`DesignX Catalog`
 
 ## Purpose
 Настройка параметров текста для читаемости: оптимальная длина строки (45-75 символов), межстрочный интервал (1.5-1.6), трекинг, контраст текста.

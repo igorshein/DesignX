@@ -1,7 +1,7 @@
 # SKILL: Version Control for Design
 
 ## Source
-DesignX Catalog · design-ops
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Применение Git-воркфлоу в дизайне: commit-стратегии, branching model для дизайн-файлов, code review для дизайн-кода, Figma version history vs Git, автоматизация экспорта ассетов через CI/CD.

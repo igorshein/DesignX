@@ -1,7 +1,7 @@
 # Elevation & Shadow Design
 
 ## Source
-DesignX Catalog · visual-design
+`dembrandt/dembrandt-skills` · [GitHub](https://github.com/dembrandt/dembrandt-skills)
 
 ## Purpose
 Elevation system: shadow scale (2-5 levels), border-radius paired with elevation, card/modal depth, colored shadows, inset shadows.

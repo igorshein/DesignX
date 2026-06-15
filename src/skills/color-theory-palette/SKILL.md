@@ -1,7 +1,7 @@
 # SKILL: Color Theory & Palette Generation
 
 ## Source
-DesignX Catalog · color-theory
+`DesignX Catalog`
 
 ## Purpose
 Работа с цветовыми моделями (HSL, RGB, LAB), построение гармоничных палитр (комплементарные, аналогичные, триадные), подбор акцентных цветов, генерация шкалы 50→900.

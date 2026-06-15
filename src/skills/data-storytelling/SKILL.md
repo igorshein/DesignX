@@ -1,7 +1,7 @@
 # SKILL: Data Storytelling
 
 ## Source
-DesignX Catalog · data-viz
+`designer-skills` · [GitHub](https://github.com/Owl-Listener/designer-skills)
 
 ## Purpose
 Искусство рассказывать истории с помощью данных: narrative arc для данных, выбор визуализации под тип истории (compare, change, correlate, distribute), data-ink ratio, annotation, highlighting, progressive disclosure, infographic design, data-driven презентации для стейкхолдеров.

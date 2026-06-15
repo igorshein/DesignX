@@ -1,7 +1,7 @@
 # AI Prompt UX
 
 ## Source
-DesignX Catalog · interaction
+`varunk130/ai-ux-skill-library` · [GitHub](https://github.com/varunk130/ai-ux-skill-library)
 
 ## Purpose
 Фреймворк CRAFT: A blank text box is not prompt UX. Input affordances, templates, suggestions, history, progressive prompting.

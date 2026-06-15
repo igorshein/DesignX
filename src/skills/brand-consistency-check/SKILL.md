@@ -1,7 +1,7 @@
 # SKILL: Brand Consistency Check
 
 ## Source
-DesignX Catalog · critique
+`DesignX Catalog`
 
 ## Purpose
 Аудит соблюдения бренд-гайда: цвета (hex совпадение), шрифты (family, weight, size), тон текста (voice & tone), иконки (стиль), фотографии (стиль).
