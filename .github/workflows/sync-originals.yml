@@ -20,8 +20,11 @@ jobs:
         with:
           node-version: 18
 
-      - name: Fetch upstream originals (SKILL.md + DESIGN.md)
+      - name: Sync core originals (SKILL.md + DESIGN.md)
         run: node scripts/sync-originals.js
+
+      - name: Sync new sources (addyosmani, agent-skills-hub, etc.)
+        run: node scripts/sync-new-sources.mjs
 
       - name: Regenerate design systems catalog from originals
         run: |
@@ -33,7 +36,7 @@ jobs:
         run: |
           git config user.name "designx-bot"
           git config user.email "bot@designx.app"
-          git add src/originals/ src/data/catalog.json
+          git add src/originals/ src/data/catalog.json src/data/originals-hashes.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

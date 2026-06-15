@@ -189,6 +189,11 @@ function entryForSkillDesign(slug, fm) {
   };
 }
 
+function loadJson(filepath) {
+  try { return JSON.parse(fs.readFileSync(filepath, 'utf-8')); }
+  catch { return null; }
+}
+
 function main() {
   const results = [];
 
@@ -216,12 +221,43 @@ function main() {
     }
   }
 
+  // ── Add timestamps from old catalog / originals hashes ─────────
+  const oldCatalog = loadJson(CATALOG_PATH);
+  const oldSystems = (oldCatalog?.design_systems || []).reduce((map, ds) => {
+    map[ds.id] = ds;
+    return map;
+  }, {});
+  const hashes = loadJson(path.join(__dirname, '..', 'src', 'data', 'originals-hashes.json')) || {};
+  const today = new Date().toISOString().split('T')[0];
+
+  for (const ds of results) {
+    const old = oldSystems[ds.id];
+    ds.createdAt = old?.createdAt || '2026-06-11';
+    ds.updatedAt = old?.updatedAt || ds.createdAt;
+
+    // Check if originals content changed → mark updated
+    const hashPrefix = `${ds.source}/${ds.id}`;
+    const matchingHash = Object.keys(hashes).find(k => k.startsWith(hashPrefix));
+    if (matchingHash && old) {
+      // If old catalog had this item but we're regenerating, check hash
+      const origFile = path.join(ORIGINALS_DIR, matchingHash);
+      if (fs.existsSync(origFile)) {
+        const mtime = fs.statSync(origFile).mtime.toISOString().split('T')[0];
+        if (mtime > ds.updatedAt) {
+          ds.updatedAt = mtime;
+        }
+      }
+    }
+  }
+
   // Write output
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, 2), 'utf-8');
+  const withUpdated = results.filter(ds => ds.updatedAt && ds.updatedAt !== ds.createdAt).length;
   console.log(`Generated ${results.length} design system entries`);
   console.log(`  awesome-design-md: ${results.filter(r => r.source === 'awesome-design-md').length}`);
   console.log(`  awesome-design-skills: ${results.filter(r => r.source === 'awesome-design-skills').length}`);
   console.log(`  With tokens: ${results.filter(r => r.tokens_css).length}`);
+  console.log(`  With updatedAt > createdAt: ${withUpdated}`);
   console.log(`Output: ${OUTPUT_PATH}`);
 }
 

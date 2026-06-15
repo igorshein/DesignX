@@ -68,6 +68,12 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 .card[style*="--card-acc"].selected{border-color:var(--card-acc)!important;background:color-mix(in srgb,var(--card-acc) 6%,transparent)}
 .card:hover .preview-frame{box-shadow:0 0 0 1px var(--card-acc,rgba(255,255,255,.1))}
 
+/* Date badges */
+.date-badge{display:inline-flex;align-items:center;gap:3px;font-size:.625rem;padding:1px 6px;border-radius:3px;line-height:1.5;white-space:nowrap;letter-spacing:.3px}
+.badge-updated{background:rgba(77,163,255,.15);color:var(--accent-primary);border:1px solid rgba(77,163,255,.3)}
+.badge-created{background:rgba(78,201,144,.12);color:var(--success);border:1px solid rgba(78,201,144,.25)}
+.date-muted{background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
+
 /* Color swatches */
 .swatch-row{display:flex;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
 .swatch{display:flex;align-items:center;gap:4px;font-size:.625rem;color:var(--text-muted)}
@@ -159,6 +165,26 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:var(--bg-surface)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* Sort & Pagination */
+.sort-bar{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
+.sort-bar label{font-size:.75rem;color:var(--text-muted)}
+.sort-bar select{height:32px;padding:0 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none;cursor:pointer}
+.sort-bar select:focus{border-color:var(--accent-primary)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)}
+.pagination button{height:36px;min-width:36px;padding:0 12px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-muted);border-radius:var(--radius);cursor:pointer;font-family:var(--font);font-size:.75rem;transition:all .15s}
+.pagination button:hover:not(:disabled){border-color:var(--accent-primary);color:var(--accent-primary)}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.pagination button.active{background:var(--accent-primary);color:var(--bg-surface);border-color:var(--accent-primary)}
+.pagination .page-info{font-size:.75rem;color:var(--text-muted);padding:0 8px}
+/* Favorite */
+.fav-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px;line-height:1;opacity:.3;transition:opacity .15s;color:var(--accent-primary)}
+.card:hover .fav-btn,.fav-btn.active{opacity:1}
+.fav-btn.active{opacity:1;color:var(--accent-primary)}
+/* Cross-refs */
+.cross-refs{display:flex;gap:3px;flex-wrap:wrap;margin-top:.3rem}
+.cross-ref{padding:1px 4px;border:1px solid var(--border);border-radius:3px;font-size:.625rem;color:var(--text-code);background:var(--bg-surface);cursor:help}
+/* Source badge */
+.source-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.625rem;color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border)}
 @media(max-width:640px){.grid{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:1fr}.layout{padding:.75rem}.header h1{font-size:1.125rem}.phil-grid{grid-template-columns:1fr 1fr}.contras-grid{grid-template-columns:1fr}}
 #references-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:.75rem}
 .ref-card{transition:border-color .15s}
@@ -197,6 +223,7 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
     </div>
     <nav class="header-nav" id="main-nav">
       <a class="active" data-panel="browse">Обзор</a>
+      <a data-panel="favorites" onclick="showFavorites()">★ Избранное</a>
       <a data-panel="matcher">Подбор</a>
       <a data-panel="systems">Дизайн-системы</a>
       <a data-panel="philosophies">Философии</a>
@@ -223,11 +250,39 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
       </div>
     </div>
     <div class="section"><h3>Тип продукта</h3><div class="filter-scroll" id="product-type-filters"></div></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+    <div class="section"><h3>Источник</h3><div class="filter-scroll" id="source-filters"></div></div>
+    <div class="section"><h3>Рейтинг</h3><div class="filter-bar" id="rating-filters">
+      <button class="filter-btn active" onclick="setRating(0)">Любой</button>
+      <button class="filter-btn" onclick="setRating(4)">★ 4+</button>
+      <button class="filter-btn" onclick="setRating(3)">★ 3+</button>
+    </div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem" id="filter-summary">
       <span style="font-size:.8125rem;color:var(--text-muted)" id="result-count"></span>
-      <button class="export-btn secondary" onclick="exportSelected()" style="padding:4px 12px;font-size:.75rem">Экспорт</button>
+      <span style="font-size:.6875rem;color:var(--text-code)" id="active-filters"></span>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-left:auto">
+        <label style="font-size:.75rem;color:var(--text-muted);cursor:pointer"><input type="checkbox" id="fav-filter" onchange="filterSkills()" style="accent-color:var(--accent-primary)"> ★ Избранное</label>
+        <button class="export-btn secondary" onclick="exportSelected()" style="padding:4px 12px;font-size:.75rem">Экспорт</button>
+      </div>
+    </div>
+    <div class="sort-bar">
+      <label>Сортировка:</label>
+      <select id="sort-select" onchange="filterSkills()">
+        <option value="name-asc">По имени ↑</option>
+        <option value="name-desc">По имени ↓</option>
+        <option value="rating-desc">По рейтингу ↓</option>
+        <option value="rating-asc">По рейтингу ↑</option>
+      </select>
+      <label style="margin-left:.5rem" title="Найти дизайн-системы по hex-цвету">🎨 HEX:</label>
+      <input type="text" id="hex-search" placeholder="#4da3ff" style="width:110px;height:32px;padding:0 8px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" oninput="filterSkills()" title="Поиск систем по hex-цвету. Результаты — во вкладке Дизайн-системы">
     </div>
     <div id="skills-grid" class="grid"></div>
+    <div class="pagination" id="pagination-controls">
+      <button onclick="goPage(0)" id="page-first" disabled>«</button>
+      <button onclick="goPage(page-1)" id="page-prev" disabled>‹</button>
+      <span class="page-info" id="page-info">1 / 1</span>
+      <button onclick="goPage(page+1)" id="page-next">›</button>
+      <button onclick="goPage(totalPages-1)" id="page-last">»</button>
+    </div>
   </div>
 
   <!-- PANEL: Matcher -->
@@ -243,7 +298,24 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
   <div id="panel-systems" class="panel">
     <div class="section"><h3>Фильтр по эстетике</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
     <div class="section"><h3>Фильтр по типу продукта</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
+    <div class="sort-bar">
+      <label>Сортировка:</label>
+      <select id="ds-sort-select" onchange="renderAllSystems()">
+        <option value="name-asc">По имени ↑</option>
+        <option value="name-desc">По имени ↓</option>
+        <option value="rating-desc">По рейтингу ↓</option>
+      </select>
+      <span style="font-size:.75rem;color:var(--text-muted);margin-left:auto" id="ds-result-count"></span>
+      <span id="ds-hex-badge" style="display:none;font-size:.6875rem;padding:2px 8px;background:var(--accent-primary);color:var(--bg-surface);border-radius:var(--radius)"></span>
+    </div>
     <div class="grid grid-3" id="systems-grid"></div>
+    <div class="pagination" id="ds-pagination">
+      <button onclick="goDsPage(0)" id="ds-page-first" disabled>«</button>
+      <button onclick="goDsPage(dsPage-1)" id="ds-page-prev" disabled>‹</button>
+      <span class="page-info" id="ds-page-info">1 / 1</span>
+      <button onclick="goDsPage(dsPage+1)" id="ds-page-next">›</button>
+      <button onclick="goDsPage(totalDsPages-1)" id="ds-page-last">»</button>
+    </div>
   </div>
 
   <!-- PANEL: Philosophies -->
@@ -429,15 +501,8 @@ h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem;color:var(--text-muted
       </ol>
       <h3 style="margin-top:1rem">Статистика</h3>
       <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem" id="about-stats"></ul>
-      <h3 style="margin-top:1rem">Источники</h3>
-      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem">
-        <li><a href="https://github.com/anthropics/skills" style="color:var(--accent-primary)">anthropics/skills</a></li>
-        <li><a href="https://github.com/Owl-Listener/designer-skills" style="color:var(--accent-primary)">Owl-Listener/designer-skills</a></li>
-        <li><a href="https://github.com/VoltAgent/awesome-agent-skills" style="color:var(--accent-primary)">VoltAgent/awesome-agent-skills</a></li>
-        <li><a href="https://github.com/VoltAgent/awesome-design-md" style="color:var(--accent-primary)">VoltAgent/awesome-design-md</a></li>
-        <li><a href="https://github.com/bergside/awesome-design-skills" style="color:var(--accent-primary)">bergside/awesome-design-skills</a></li>
-        <li><a href="https://github.com/nexu-io/open-design" style="color:var(--accent-primary)">nexu-io/open-design</a></li>
-      </ul>
+      <h3 style="margin-top:1rem">Источники (${CATALOG?.meta?.sources?.length || 15})</h3>
+      <ul style="color:var(--text-muted);margin-left:1.25rem;line-height:1.8;font-size:.8125rem" id="about-sources"></ul>
     </div>
   </div>
 </div>
@@ -481,7 +546,10 @@ const CAT_ICONS={
 let selectedSkillIds = new Set();
 let selectedSystemIds = new Set();
 let categoryFilter = 'all', complexityFilter = 'all', productFilter = null;
+let sourceFilter = null, ratingFilter = 0, sortBy = 'name-asc';
+let page = 0, pageSize = 50;
 let matcherProduct = null, matcherPhilosophy = null;
+let favorites = new Set(JSON.parse(localStorage.getItem('designx-favs') || '[]'));
 
 (function loadCatalog() {
   const paths = ['src/data/catalog.json', '../src/data/catalog.json', 'data/catalog.json'];
@@ -499,10 +567,14 @@ let matcherProduct = null, matcherPhilosophy = null;
 
 function init() {
   const c = CATALOG;
-  document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span>`;
-  document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');};});
+  // Ensure source_short for skills
+  c.skills.forEach(s=>{if(!s.source_short)s.source_short=s.source?s.source.split('/')[0]:'DesignX'});
+  document.getElementById('stats-bar').innerHTML = `<span>📚 ${c.skills.length} навыков</span><span>🎨 ${(c.design_systems||[]).length} систем дизайна</span><span>🏛 ${(c.design_philosophies||[]).length} философий</span><span>★ ${favorites.size}</span>`;
+  document.querySelectorAll('.header-nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+a.dataset.panel).classList.add('active');if(a.dataset.panel==='systems')renderAllSystems();};});
   document.getElementById('panel-browse').classList.add('active');
-  initFilters(); filterSkills(); updateExportBar();
+  initFilters(); initDsFilters(); filterSkills(); updateExportBar();
+  // Keyboard shortcut: '/' to focus search
+  document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(e.target.tagName)){e.preventDefault();document.getElementById('skill-search')?.focus()}});
   requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();renderReferences();buildProcessPipeline();updateStats();});
 }
 
@@ -512,38 +584,210 @@ function initFilters() {
     CATALOG.categories.map(c=>`<button class="filter-btn" onclick="setCategory('${c.id}')">${c.name} (${counts[c.id]||0})</button>`).join('');
   document.getElementById('product-type-filters').innerHTML = `<button class="filter-btn${!productFilter?' active':''}" onclick="setProductFilter(null)">Все продукты</button>` +
     CATALOG.product_types.map(pt=>`<button class="filter-btn${productFilter===pt.id?' active':''}" onclick="setProductFilter('${pt.id}')">${pt.icon||'📁'} ${pt.name}</button>`).join('');
+  // Source filters from design systems
+  const srcCounts={}; (CATALOG.design_systems||[]).forEach(ds=>{const s=ds.source_short||ds.source;if(s)srcCounts[s]=(srcCounts[s]||0)+1});
+  document.getElementById('source-filters').innerHTML = `<button class="filter-btn${!sourceFilter?' active':''}" onclick="setSource(null)">Все</button>` +
+    Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).map(([s,c])=>`<button class="filter-btn${sourceFilter===s?' active':''}" onclick="setSource('${s.replace(/'/g,"\\'")}')">${s} (${c})</button>`).join('');
 }
 
-function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'Все':CATALOG.categories.find(c=>c.id===cat)?.name)));filterSkills()}
-function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'Любая':{beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[val])));filterSkills()}
-function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.val===id));filterSkills()}
+function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'Все':CATALOG.categories.find(c=>c.id===cat)?.name)));page=0;filterSkills()}
+function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'Любая':{beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[val])));page=0;filterSkills()}
+function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.val===id));page=0;filterSkills()}
+function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'Все')));page=0;filterSkills()}
+function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Любой':val+'+')));page=0;filterSkills()}
+function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsPhilosophyFilter||'Все')));dsPage=0;renderAllSystems()}
+function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsProductFilter||'Все')));dsPage=0;renderAllSystems()}
+
+function initDsFilters(){
+  const el=document.getElementById('ds-philosophy-filters');
+  if(el)el.innerHTML=`<button class="filter-btn active" onclick="setDsPhilosophy(null)">Все</button>`+(CATALOG.design_philosophies||[]).map(p=>`<button class="filter-btn" onclick="setDsPhilosophy('${p.id}')">${p.name}</button>`).join('');
+  const el2=document.getElementById('ds-product-filters');
+  if(el2)el2.innerHTML=`<button class="filter-btn active" onclick="setDsProduct(null)">Все</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" onclick="setDsProduct('${pt.id}')">${pt.icon||'📁'} ${pt.name}</button>`).join('');
+}
 
 // Skills
 function filterSkills() {
   if(!CATALOG)return;
-  let skills=[...CATALOG.skills]; const s=(document.getElementById('skill-search')?.value||'').toLowerCase();
+  let skills=[...CATALOG.skills];
+  const search=(document.getElementById('skill-search')?.value||'').toLowerCase();
+  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
+
   if(categoryFilter!=='all')skills=skills.filter(s=>s.category===categoryFilter);
   if(complexityFilter!=='all')skills=skills.filter(s=>s.complexity===complexityFilter);
   if(productFilter)skills=skills.filter(s=>s.for_product_types?.includes(productFilter));
-  if(s)skills=skills.filter(x=>x.name.toLowerCase().includes(s)||(x.tags||[]).some(t=>t.includes(s))||x.summary.toLowerCase().includes(s));
-  document.getElementById('result-count').textContent=`Найдено: ${skills.length} из ${CATALOG.skills.length}`;
-  document.getElementById('skills-grid').innerHTML=skills.length?skills.map(s=>renderCard(s)).join(''):'<div class="empty"><span class="icon">🔍</span>Ничего не найдено</div>';
+  if(search)skills=skills.filter(x=>x.name.toLowerCase().includes(search)||(x.tags||[]).some(t=>t.includes(search))||x.summary.toLowerCase().includes(search));
+  if(ratingFilter>0)skills=skills.filter(s=>(s.rating||0)>=ratingFilter);
+  if(sourceFilter)skills=skills.filter(s=>(s.source_short||s.source||'').startsWith(sourceFilter));
+  if(document.getElementById('fav-filter')?.checked)skills=skills.filter(s=>favorites.has(s.id));
+
+  // Hex color search: find skills/DS matching a hex color
+  let hexDsCount=0;
+  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
+    const h=hexSearch.toLowerCase();
+    skills=skills.filter(s=>(s.tags||[]).some(t=>t.toLowerCase().includes(h)));
+    // Count matching DS (shown in the DS tab)
+    hexDsCount=(CATALOG.design_systems||[]).filter(ds=>{
+      const tc=ds.tokens_css; if(!tc)return false;
+      return Object.values(tc).some(v=>typeof v==='string'&&v.toLowerCase()===h);
+    }).length;
+  }
+
+  // Sort
+  sortBy=document.getElementById('sort-select')?.value||'name-asc';
+  skills.sort((a,b)=>{
+    switch(sortBy){
+      case 'name-desc': return b.name.localeCompare(a.name);
+      case 'rating-desc': return (b.rating||0)-(a.rating||0)||a.name.localeCompare(b.name);
+      case 'rating-asc': return (a.rating||0)-(b.rating||0)||a.name.localeCompare(b.name);
+      default: return a.name.localeCompare(b.name);
+    }
+  });
+
+  const total=skills.length;
+  const totalPages=Math.ceil(total/pageSize)||1;
+  if(page>=totalPages)page=totalPages-1;
+  const start=page*pageSize;
+  const pageSkills=skills.slice(start,start+pageSize);
+
+  document.getElementById('result-count').textContent=`Найдено: ${total} из ${CATALOG.skills.length}${hexDsCount?` · 🎨 ${hexDsCount} дизайн-систем`:''}`;
+  // Active filters summary
+  const activeFilters=[];
+  if(categoryFilter!=='all')activeFilters.push(CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter);
+  if(complexityFilter!=='all')activeFilters.push({beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'}[complexityFilter]);
+  if(productFilter)activeFilters.push(CATALOG.product_types.find(p=>p.id===productFilter)?.name||productFilter);
+  if(sourceFilter)activeFilters.push(`📦${sourceFilter}`);
+  if(ratingFilter>0)activeFilters.push(`★${ratingFilter}+`);
+  if(document.getElementById('fav-filter')?.checked)activeFilters.push('★Избранное');
+  if(hexSearch)activeFilters.push(`🎨${hexSearch}`);
+  document.getElementById('active-filters').innerHTML=activeFilters.length?`⚡ ${activeFilters.join(' · ')} <a href="#" onclick="resetAllFilters();return false" style="color:var(--error);font-size:.6875rem;text-decoration:none">✕</a>`:'';
+  document.getElementById('skills-grid').innerHTML=pageSkills.length?
+    pageSkills.map(s=>renderCard(s)).join('')+
+    (total>pageSize?`<div class="empty" style="grid-column:1/-1;padding:1rem;font-size:.75rem">Показано ${start+1}–${Math.min(start+pageSize,total)} из ${total}</div>`:'')
+    :'<div class="empty"><span class="icon">🔍</span>Ничего не найдено</div>';
+
+  // Pagination buttons
+  const pc=document.getElementById('pagination-controls');
+  if(pc){
+    document.getElementById('page-first').disabled=page===0;
+    document.getElementById('page-prev').disabled=page===0;
+    document.getElementById('page-next').disabled=page>=totalPages-1;
+    document.getElementById('page-last').disabled=page>=totalPages-1;
+    document.getElementById('page-info').textContent=`${page+1} / ${totalPages}`;
+  }
 }
-function renderCard(s){const sel=selectedSkillIds.has(s.id);const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cc=CAT_COLORS[s.category]||'var(--border)';const ci=CAT_ICONS[s.category]||'📁';
-  return `<div class="card${sel?' selected':''}" onclick="toggleSkill('${s.id}')" ondblclick="showSkillDetail('${s.id}')"><div class="card-accent" style="background:${cc}"></div><div><h4>${s.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="tags">${(s.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}</div><p>${s.summary}</p><div class="meta"><span class="${s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced'}">${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}</span><span class="cat-badge">${ci} ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}</div></div>`;
+
+function resetAllFilters(){
+  categoryFilter='all';complexityFilter='all';productFilter=null;sourceFilter=null;ratingFilter=0;
+  document.getElementById('skill-search').value='';document.getElementById('hex-search').value='';
+  document.getElementById('fav-filter').checked=false;
+  document.querySelectorAll('#category-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#complexity-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#product-type-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#source-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#rating-filters .filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  page=0;filterSkills();
+}
+
+function goPage(p){
+  page=p;
+  filterSkills();
+  document.getElementById('skills-grid').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function dateBadge(item){
+  if(!item.createdAt)return'';
+  const created=item.createdAt;
+  const updated=item.updatedAt;
+  const isUpdated=updated&&updated!==created;
+  const today=new Date().toISOString().split('T')[0];
+  const isRecent=today===updated||today===created;
+  const updatedLabel=isUpdated?'обновлено':'создано';
+  const dateStr=isUpdated?updated:created;
+  const cls=isUpdated?'badge-updated':'badge-created';
+  const label=isUpdated?'ОБНОВЛЕНО':'НОВОЕ';
+  const showLabel=isRecent||isUpdated;
+  return showLabel?`<span class="date-badge ${cls}" title="${updatedLabel}: ${dateStr}">${label}</span>`:`<span class="date-badge date-muted" title="${updatedLabel}: ${dateStr}">${dateStr}</span>`;
+}
+
+function renderCard(s){
+  const sel=selectedSkillIds.has(s.id);
+  const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;
+  const cc=CAT_COLORS[s.category]||'var(--border)';
+  const ci=CAT_ICONS[s.category]||'📁';
+  const fav=favorites.has(s.id)?' active':'';
+  const hasCrossRef=s.cross_references&&s.cross_references.length>0;
+  const src=s.source_short||(s.source?s.source.split('/')[0]:'DesignX');
+  const db=dateBadge(s);
+  return `<div class="card${sel?' selected':''}" onclick="toggleSkill('${s.id}')" ondblclick="showSkillDetail('${s.id}')"><div class="card-accent" style="background:${cc}"></div><div style="display:flex;justify-content:space-between;align-items:flex-start"><h4>${s.name}</h4><span><span class="fav-btn${fav}" onclick="event.stopPropagation();toggleFav('${s.id}')" title="Избранное">${fav?'★':'☆'}</span><span class="select-star" style="opacity:${sel?1:.3}">${sel?'✦':'◇'}</span></span></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">${db}</div><div class="tags">${(s.tags||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}</div><p>${s.summary}</p><div class="meta"><span class="${s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced'}">${s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый'}</span><span class="cat-badge">${ci} ${cn}</span><span>${src}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}</div></div>`;
 }
 
 // Design Systems
+let dsPhilosophyFilter=null,dsProductFilter=null;
+let dsPage=0,dsPageSize=36;
+let totalDsPages=1;
+
 function renderAllSystems() {
   if(!CATALOG)return;
   let systems=CATALOG.design_systems||[];
+
+  // Apply hex color filter if present
+  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
+  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
+    const h=hexSearch.toLowerCase();
+    systems=systems.filter(ds=>{
+      const tc=ds.tokens_css;
+      if(!tc)return false;
+      return Object.values(tc).some(v=>typeof v==='string'&&v.toLowerCase()===h);
+    });
+  }
   if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.aesthetic===dsPhilosophyFilter);
-  document.getElementById('systems-grid').innerHTML=systems.length?systems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';
+  if(dsProductFilter)systems=systems.filter(ds=>ds.product_types?.includes(dsProductFilter));
+
+  const dsSort=document.getElementById('ds-sort-select')?.value||'name-asc';
+  systems.sort((a,b)=>{
+    switch(dsSort){
+      case 'name-desc': return b.name.localeCompare(a.name);
+      case 'rating-desc': return (b.rating||0)-(a.rating||0)||a.name.localeCompare(b.name);
+      default: return a.name.localeCompare(b.name);
+    }
+  });
+
+  const total=systems.length;
+  totalDsPages=Math.ceil(total/dsPageSize)||1;
+  if(dsPage>=totalDsPages)dsPage=totalDsPages-1;
+  const start=dsPage*dsPageSize;
+  const pageSystems=systems.slice(start,start+dsPageSize);
+
+  document.getElementById('systems-grid').innerHTML=pageSystems.length?pageSystems.map(ds=>renderDsCard(ds)).join(''):'<div class="empty"><span class="icon">🎨</span>Нет систем</div>';
+  document.getElementById('ds-result-count').textContent=`${total} систем`;
+  const hexBadge=document.getElementById('ds-hex-badge');
+  const hexVal=(document.getElementById('hex-search')?.value||'').trim();
+  if(hexVal&&/^#[0-9a-f]{3,8}$/i.test(hexVal)&&hexBadge){
+    hexBadge.style.display='inline-block';
+    hexBadge.innerHTML=`🔍 ${hexVal} · ${total} систем`;
+    hexBadge.onclick=()=>{document.getElementById('hex-search').value='';renderAllSystems();};
+    hexBadge.title='Очистить HEX-фильтр';
+    hexBadge.style.cursor='pointer';
+  }else if(hexBadge){hexBadge.style.display='none';}
+
+  const pc=document.getElementById('ds-pagination');
+  if(pc){
+    document.getElementById('ds-page-first').disabled=dsPage===0;
+    document.getElementById('ds-page-prev').disabled=dsPage===0;
+    document.getElementById('ds-page-next').disabled=dsPage>=totalDsPages-1;
+    document.getElementById('ds-page-last').disabled=dsPage>=totalDsPages-1;
+    document.getElementById('ds-page-info').textContent=`${dsPage+1} / ${totalDsPages}`;
+  }
 }
-let dsPhilosophyFilter=null,dsProductFilter=null;
-function renderDsCard(ds){const sel=selectedSystemIds.has(ds.id);const tc=ds.tokens_css;const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
+
+function goDsPage(p){dsPage=p;renderAllSystems();document.getElementById('systems-grid').scrollIntoView({behavior:'smooth',block:'start'});}
+function renderDsCard(ds){
+  const sel=selectedSystemIds.has(ds.id);
+  const tc=ds.tokens_css;
+  const philName=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';
   const cardStyle=tc?`--card-bg:${tc.bg};--card-txt:${tc.text};--card-acc:${tc.accent};--card-rad:${tc.radius||'6px'};--card-font:${tc.font||'JetBrains Mono'};--card-brd:${tc.border};--card-elev:${tc.bg_elevated};--card-muted:${tc.text_muted}`:'';
-  return `<div class="card${sel?' selected':''}" style="${cardStyle}" onclick="toggleDs('${ds.id}")" ondblclick="openDsPreview('${ds.id}')">${tc?`<div class="card-accent" style="background:${tc.accent};margin:-1rem -1rem .5rem -1rem;height:3px;border-radius:6px 6px 0 0"></div>`:''}<div class="card-header"><h4>${ds.name}</h4><span class="select-star">${sel?'★':'☆'}</span></div><div class="meta"><span>🎨 ${philName}</span><span>📁 ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</span></div>${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
+  const crossHtml=ds.cross_references&&ds.cross_references.length>0?`<div class="cross-refs">${ds.cross_references.slice(0,3).map(s=>`<span class="cross-ref" title="Также в: ${s}">${s.split('/')[0]}</span>`).join('')}${ds.cross_references.length>3?`<span class="cross-ref">+${ds.cross_references.length-3}</span>`:''}</div>`:'';
+  const db=dateBadge(ds);
+  return `<div class="card${sel?' selected':''}" style="${cardStyle}" onclick="toggleDs('${ds.id}')" ondblclick="openDsPreview('${ds.id}')">${tc?`<div class="card-accent" style="background:${tc.accent};margin:-1rem -1rem .5rem -1rem;height:3px;border-radius:6px 6px 0 0"></div>`:''}<div style="display:flex;justify-content:space-between;align-items:flex-start"><h4>${ds.name}</h4><span class="select-star" style="opacity:${sel?1:.3}">${sel?'✦':'◇'}</span></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">${db}</div><div class="meta"><span>🎨 ${philName}</span><span class="source-badge">${ds.source_short||ds.source||''}</span></div>${crossHtml}${tc?renderMiniPreview(tc):''}<p style="font-size:.75rem;color:var(--text-muted);margin-top:.35rem">${ds.description||''}</p></div>`;
 }
 function renderMiniPreview(tc){
   return `<div class="preview-frame" style="background:${tc.bg};color:${tc.text};font-family:${tc.font}">
@@ -630,13 +874,29 @@ function updateExportBar(){const t=selectedSkillIds.size+selectedSystemIds.size;
 // Compare
 function compareSkills(){const ids=[...selectedSkillIds];if(ids.length<2)return;const skills=ids.map(id=>CATALOG.skills.find(s=>s.id===id)).filter(Boolean);const n=Math.min(skills.length,4);document.getElementById('detail-panel').classList.add('wide');const cols=skills.map(s=>{const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cc=CAT_COLORS[s.category]||'var(--border)';const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cco=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';return `<div class="compare-col"><div class="acc-bar" style="background:${cc}"></div><h3>${s.name}</h3><div class="detail-meta"><span class="${cco}">${cl}</span><span>📁 ${cn}</span></div><div class="cm-section"><div class="cm-label">Описание</div><div class="cm-value">${(s.description||s.summary||'').substring(0,150)}${(s.description||s.summary||'').length>150?'...':''}</div></div>${s.key_principles?`<div class="cm-section"><div class="cm-label">Принципы</div><div class="cm-value"><ul style="margin:0;padding-left:1rem;font-size:.75rem;color:var(--text-muted);line-height:1.6">${s.key_principles.slice(0,4).map(p=>`<li>${p}</li>`).join('')}</ul></div></div>`:''}${s.tags?.length?`<div class="cm-section"><div class="cm-label">Теги</div><div class="cm-tags">${s.tags.slice(0,6).map(t=>`<span class="cm-tag">${t}</span>`).join('')}</div></div>`:''}<div class="cm-section"><div class="cm-label">Продукты</div><div class="cm-value">${s.for_product_types?.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')||'—'}</div></div></div>`}).join('');document.getElementById('detail-content').innerHTML=`<h2>Сравнение навыков (${skills.length})</h2><div class="compare-grid c${n}">${cols}</div>`;document.getElementById('detail-overlay').classList.add('open')}
 
+function showFavorites(){
+  document.querySelectorAll('.header-nav a').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector('[data-panel=browse]').classList.add('active');
+  document.getElementById('panel-browse').classList.add('active');
+  document.getElementById('fav-filter').checked=true;
+  filterSkills();
+}
+
+function toggleFav(id){
+  if(favorites.has(id))favorites.delete(id);else favorites.add(id);
+  localStorage.setItem('designx-favs',JSON.stringify([...favorites]));
+  document.getElementById('stats-bar').innerHTML = CATALOG?`<span>📚 ${CATALOG.skills.length} навыков</span><span>🎨 ${(CATALOG.design_systems||[]).length} систем дизайна</span><span>🏛 ${(CATALOG.design_philosophies||[]).length} философий</span><span>★ ${favorites.size}</span>`:'';
+  filterSkills();
+}
+
 // Detail
 function showSkillDetail(id){const s=CATALOG.skills.find(x=>x.id===id);if(!s)return;const cn=CATALOG.categories.find(c=>c.id===s.category)?.name||s.category;const cl=s.complexity==='beginner'?'Начальный':s.complexity==='intermediate'?'Средний':'Продвинутый';const cc=s.complexity==='beginner'?'comp-beginner':s.complexity==='intermediate'?'comp-intermediate':'comp-advanced';
-  document.getElementById('detail-content').innerHTML=`<h2>${s.name}</h2><div class="source">${s.source?formatSource(s.source).replace(/[`]/g,''):'DesignX Catalog'}</div><p style="margin:.75rem 0;color:var(--text-muted);font-size:.875rem">${s.description||s.summary}</p>${s.key_principles?`<h3>Ключевые принципы</h3><ul class="principles">${s.key_principles.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}<div class="detail-meta"><span class="${cc}">${cl}</span><span>📁 ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}${s.frameworks?.length?`<span>🛠 ${s.frameworks.join(', ')}</span>`:''}</div>${s.for_product_types?.length?`<p style="color:var(--text-muted);font-size:.75rem;margin-top:.5rem">Подходит для: ${s.for_product_types.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')}</p>`:''}<div class="tags" style="margin-top:.75rem">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;document.getElementById('detail-overlay').classList.add('open')}
+  document.getElementById('detail-content').innerHTML=`<h2>${s.name} ${favorites.has(s.id)?'★':''}</h2><div class="source">${s.source?formatSource(s.source).replace(/[`]/g,''):'DesignX Catalog'}</div><p style="margin:.75rem 0;color:var(--text-muted);font-size:.875rem">${s.description||s.summary}</p>${s.key_principles?`<h3>Ключевые принципы</h3><ul class="principles">${s.key_principles.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}<div class="detail-meta"><span class="${cc}">${cl}</span><span>📁 ${cn}</span>${s.rating?`<span>${'★'.repeat(s.rating)}</span>`:''}${s.frameworks?.length?`<span>🛠 ${s.frameworks.join(', ')}</span>`:''}</div>${s.for_product_types?.length?`<p style="color:var(--text-muted);font-size:.75rem;margin-top:.5rem">Подходит для: ${s.for_product_types.map(pt=>CATALOG.product_types.find(p=>p.id===pt)?.name||pt).join(', ')}</p>`:''}<div class="tags" style="margin-top:.75rem">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;document.getElementById('detail-overlay').classList.add('open')}
 function closeDetail(){document.getElementById('detail-overlay').classList.remove('open');document.getElementById('detail-panel').classList.remove('wide')}
 
 // DS Preview
-function openDsPreview(id){const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds)return;const tc=ds.tokens_css;const pn=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';let html=`<h2>${ds.name}</h2><div class="source">${pn} · ${(ds.product_types||[]).map(pt=>CATALOG.product_types?.find(p=>p.id===pt)?.name||pt).join(', ')}</div><p style="margin:.75rem 0;color:var(--text-muted)">${ds.description||''}</p>`;if(tc){html+=`<h3>Превью</h3>${renderMiniPreview(tc)}<h3 style="margin-top:1rem">Design Tokens</h3><div class="swatch-row">${[{c:tc.bg,l:'bg-surface',v:tc.bg},{c:tc.bg_elevated,l:'bg-elevated',v:tc.bg_elevated},{c:tc.accent,l:'accent',v:tc.accent},{c:tc.accent2,l:'accent2',v:tc.accent2},{c:tc.text,l:'text',v:tc.text},{c:tc.text_muted,l:'text-muted',v:tc.text_muted},{c:tc.border,l:'border',v:tc.border}].map(({c,l,v})=>`<span class="swatch"><span class="swatch-dot" style="background:${c};${tc.dark?'border-color:rgba(255,255,255,.15)':''}"></span><span style="display:flex;flex-direction:column;gap:0"><span>${l}</span><span style="font-size:.5625rem;opacity:.5">${v}</span></span></span>`).join('')}</div><div class="detail-meta" style="margin-top:.75rem"><span>Font: ${tc.font||'JetBrains Mono'}</span><span>Radius: ${tc.radius||'6px'}</span><span>Scheme: ${tc.dark?'🌙 Dark':'☀️ Light'}</span></div>`;}html+=`<h3 style="margin-top:1rem">Связанные навыки</h3><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">${CATALOG.skills.filter(s=>s.for_product_types?.some(pt=>(ds.product_types||[]).includes(pt))).slice(0,6).map(s=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();showSkillDetail('${s.id}')">${s.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет связанных</span>'}</div>`;document.getElementById('detail-content').innerHTML=html;document.getElementById('detail-overlay').classList.add('open')}
+function openDsPreview(id){const ds=CATALOG.design_systems?.find(x=>x.id===id);if(!ds)return;const tc=ds.tokens_css;const pn=CATALOG.design_philosophies?.find(p=>p.id===ds.aesthetic)?.name||ds.aesthetic||'';const crossSrc=ds.cross_references&&ds.cross_references.length>0?`<div class="detail-meta" style="margin-top:.5rem"><span>📚 Также в источниках: ${ds.cross_references.join(', ')}</span></div>`:'';let html=`<h2>${ds.name}</h2><div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem"><span class="source-badge">${ds.source_short||ds.source||'DesignX'}</span><span class="source">${pn}</span></div>${crossSrc}<p style="margin:.75rem 0;color:var(--text-muted)">${ds.description||''}</p>`;if(tc){html+=`<h3>Превью</h3>${renderMiniPreview(tc)}<h3 style="margin-top:1rem">Design Tokens</h3><div class="swatch-row">${[{c:tc.bg,l:'bg-surface',v:tc.bg},{c:tc.bg_elevated,l:'bg-elevated',v:tc.bg_elevated},{c:tc.accent,l:'accent',v:tc.accent},{c:tc.accent2,l:'accent2',v:tc.accent2},{c:tc.text,l:'text',v:tc.text},{c:tc.text_muted,l:'text-muted',v:tc.text_muted},{c:tc.border,l:'border',v:tc.border}].map(({c,l,v})=>`<span class="swatch"><span class="swatch-dot" style="background:${c};${tc.dark?'border-color:rgba(255,255,255,.15)':''}"></span><span style="display:flex;flex-direction:column;gap:0"><span>${l}</span><span style="font-size:.5625rem;opacity:.5">${v}</span></span></span>`).join('')}</div><div class="detail-meta" style="margin-top:.75rem"><span>Font: ${tc.font||'JetBrains Mono'}</span><span>Radius: ${tc.radius||'6px'}</span><span>Scheme: ${tc.dark?'🌙 Dark':'☀️ Light'}</span></div>`;}html+=`<h3 style="margin-top:1rem">Связанные навыки</h3><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">${CATALOG.skills.filter(s=>s.for_product_types?.some(pt=>(ds.product_types||[]).includes(pt))).slice(0,6).map(s=>`<span class="tag" style="cursor:pointer" onclick="closeDetail();showSkillDetail('${s.id}')">${s.name}</span>`).join('')||'<span style="color:var(--text-muted);font-size:.8125rem">Нет связанных</span>'}</div>`;document.getElementById('detail-content').innerHTML=html;document.getElementById('detail-overlay').classList.add('open')}
 
 // Tools
 function renderTools(){
@@ -655,7 +915,8 @@ function hexToLuminance(h){const r=parseInt(h.slice(1,3),16)/255;const g=parseIn
 function checkContrast(){const fg=document.getElementById('contrast-fg').value;const bg=document.getElementById('contrast-bg').value;const el=document.getElementById('contrast-result');const sample=document.getElementById('contrast-sample');if(!/^#[0-9a-f]{6}$/i.test(fg)||!/^#[0-9a-f]{6}$/i.test(bg)){el.textContent='Введите HEX цвета (#RRGGBB)';el.className='contras-result fail';return}const l1=hexToLuminance(fg)+.05;const l2=hexToLuminance(bg)+.05;const ratio=Math.max(l1,l2)/Math.min(l1,l2);const aa=ratio>=4.5;const aaa=ratio>=7;const large=ratio>=3;el.textContent=`Ratio: ${ratio.toFixed(1)}:1 · WCAG AA: ${aa?'✅':'❌'} · WCAG AAA: ${aaa?'✅':'❌'} · Large text: ${large?'✅':'❌'}`;el.className=`contras-result ${ratio>=4.5?'pass':'fail'}`;sample.style.background=bg;sample.style.color=fg}
 
 // About
-function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего навыков: <strong>${CATALOG.skills.length}</strong></li>`;h+=`<li>📁 Категорий: <strong>${CATALOG.categories.length}</strong></li>`;h+=`<li>🎨 Дизайн-систем: <strong>${(CATALOG.design_systems||[]).length}</strong></li>`;h+=`<li>🎯 Типов продуктов: <strong>${CATALOG.product_types.length}</strong></li>`;h+=`<li>🏛 Философий дизайна: <strong>${CATALOG.design_philosophies?.length||0}</strong></li>`;h+=`<li>🔄 Всего тегов: <strong>${new Set(CATALOG.skills.flatMap(s=>s.tags||[])).size}</strong></li>`;const step={beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'};const dist=CATALOG.skills.reduce((a,s)=>{a[step[s.complexity]]=(a[step[s.complexity]]||0)+1;return a},{});h+=`<li>📊 Сложность: ${Object.entries(dist).map(([k,v])=>`${k}: ${v}`).join(' · ')}</li>`;document.getElementById('about-stats').innerHTML=h}
+function updateStats(){if(!CATALOG)return;let h='';h+=`<li>📚 Всего навыков: <strong>${CATALOG.skills.length}</strong></li>`;h+=`<li>📁 Категорий: <strong>${CATALOG.categories.length}</strong></li>`;h+=`<li>🎨 Дизайн-систем: <strong>${(CATALOG.design_systems||[]).length}</strong></li>`;h+=`<li>🎯 Типов продуктов: <strong>${CATALOG.product_types.length}</strong></li>`;h+=`<li>🏛 Философий дизайна: <strong>${CATALOG.design_philosophies?.length||0}</strong></li>`;h+=`<li>🔄 Всего тегов: <strong>${new Set(CATALOG.skills.flatMap(s=>s.tags||[])).size}</strong></li>`;const step={beginner:'Начальный',intermediate:'Средний',advanced:'Продвинутый'};const dist=CATALOG.skills.reduce((a,s)=>{a[step[s.complexity]]=(a[step[s.complexity]]||0)+1;return a},{});h+=`<li>📊 Сложность: ${Object.entries(dist).map(([k,v])=>`${k}: ${v}`).join(' · ')}</li>`;document.getElementById('about-stats').innerHTML=h;
+const srcHtml=(CATALOG.meta?.sources||[]).map(s=>`<li>📦 ${s}</li>`).join('');document.getElementById('about-sources').innerHTML=srcHtml;}
 
 // ── Original file fetching ──────────────────────────────────────
 // Tries to load original upstream SKILL.md/DESIGN.md/README.md from src/originals/

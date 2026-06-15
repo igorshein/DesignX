@@ -2,7 +2,7 @@
 
 > Skill & Design System Matcher для ИИ-агентов. Самый большой открытый каталог UI/UX дизайн-скиллов.
 
-**381 UI/UX навык · 1131 DESIGN.md стартер · 29 категорий · 15 философий дизайна · 12+ источников**
+**381 UI/UX навык · 1169 DESIGN.md стартеров · 20 категорий · 15 философий дизайна · 15+ источников**
 
 ---
 
@@ -103,17 +103,18 @@ DesignX/
 
 ## Дизайн-системы
 
-**1131 DESIGN.md** из 12+ источников — от брендов (Apple, Airbnb, Stripe, Linear, Netflix, Instagram) до эстетик (Glassmorphism, Brutalism, Cosmic):
+**1169 DESIGN.md** из 15+ источников — от брендов (Apple, Airbnb, Stripe, Linear, Netflix, Instagram) до эстетик (Glassmorphism, Brutalism, Cosmic):
 
-- **WebDesignHot** (403) — дизайн-системы реальных брендов
-- **Meliwat/awesome-ios-design-md** (200) — iOS-дизайн-системы для мобильных приложений
+- **WebDesignHot** (393) — дизайн-системы реальных брендов
 - **ndroussi/design-md-for-ai** (156) — дизайн-системы для ИИ-агентов
-- **nexu-io/open-design** (150) — эстетики и стили
+- **kwakseongjae/oh-my-design** (153) — OmD дизайн-системы
+- **nexu-io/open-design** (149) — эстетики и стили
 - **awesome-design-md** (74) — коллекция VoltAgent
 - **awesome-design-skills** (67) — скиллы и стартеры
-- **netsus/oh-my-design** (67) — OmD v0.1 философские дизайн-системы
-- **soulcore-dev** (7) + **dimabraven** (4) — авторские подборки
-- **google-labs-code** (3) — официальные примеры DESIGN.md spec
+- **Meliwat/awesome-ios-design-md** (152) — iOS-дизайн-системы (social, travel, productivity, fitness, dating, video, messaging, misc, music, food, finance)
+- **netsus/oh-my-design** (22) — OmD v0.1 философские дизайн-системы
+- **soulcore-dev** (7), **google-labs-code** (3), **dimabraven** (1) — авторские подборки
+- **Новые:** albemala/design-md-library, educlopez/design-bites, fabricioctelles/vibe-styles и др.
 
 Каждая дизайн-система содержит:
 - Цветовые токены
@@ -136,16 +137,19 @@ DesignX/
 ## Источники
 
 Design Systems:
-- [Meliwat/awesome-ios-design-md](https://github.com/Meliwat/awesome-ios-design-md) — 200 iOS-дизайн-систем
-- [WebDesignHot/design-md](https://github.com/WebDesignHot/design-md) — 403 дизайн-системы брендов
+- [WebDesignHot/design-md](https://github.com/WebDesignHot/design-md) — 393 дизайн-системы брендов
 - [ndroussi/design-md-for-ai](https://github.com/ndroussi/design-md-for-ai) — 156 дизайн-систем для ИИ
-- [nexu-io/open-design](https://github.com/nexu-io/open-design) — 150 эстетик + 155 скиллов
+- [kwakseongjae/oh-my-design](https://github.com/kwakseongjae/oh-my-design) — 153 OmD дизайн-системы
+- [nexu-io/open-design](https://github.com/nexu-io/open-design) — 149 эстетик + 155 скиллов
+- [Meliwat/awesome-ios-design-md](https://github.com/Meliwat/awesome-ios-design-md) — 152 iOS-дизайн-систем
 - [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) — 74 дизайн-системы
 - [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) — 67 скиллов
-- [netsus/oh-my-design](https://github.com/netsus/oh-my-design) — 67 OmD v0.1 дизайн-систем
-- [google-labs-code/design.md](https://github.com/google-labs-code/design.md) — официальные примеры spec
+- [netsus/oh-my-design](https://github.com/netsus/oh-my-design) — 22 OmD v0.1 дизайн-системы
+- [albemala/design-md-library](https://github.com/albemala/design-md-library) — Open library DESIGN.md
+- [educlopez/design-bites](https://github.com/educlopez/design-bites) — Curated DESIGN.md для сайтов
 - [soulcore-dev/soul-design-md](https://github.com/soulcore-dev/soul-design-md) — 7 авторских
-- [dimabraven/design-md](https://github.com/dimabraven/design-md) — 4 авторских
+- [google-labs-code/design.md](https://github.com/google-labs-code/design.md) — официальные примеры spec
+- [dimabraven/design-md](https://github.com/dimabraven/design-md) — авторские подборки
 
 Skills:
 - [carmahhawwari/ui-design-brain](https://github.com/carmahhawwari/ui-design-brain) (819★) — UI компоненты и паттерны
