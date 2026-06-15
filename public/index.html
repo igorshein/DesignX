@@ -374,6 +374,7 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
   <div id="panel-systems" class="panel">
     <div class="section"><h3>Filter by philosophy</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
     <div class="section"><h3>Filter by product type</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
+    <div class="section"><h3>Rating</h3><div class="filter-bar" id="ds-rating-filters"></div></div>
     <div class="toolbar">
       <div class="toolbar-left">
         <select class="sort-select" id="ds-sort-select" onchange="renderAllSystems()">
@@ -517,7 +518,9 @@ let favorites = new Set(JSON.parse(localStorage.getItem('designx-favs') || '[]')
     if (i >= paths.length) {
       document.getElementById('loader').innerHTML = '<p style="color:var(--error)">Error loading catalog</p><p style="color:var(--text-muted);font-size:.8125rem">Run <code style="font-family:var(--font-mono);color:var(--text-primary)">npx serve .</code></p>';
       return;
-    }
+  const el3=document.getElementById('ds-rating-filters');
+  if(el3)el3.innerHTML=`<button class="filter-btn${dsRatingFilter===0?' active':''}" data-rating="0" onclick="setDsRating(0)">Any</button><button class="filter-btn${dsRatingFilter===5?' active':''}" data-rating="5" onclick="setDsRating(5)">5</button><button class="filter-btn${dsRatingFilter===4?' active':''}" data-rating="4" onclick="setDsRating(4)">4+</button><button class="filter-btn${dsRatingFilter===3?' active':''}" data-rating="3" onclick="setDsRating(3)">3+</button>`;
+}
     fetch(paths[i]).then(r => { if (!r.ok) throw Error(); return r.json(); })
       .then(c => { CATALOG = c; document.getElementById('loader').style.display = 'none'; init(); })
       .catch(() => tryPath(i + 1));
@@ -552,6 +555,7 @@ function setComplexity(val){complexityFilter=val;document.querySelectorAll('#com
 function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(productFilter||'All')));page=0;filterSkills()}
 function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'All')));page=0;filterSkills()}
 function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Any':val+'+')));page=0;filterSkills()}
+function setDsRating(val){dsRatingFilter=dsRatingFilter===val?0:val;document.querySelectorAll('#ds-rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.rating)===dsRatingFilter||(dsRatingFilter===0&&parseInt(b.dataset.rating)===0)));dsPage=0;renderAllSystems()}
 function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.phil===dsPhilosophyFilter||(!b.dataset.phil&&!dsPhilosophyFilter)));dsPage=0;renderAllSystems()}
 function shortCatName(c){
   const phil=CATALOG.design_philosophies?.find(p=>p.id===c);
@@ -773,13 +777,14 @@ function showCompare(skills){
 }
 
 // Design Systems
-let dsPhilosophyFilter=null,dsProductFilter=null,dsPage=0,dsPageSize=24;
+let dsPhilosophyFilter=null,dsProductFilter=null,dsRatingFilter=0,dsPage=0,dsPageSize=24;
 function renderAllSystems(){
   if(!CATALOG||!CATALOG.design_systems)return;
   let systems=[...CATALOG.design_systems];
   const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
   if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.category===dsPhilosophyFilter);
   if(dsProductFilter)systems=systems.filter(ds=>ds.for_product_types?.includes(dsProductFilter));
+  if(dsRatingFilter>0)systems=systems.filter(ds=>(ds.rating||0)>=dsRatingFilter);
   if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
     systems=systems.filter(ds=>{
       const cols=[ds.colors?.primary,ds.colors?.secondary,ds.colors?.accent,...(ds.colors?.palette||[])];
