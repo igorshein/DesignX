@@ -552,14 +552,18 @@ function setComplexity(val){complexityFilter=val;document.querySelectorAll('#com
 function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(productFilter||'All')));page=0;filterSkills()}
 function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'All')));page=0;filterSkills()}
 function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Any':val+'+')));page=0;filterSkills()}
-function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsPhilosophyFilter||'All')));dsPage=0;renderAllSystems()}
-function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(dsProductFilter||'All')));dsPage=0;renderAllSystems()}
+function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.phil===dsPhilosophyFilter||(!b.dataset.phil&&!dsPhilosophyFilter)));dsPage=0;renderAllSystems()}
+function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.prod===dsProductFilter||(!b.dataset.prod&&!dsProductFilter)));dsPage=0;renderAllSystems()}
 
 function initDsFilters(){
+  const usedCats=[...new Set((CATALOG.design_systems||[]).map(ds=>ds.category).filter(Boolean))].sort();
   const el=document.getElementById('ds-philosophy-filters');
-  if(el)el.innerHTML=`<button class="filter-btn active" onclick="setDsPhilosophy(null)">All</button>`+(CATALOG.design_philosophies||[]).map(p=>`<button class="filter-btn" onclick="setDsPhilosophy('${p.id}')">${p.name}</button>`).join('');
+  if(el)el.innerHTML=`<button class="filter-btn active" data-phil="" onclick="setDsPhilosophy(null)">All</button>`+usedCats.map(c=>{
+    const name=CATALOG.design_philosophies?.find(p=>p.id===c)?.name||c;
+    return `<button class="filter-btn" data-phil="${c}" onclick="setDsPhilosophy('${c}')">${name}</button>`;
+  }).join('');
   const el2=document.getElementById('ds-product-filters');
-  if(el2)el2.innerHTML=`<button class="filter-btn active" onclick="setDsProduct(null)">All</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" onclick="setDsProduct('${pt.id}')">${pt.name}</button>`).join('');
+  if(el2)el2.innerHTML=`<button class="filter-btn active" data-prod="" onclick="setDsProduct(null)">All</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" data-prod="${pt.id}" onclick="setDsProduct('${pt.id}')">${pt.name}</button>`).join('');
 }
 
 // Skills
@@ -769,7 +773,7 @@ function renderAllSystems(){
   if(!CATALOG||!CATALOG.design_systems)return;
   let systems=[...CATALOG.design_systems];
   const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
-  if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.philosophy===dsPhilosophyFilter);
+  if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.category===dsPhilosophyFilter);
   if(dsProductFilter)systems=systems.filter(ds=>ds.for_product_types?.includes(dsProductFilter));
   if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
     systems=systems.filter(ds=>{
@@ -797,7 +801,7 @@ function renderAllSystems(){
       <h4>${ds.name}</h4>
       <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem;transition:color .15s">${ds.description||''}</p>
       <div class="meta" style="margin-top:.5rem">
-        ${ds.philosophy?`<span class="tag">${CATALOG.design_philosophies?.find(p=>p.id===ds.philosophy)?.name||ds.philosophy}</span>`:''}
+        ${ds.category?`<span class="tag">${CATALOG.design_philosophies?.find(p=>p.id===ds.category)?.name||ds.category}</span>`:''}
         ${ds.rating?`<span>★ ${ds.rating.toFixed(1)}</span>`:''}
       </div>
     </div>`;
