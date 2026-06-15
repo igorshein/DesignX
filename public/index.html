@@ -554,8 +554,10 @@ function setSource(src){sourceFilter=src===sourceFilter?null:src;document.queryS
 function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Any':val+'+')));page=0;filterSkills()}
 function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.phil===dsPhilosophyFilter||(!b.dataset.phil&&!dsPhilosophyFilter)));dsPage=0;renderAllSystems()}
 function shortCatName(c){
-  if(c.startsWith('design-system-inspired-by-'))return c.replace('design-system-inspired-by-','').split(/[-/]/)[0];
-  return c.split(/[-/]/)[0];
+  const phil=CATALOG.design_philosophies?.find(p=>p.id===c);
+  if(phil)return phil.name;
+  if(c.startsWith('design-system-inspired-by-'))return c.replace('design-system-inspired-by-','');
+  return c.replace(/-/g,' ');
 }
 function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.prod===dsProductFilter||(!b.dataset.prod&&!dsProductFilter)));dsPage=0;renderAllSystems()}
 
