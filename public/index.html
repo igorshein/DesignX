@@ -556,7 +556,6 @@ function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:v
 function shortCatName(c){
   const phil=CATALOG.design_philosophies?.find(p=>p.id===c);
   if(phil)return phil.name;
-  if(c.startsWith('design-system-inspired-by-'))return c.replace('design-system-inspired-by-','');
   return c.replace(/-/g,' ');
 }
 function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.prod===dsProductFilter||(!b.dataset.prod&&!dsProductFilter)));dsPage=0;renderAllSystems()}
