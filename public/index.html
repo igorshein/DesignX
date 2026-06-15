@@ -279,46 +279,51 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
       <small>v2</small>
     </a>
     <div class="header-right">
-      <div class="header-stats" id="stats-bar"><span>0 skills</span><span>0 systems</span></div>
-      <button class="btn btn-sm btn-outline" onclick="pickRandom()">Random</button>
+      <div class="lang-switcher" style="display:flex;gap:2px" data-i18n-title="lang.switcherTitle">
+        <button class="btn btn-sm btn-ghost lang-btn active" data-action="lang" data-lang="ru" data-i18n-text="lang.ru">РУС</button>
+        <button class="btn btn-sm btn-ghost lang-btn" data-action="lang" data-lang="en" data-i18n-text="lang.en">ENG</button>
+        <button class="btn btn-sm btn-ghost lang-btn" data-action="lang" data-lang="zh" data-i18n-text="lang.zh">中文</button>
+      </div>
+      <div class="header-stats" id="stats-bar"><span>0 <span data-i18n="about.skills">skills</span></span><span>0 <span data-i18n="about.designSystems">systems</span></span></div>
+      <button class="btn btn-sm btn-outline" data-action="random" data-i18n="nav.random">Random</button>
     </div>
   </header>
 
   <nav class="nav" id="main-nav">
-    <a class="active" data-panel="browse">Browse</a>
-    <a data-panel="favorites">Favorites</a>
-    <a data-panel="matcher">Matcher</a>
-    <a data-panel="systems">Design Systems</a>
-    <a data-panel="philosophies">Philosophies</a>
-    <a data-panel="tools">Tools</a>
-    <a data-panel="about">About</a>
+    <a class="active" data-action="nav" data-panel="browse" data-i18n="nav.browse">Browse</a>
+    <a data-action="nav" data-panel="favorites" data-i18n="nav.favorites">Favorites</a>
+    <a data-action="nav" data-panel="matcher" data-i18n="nav.matcher">Matcher</a>
+    <a data-action="nav" data-panel="systems" data-i18n="nav.systems">Design Systems</a>
+    <a data-action="nav" data-panel="philosophies" data-i18n="nav.philosophies">Philosophies</a>
+    <a data-action="nav" data-panel="tools" data-i18n="nav.tools">Tools</a>
+    <a data-action="nav" data-panel="about" data-i18n="nav.about">About</a>
   </nav>
 
-  <div id="loader"><div class="spinner"></div><p style="color:var(--text-muted);font-size:.75rem">Loading catalog</p></div>
+  <div id="loader"><div class="spinner"></div><p style="color:var(--text-muted);font-size:.75rem" data-i18n="states.loading">Loading catalog</p></div>
 
   <!-- PANEL: Browse -->
   <div id="panel-browse" class="panel">
     <div class="search-wrap">
       <span class="search-icon">/</span>
-      <input type="text" id="skill-search" placeholder="Search skills by name, tags, description..." oninput="filterSkills()" title="Press / to search">
+      <input type="text" id="skill-search" data-i18n-placeholder="search.placeholder" placeholder="Search skills by name, tags, description..." data-i18n-title="search.pressToSearch" title="Press / to search">
     </div>
 
-    <div class="section"><h3>Category</h3><div class="filter-scroll" id="category-filters"></div></div>
+    <div class="section"><h3 data-i18n="filter.category">Category</h3><div class="filter-scroll" id="category-filters"></div></div>
     <div class="section">
-      <h3>Level</h3>
+      <h3 data-i18n="filter.level">Level</h3>
       <div class="filter-bar" id="complexity-filters">
-        <button class="filter-btn active" onclick="setComplexity('all')">All</button>
-        <button class="filter-btn" onclick="setComplexity('beginner')">Beginner</button>
-        <button class="filter-btn" onclick="setComplexity('intermediate')">Intermediate</button>
-        <button class="filter-btn" onclick="setComplexity('advanced')">Advanced</button>
+        <button class="filter-btn active" data-action="filter" data-filter-type="complexity" data-filter-value="all" data-i18n="filter.any">All</button>
+        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="beginner" data-i18n="filter.beginner">Beginner</button>
+        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="intermediate" data-i18n="filter.intermediate">Intermediate</button>
+        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="advanced" data-i18n="filter.advanced">Advanced</button>
       </div>
     </div>
-    <div class="section"><h3>Product type</h3><div class="filter-scroll" id="product-type-filters"></div></div>
-    <div class="section"><h3>Source</h3><div class="filter-scroll" id="source-filters"></div></div>
-    <div class="section"><h3>Rating</h3><div class="filter-bar" id="rating-filters">
-      <button class="filter-btn active" onclick="setRating(0)">Any</button>
-      <button class="filter-btn" onclick="setRating(4)">4+</button>
-      <button class="filter-btn" onclick="setRating(3)">3+</button>
+    <div class="section"><h3 data-i18n="filter.productType">Product type</h3><div class="filter-scroll" id="product-type-filters"></div></div>
+    <div class="section"><h3 data-i18n="filter.source">Source</h3><div class="filter-scroll" id="source-filters"></div></div>
+    <div class="section"><h3 data-i18n="filter.rating">Rating</h3><div class="filter-bar" id="rating-filters">
+      <button class="filter-btn active" data-action="filter" data-filter-type="rating" data-filter-value="all" data-i18n="filter.anyRating">Any</button>
+      <button class="filter-btn" data-action="filter" data-filter-type="rating" data-filter-value="4">4+</button>
+      <button class="filter-btn" data-action="filter" data-filter-type="rating" data-filter-value="3">3+</button>
     </div></div>
 
     <div class="toolbar">
@@ -327,57 +332,57 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
         <span style="font-size:.6875rem;color:var(--text-muted)" id="active-filters"></span>
       </div>
       <div class="toolbar-right">
-        <label class="check-label"><input type="checkbox" id="fav-filter" onchange="filterSkills()"> Favorites</label>
+        <label class="check-label"><input type="checkbox" id="fav-filter"> <span data-i18n="filter.favorites">Favorites</span></label>
         <span style="color:var(--text-dim)">|</span>
-        <span style="font-size:.6875rem;color:var(--text-dim)">HEX:</span>
-        <input type="text" id="hex-search" placeholder="#2965f6" style="width:100px;height:32px;padding:0 10px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" oninput="filterSkills()" title="Search systems by hex color. Results in Design Systems tab">
-        <select class="sort-select" id="sort-select" onchange="filterSkills()">
-          <option value="name-asc">Name ↑</option>
-          <option value="name-desc">Name ↓</option>
-          <option value="rating-desc">Rating ↓</option>
-          <option value="rating-asc">Rating ↑</option>
+        <span style="font-size:.6875rem;color:var(--text-dim)" data-i18n="filter.hex">HEX:</span>
+        <input type="text" id="hex-search" data-i18n-placeholder="search.hexPlaceholder" placeholder="#2965f6" style="width:100px;height:32px;padding:0 10px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" data-i18n-title="search.hexTitle" title="Search systems by hex color">
+        <select class="sort-select" id="sort-select">
+          <option value="name-asc" data-i18n="sort.nameAsc">Name ↑</option>
+          <option value="name-desc" data-i18n="sort.nameDesc">Name ↓</option>
+          <option value="rating-desc" data-i18n="sort.ratingDesc">Rating ↓</option>
+          <option value="rating-asc" data-i18n="sort.ratingAsc">Rating ↑</option>
         </select>
-        <button class="btn btn-sm btn-ghost" onclick="exportSelected()">Export</button>
+        <button class="btn btn-sm btn-ghost" data-action="export" data-i18n="exportBar.export">Export</button>
       </div>
     </div>
 
     <div id="skills-grid" class="grid"></div>
     <div class="pagination" id="pagination-controls">
-      <button onclick="goPage(0)" id="page-first" disabled>«</button>
-      <button onclick="goPage(page-1)" id="page-prev" disabled>‹</button>
+      <button data-action="page" data-page="0" id="page-first" disabled data-i18n="pagination.first">«</button>
+      <button data-action="page" data-page="-1" id="page-prev" disabled data-i18n="pagination.prev">‹</button>
       <span class="page-info" id="page-info"></span>
-      <button onclick="goPage(page+1)" id="page-next">›</button>
-      <button onclick="goPage(totalPages-1)" id="page-last">»</button>
+      <button data-action="page" data-page="1" id="page-next" data-i18n="pagination.next">›</button>
+      <button data-action="page" data-page="-2" id="page-last" data-i18n="pagination.last">»</button>
     </div>
   </div>
 
   <!-- PANEL: Favorites -->
   <div id="panel-favorites" class="panel">
     <div class="toolbar">
-      <h2>Favorites</h2>
-      <button class="btn btn-sm btn-ghost" onclick="clearFavorites()" id="clear-favs-btn" style="display:none">Clear all</button>
+      <h2 data-i18n="nav.favorites">Favorites</h2>
+      <button class="btn btn-sm btn-ghost" data-action="clear-favs" id="clear-favs-btn" style="display:none" data-i18n="exportBar.clear">Clear all</button>
     </div>
     <div id="favorites-grid" class="grid"></div>
-    <div class="empty" id="favorites-empty" style="display:none">Nothing saved yet. Click ★ on a skill to add it.</div>
+    <div class="empty" id="favorites-empty" style="display:none" data-i18n="states.noFavorites">Nothing saved yet. Click ★ on a skill to add it.</div>
   </div>
 
   <!-- PANEL: Matcher -->
   <div id="panel-matcher" class="panel">
-    <div class="step"><span class="step-num">1</span><h3>What are you building?</h3><div class="product-select" id="matcher-product-types"></div></div>
-    <div class="step" id="matcher-step2" style="display:none"><span class="step-num">2</span><h3>Which aesthetic?</h3><div class="phil-grid" id="matcher-philosophies"></div></div>
-    <div class="step" id="matcher-step3" style="display:none"><span class="step-num">3</span><h3>Recommended skills</h3><p style="color:var(--text-muted);font-size:.75rem;margin:.5rem 0" id="matcher-reason"></p><div class="grid" id="matcher-skills"></div></div>
-    <div class="step" id="matcher-step4" style="display:none"><span class="step-num">4</span><h3>Design systems</h3><div class="grid grid-3" id="matcher-systems"></div></div>
-    <div id="matcher-step5" style="display:none" class="step" style="text-align:center"><button class="btn" onclick="exportSelected()">Export set</button></div>
+    <div class="step"><span class="step-num">1</span><h3 data-i18n="matcher.step1">What are you building?</h3><div class="product-select" id="matcher-product-types"></div></div>
+    <div class="step" id="matcher-step2" style="display:none"><span class="step-num">2</span><h3 data-i18n="matcher.step2">Which aesthetic?</h3><div class="phil-grid" id="matcher-philosophies"></div></div>
+    <div class="step" id="matcher-step3" style="display:none"><span class="step-num">3</span><h3 data-i18n="matcher.step3">Recommended skills</h3><p style="color:var(--text-muted);font-size:.75rem;margin:.5rem 0" id="matcher-reason"></p><div class="grid" id="matcher-skills"></div></div>
+    <div class="step" id="matcher-step4" style="display:none"><span class="step-num">4</span><h3 data-i18n="matcher.step4">Design systems</h3><div class="grid grid-3" id="matcher-systems"></div></div>
+    <div id="matcher-step5" style="display:none;text-align:center" class="step"><button class="btn" data-action="export" data-i18n="exportBar.export">Export set</button></div>
   </div>
 
   <!-- PANEL: Design Systems -->
   <div id="panel-systems" class="panel">
-    <div class="section"><h3>Filter by philosophy</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
-    <div class="section"><h3>Filter by product type</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
-    <div class="section"><h3>Rating</h3><div class="filter-bar" id="ds-rating-filters"></div></div>
+    <div class="section"><h3 data-i18n="ds.filterPhilosophy">Filter by philosophy</h3><div class="filter-scroll" id="ds-philosophy-filters"></div></div>
+    <div class="section"><h3 data-i18n="ds.filterProduct">Filter by product type</h3><div class="filter-scroll" id="ds-product-filters"></div></div>
+    <div class="section"><h3 data-i18n="ds.filterRating">Rating</h3><div class="filter-bar" id="ds-rating-filters"></div></div>
     <div class="toolbar">
       <div class="toolbar-left">
-        <select class="sort-select" id="ds-sort-select" onchange="renderAllSystems()">
+        <select class="sort-select" id="ds-sort-select">
           <option value="name-asc">Name ↑</option>
           <option value="name-desc">Name ↓</option>
         </select>
@@ -387,21 +392,21 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
     </div>
     <div class="grid grid-3" id="systems-grid"></div>
     <div class="pagination" id="ds-pagination">
-      <button onclick="goDsPage(0)" id="ds-page-first" disabled>«</button>
-      <button onclick="goDsPage(dsPage-1)" id="ds-page-prev" disabled>‹</button>
+      <button data-action="ds-page" data-page="0" id="ds-page-first" disabled>«</button>
+      <button data-action="ds-page" data-page="-1" id="ds-page-prev" disabled>‹</button>
       <span class="page-info" id="ds-page-info"></span>
-      <button onclick="goDsPage(dsPage+1)" id="ds-page-next">›</button>
-      <button onclick="goDsPage(totalDsPages-1)" id="ds-page-last">»</button>
+      <button data-action="ds-page" data-page="1" id="ds-page-next">›</button>
+      <button data-action="ds-page" data-page="-2" id="ds-page-last">»</button>
     </div>
   </div>
 
   <!-- PANEL: Philosophies -->
   <div id="panel-philosophies" class="panel">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem">
-      <h2 style="margin:0">Design philosophies</h2>
+      <h2 style="margin:0" data-i18n="philosophies.title">Design philosophies</h2>
       <span id="phil-count" style="font-size:.75rem;color:var(--text-dim)"></span>
     </div>
-    <p style="color:var(--text-muted);font-size:.8125rem;margin-bottom:1rem">55 aesthetic directions for AI agents. Each philosophy defines a visual language and atmosphere.</p>
+    <p style="color:var(--text-muted);font-size:.8125rem;margin-bottom:1rem" data-i18n="philosophies.subtitle">55 aesthetic directions for AI agents. Each philosophy defines a visual language and atmosphere.</p>
     <div class="filter-bar" id="phil-categories" style="margin-bottom:1.25rem"></div>
     <div class="grid grid-4" id="philosophies-grid"></div>
   </div>
@@ -410,41 +415,41 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
   <div id="panel-tools" class="panel">
     <div class="tools-layout">
       <div class="tool-section">
-        <h2 style="margin-bottom:.75rem">WCAG Contrast Checker</h2>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Color contrast checker per WCAG 2.2 (AA: 4.5:1, AAA: 7:1)</p>
+        <h2 style="margin-bottom:.75rem" data-i18n="tools.contrast.title">WCAG Contrast Checker</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem" data-i18n="tools.contrast.desc">Color contrast checker per WCAG 2.2 (AA: 4.5:1, AAA: 7:1)</p>
         <div class="contras-grid">
-          <div><label>Text color</label><input id="contrast-fg" value="#0d0d0d" oninput="checkContrast()"></div>
-          <div><label>Background</label><input id="contrast-bg" value="#f7f5f3" oninput="checkContrast()"></div>
+          <div><label data-i18n="tools.contrast.textColor">Text color</label><input id="contrast-fg" value="#0d0d0d"></div>
+          <div><label data-i18n="tools.contrast.bgColor">Background</label><input id="contrast-bg" value="#f7f5f3"></div>
         </div>
-        <div id="contrast-result" class="contras-result pass">Ratio: 10.2:1 · AA ✓ · AAA ✓</div>
-        <div id="contrast-sample" class="contras-sample" style="color:#0d0d0d;background:#f7f5f3">Sample text for readability check</div>
+        <div id="contrast-result" class="contras-result pass"></div>
+        <div id="contrast-sample" class="contras-sample" style="color:#0d0d0d;background:#f7f5f3" data-i18n="tools.contrast.sample">Sample text for readability check</div>
       </div>
 
       <div class="tool-section">
-        <h2 style="margin-bottom:.75rem">Design Principles (NN/g)</h2>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">10 Nielsen Norman Group heuristics + 5 visual design principles</p>
+        <h2 style="margin-bottom:.75rem" data-i18n="tools.principles.title">Design Principles (NN/g)</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem" data-i18n="tools.principles.desc">10 Nielsen Norman Group heuristics + 5 visual design principles</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)" id="nn-grid"></div>
       </div>
 
       <div class="tool-section full">
-        <h2 style="margin-bottom:.75rem">Design Tokens Viewer</h2>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Visualize tokens from any DESIGN.md. Type to search, then select a system:</p>
+        <h2 style="margin-bottom:.75rem" data-i18n="tools.tokens.title">Design Tokens Viewer</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem" data-i18n="tools.tokens.desc">Visualize tokens from any DESIGN.md. Type to search, then select a system:</p>
         <div class="filter-bar" id="tokens-ds-filters" style="margin-bottom:.75rem">
-          <input type="text" id="tokens-search" placeholder="Search design systems..." oninput="filterTokensSystems()" style="flex:1">
+          <input type="text" id="tokens-search" data-i18n-placeholder="tools.tokens.searchPlaceholder" placeholder="Search design systems..." style="flex:1">
         </div>
         <div id="tokens-ds-list" style="display:none;max-height:200px;overflow-y:auto;border:0.5px solid var(--border);margin-bottom:.75rem;background:var(--bg-surface)"></div>
-        <div id="tokens-viewer" class="tokens-viewer">Select a design system to view tokens</div>
+        <div id="tokens-viewer" class="tokens-viewer" data-i18n="tools.tokens.selectSystem">Select a design system to view tokens</div>
       </div>
 
       <div class="tool-section full">
-        <h2 style="margin-bottom:.75rem">Design Tools Map</h2>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Categorized reference of real services and tools for UI/UX design</p>
+        <h2 style="margin-bottom:.75rem" data-i18n="tools.toolsMap.title">Design Tools Map</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem" data-i18n="tools.toolsMap.desc">Categorized reference of real services and tools for UI/UX design</p>
         <div id="tools-map" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:1px;background:var(--border)"></div>
       </div>
 
       <div class="tool-section full">
-        <h2 style="margin-bottom:.75rem">Gestalt Principles in UI</h2>
-        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Gestalt psychology principles explaining how people perceive visual compositions</p>
+        <h2 style="margin-bottom:.75rem" data-i18n="tools.gestalt.title">Gestalt Principles in UI</h2>
+        <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem" data-i18n="tools.gestalt.desc">Gestalt psychology principles explaining how people perceive visual compositions</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:1px;background:var(--border)" id="gestalt-grid"></div>
       </div>
     </div>
@@ -453,31 +458,31 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
   <!-- PANEL: About -->
   <div id="panel-about" class="panel">
     <div class="about-section">
-      <h2>DesignX v2</h2>
-      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem">The largest open catalog of UI/UX design skills and DESIGN.md design systems for AI agents.</p>
-      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem"><strong>Difference from Open Design:</strong> DesignX is a recommendation catalog, not an artifact generator. We help you understand which skills and design systems your project needs.</p>
-      <h3>How to use</h3>
+      <h2 data-i18n="about.title">DesignX v2</h2>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem" data-i18n="about.desc">The largest open catalog of UI/UX design skills and DESIGN.md design systems for AI agents.</p>
+      <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.8125rem"><span data-i18n="about.diff">Difference from Open Design: DesignX is a recommendation catalog, not an artifact generator. We help you understand which skills and design systems your project needs.</span></p>
+      <h3 data-i18n="about.howToUse">How to use</h3>
       <ol>
-        <li>Select product type → DesignX picks skills + design system</li>
-        <li>Select design philosophy → refine the style</li>
-        <li>Export set → SKILL.md + DESIGN.md to repo root</li>
-        <li>AI agent reads files and follows the design system</li>
+        <li data-i18n="about.steps.0">Select product type → DesignX picks skills + design system</li>
+        <li data-i18n="about.steps.1">Select design philosophy → refine the style</li>
+        <li data-i18n="about.steps.2">Export set → SKILL.md + DESIGN.md to repo root</li>
+        <li data-i18n="about.steps.3">AI agent reads files and follows the design system</li>
       </ol>
-      <h3 style="margin-top:1rem">Statistics</h3>
+      <h3 style="margin-top:1rem" data-i18n="about.stats">Statistics</h3>
       <ul id="about-stats"></ul>
       <h3 style="margin-top:1rem">Recommended for DesignX</h3>
       <p style="color:var(--text-muted);font-size:.75rem;margin-bottom:.75rem">Skills that built DesignX itself — Cosmos-inspired aesthetic.</p>
       <div id="about-recommended" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
-      <h3 style="margin-top:1rem">Sources</h3>
+      <h3 style="margin-top:1rem" data-i18n="about.sources">Sources</h3>
       <ul id="about-sources"></ul>
     </div>
   </div>
 </div>
 
 <!-- Detail Overlay -->
-<div id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+<div id="detail-overlay" data-action="close-overlay">
   <div id="detail-panel">
-    <button class="close" onclick="closeDetail()">Close</button>
+    <button class="close" data-action="close-detail" data-i18n="detail.close">Close</button>
     <div id="detail-content"></div>
   </div>
 </div>
@@ -485,93 +490,229 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
 <!-- Export Bar -->
 <div class="export-bar" id="export-bar">
   <div class="export-inner">
-    <span class="export-count" id="export-count">Selected: 0</span>
+    <span class="export-count" id="export-count" data-i18n="exportBar.nothing">Selected: 0</span>
     <div class="export-actions">
-      <button class="btn btn-sm btn-outline" id="compare-btn" onclick="compareSkills()" style="display:none">Compare</button>
-      <button class="btn btn-sm btn-ghost" onclick="clearSelection()">Clear</button>
-      <button class="btn btn-sm" onclick="exportSelected()">Export</button>
+      <button class="btn btn-sm btn-outline" id="compare-btn" data-action="compare" style="display:none" data-i18n="exportBar.compare">Compare</button>
+      <button class="btn btn-sm btn-ghost" data-action="clear-selection" data-i18n="exportBar.clear">Clear</button>
+      <button class="btn btn-sm" data-action="export" data-i18n="exportBar.export">Export</button>
     </div>
   </div>
 </div>
 
-<script>
+<script type="module">
+import {
+  CAT_COLORS, escapeHtml, debounce, contrastRatio, hexToLuminance, isDarkColor,
+  filterSkills as coreFilter, sortSkills, paginate, loadCatalog as loadCore,
+  loadFavorites, saveFavorites, dateBadge as coreDateBadge, normalizeTokens
+} from '../src/app.js';
+import {
+  registerLocale, setLanguage, getLanguage, getLocales, getLocaleNames,
+  onChange, t, tArray, initLanguage
+} from '../src/i18n.js';
+import ru from '../src/locales/ru.js';
+import en from '../src/locales/en.js';
+import zh from '../src/locales/zh.js';
+
+registerLocale('ru', ru);
+registerLocale('en', en);
+registerLocale('zh', zh);
+initLanguage();
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const val = t(key);
+    if (val !== undefined && val !== null) el.textContent = val;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    const val = t(key);
+    if (val) el.placeholder = val;
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.dataset.i18nTitle;
+    const val = t(key);
+    if (val) el.title = val;
+  });
+  document.querySelectorAll('[data-i18n-text]').forEach(el => {
+    const key = el.dataset.i18nText;
+    const val = t(key);
+    if (val !== undefined && val !== null) el.textContent = val;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === getLanguage());
+  });
+  document.documentElement.lang = getLanguage();
+}
+applyI18n();
+onChange(() => { applyI18n(); refreshAllI18n(); });
+
+function refreshAllI18n() {
+  if (!CATALOG) return;
+  initFilters();
+  initDsFilters();
+  filterSkills();
+  renderAllSystems();
+  renderPhilosophiesPage();
+  renderMatcher();
+  renderNng();
+  renderGestalt();
+  renderToolsMap();
+  updateStats();
+  checkContrast();
+}
+
 let CATALOG = null;
-const CAT_COLORS={
-  'visual-design':'#2965f6','ux-research':'#6e6a69','prototyping':'#9a9796','design-system':'#00af5d',
-  'critique':'#bd3c1f','brand':'#6e6a69','motion':'#9a9796','typography':'#0d0d0d','color-theory':'#bd3c1f',
-  'layout-composition':'#6e6a69','interaction':'#2965f6','mobile':'#9a9796','responsive':'#00af5d',
-  'frontend-dev':'#e8a838','data-viz':'#2965f6','accessibility':'#00af5d','game-ui':'#bd3c1f',
-  'design-tools':'#6e6a69','ai-tools':'#2965f6','design-ops':'#0d0d0d'
-};
 let selectedSkillIds = new Set();
 let selectedSystemIds = new Set();
 let categoryFilter = 'all', complexityFilter = 'all', productFilter = null;
 let sourceFilter = null, ratingFilter = 0, sortBy = 'name-asc';
+let dsRatingFilter = 0;
 let page = 0, pageSize = 50;
 let matcherProduct = null, matcherPhilosophy = null;
-let favorites = new Set(JSON.parse(localStorage.getItem('designx-favs') || '[]'));
+let favorites = loadFavorites('designx-favs');
+let _allTokenSystems = [];
+let _selectedTokenSystem = null;
 
-(function loadCatalog() {
-  const paths = ['src/data/catalog.json', '../src/data/catalog.json', 'data/catalog.json'];
-  function tryPath(i) {
-    if (i >= paths.length) {
-      document.getElementById('loader').innerHTML = '<p style="color:var(--error)">Error loading catalog</p><p style="color:var(--text-muted);font-size:.8125rem">Run <code style="font-family:var(--font-mono);color:var(--text-primary)">npx serve .</code></p>';
-      return;
-  const el3=document.getElementById('ds-rating-filters');
-  if(el3)el3.innerHTML=`<button class="filter-btn${dsRatingFilter===0?' active':''}" data-rating="0" onclick="setDsRating(0)">Any</button><button class="filter-btn${dsRatingFilter===5?' active':''}" data-rating="5" onclick="setDsRating(5)">5</button><button class="filter-btn${dsRatingFilter===4?' active':''}" data-rating="4" onclick="setDsRating(4)">4+</button><button class="filter-btn${dsRatingFilter===3?' active':''}" data-rating="3" onclick="setDsRating(3)">3+</button>`;
+// --- Escaped HTML helpers ---
+function html(strings, ...values) {
+  return strings.reduce((r, s, i) => r + escapeHtml(String(values[i - 1] ?? '')) + s);
 }
-    fetch(paths[i]).then(r => { if (!r.ok) throw Error(); return r.json(); })
-      .then(c => { CATALOG = c; document.getElementById('loader').style.display = 'none'; init(); })
-      .catch(() => tryPath(i + 1));
-  }
-  tryPath(0);
-})();
+
+// --- Event delegation ---
+function setupDelegation() {
+  document.addEventListener('click', e => {
+    const target = e.target;
+    const actionEl = target.closest('[data-action]');
+    if (!actionEl) return;
+    const action = actionEl.dataset.action;
+    const id = actionEl.dataset.id;
+    const panel = actionEl.dataset.panel;
+
+    switch (action) {
+      case 'select-skill': selectSkill(id); break;
+      case 'select-ds': selectSystem(id); break;
+      case 'fav': e.stopPropagation(); toggleFav(id); break;
+      case 'nav': switchPanel(panel); break;
+      case 'filter': applyFilter(actionEl.dataset.filterType, actionEl.dataset.filterValue); break;
+      case 'page': {
+        const v = parseInt(actionEl.dataset.page);
+        goPage(v === -1 ? page - 1 : v === -2 ? window.totalPages - 1 : v);
+        break;
+      }
+      case 'ds-page': {
+        const v = parseInt(actionEl.dataset.page);
+        goDsPage(v === -1 ? dsPage - 1 : v === -2 ? window.totalDsPages - 1 : v);
+        break;
+      }
+      case 'phil-category': togglePhilCategory(actionEl.dataset.value); break;
+      case 'show-phil-detail': showPhilosophyDetail(id); break;
+      case 'matcher-product': selectMatcherProduct(id); break;
+      case 'matcher-philosophy': selectMatcherPhilosophy(id); break;
+      case 'select-token-system': selectTokenSystem(id); break;
+      case 'export': exportSelected(); break;
+      case 'clear-selection': clearSelection(); break;
+      case 'compare': compareSkills(); break;
+      case 'lang': setLanguage(actionEl.dataset.lang); break;
+      case 'random': pickRandom(); break;
+      case 'clear-favs': clearFavorites(); break;
+    }
+  });
+  document.addEventListener('dblclick', e => {
+    const card = e.target.closest('[data-action="select-skill"]');
+    if (card) showSkillDetail(card.dataset.id);
+  });
+}
 
 function init() {
   const c = CATALOG;
   c.skills.forEach(s=>{if(!s.source_short)s.source_short=s.source?s.source.split('/')[0]:'DesignX'});
-  document.getElementById('stats-bar').innerHTML = `<span>${c.skills.length} skills</span><span>${(c.design_systems||[]).length} systems</span><span>${(c.design_philosophies||[]).length} philosophies</span><span>${favorites.size} saved</span>`;
-  document.querySelectorAll('.nav a').forEach(a=>{a.onclick=()=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const panel=document.getElementById('panel-'+a.dataset.panel);if(panel)panel.classList.add('active');if(a.dataset.panel==='systems')renderAllSystems();if(a.dataset.panel==='favorites')showFavorites();};});
+  document.getElementById('stats-bar').innerHTML = `<span>${c.skills.length} ${t('about.skills')}</span><span>${(c.design_systems||[]).length} ${t('about.designSystems')}</span><span>${(c.design_philosophies||[]).length} ${t('about.philosophies')}</span><span>${favorites.size} ${t('about.saved')}</span>`;
   document.getElementById('panel-browse').classList.add('active');
   initFilters(); initDsFilters(); filterSkills(); updateExportBar();
   document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(e.target.tagName)){e.preventDefault();document.getElementById('skill-search')?.focus()}});
   requestAnimationFrame(()=>{renderAllSystems();renderPhilosophiesPage();renderMatcher();renderTools();renderToolsMap();updateStats();});
 }
 
+// --- Filter state machine ---
+function applyFilter(type, value) {
+  switch (type) {
+    case 'category': categoryFilter = value; page = 0; filterSkills(); break;
+    case 'complexity': complexityFilter = value; page = 0; filterSkills(); break;
+    case 'product': productFilter = productFilter === value ? null : value; page = 0; filterSkills(); break;
+    case 'source': sourceFilter = sourceFilter === value ? null : value; page = 0; filterSkills(); break;
+    case 'rating': ratingFilter = ratingFilter === value ? 0 : value; page = 0; filterSkills(); break;
+    case 'ds-rating': dsRatingFilter = dsRatingFilter === Number(value) ? 0 : Number(value); dsPage = 0; renderAllSystems(); break;
+    case 'ds-philosophy': dsPhilosophyFilter = dsPhilosophyFilter === value ? null : value; dsPage = 0; renderAllSystems(); break;
+    case 'ds-product': dsProductFilter = dsProductFilter === value ? null : value; dsPage = 0; renderAllSystems(); break;
+  }
+  updateFilterUI(type);
+}
+
+function updateFilterUI(type) {
+  // Find the container for this filter type and toggle active class
+  const selectors = {
+    category: '#category-filters .filter-btn',
+    complexity: '#complexity-filters .filter-btn',
+    product: '#product-type-filters .filter-btn',
+    source: '#source-filters .filter-btn',
+    rating: '#rating-filters .filter-btn',
+    'ds-rating': '#ds-rating-filters .filter-btn',
+    'ds-philosophy': '#ds-philosophy-filters .filter-btn',
+    'ds-product': '#ds-product-filters .filter-btn',
+  };
+  const sel = selectors[type];
+  if (!sel) return;
+  document.querySelectorAll(sel).forEach(b => {
+    const val = b.dataset.filterValue;
+    let active = false;
+    switch (type) {
+      case 'category': active = val === categoryFilter; break;
+      case 'complexity': active = val === complexityFilter; break;
+      case 'product': active = productFilter ? val === productFilter : val === 'all'; break;
+      case 'source': active = sourceFilter ? val === sourceFilter : val === 'all'; break;
+      case 'rating': active = ratingFilter ? val === String(ratingFilter) : val === 'all'; break;
+      case 'ds-rating': active = dsRatingFilter ? val === String(dsRatingFilter) : val === 'all'; break;
+      case 'ds-philosophy': active = dsPhilosophyFilter ? val === dsPhilosophyFilter : val === 'all'; break;
+      case 'ds-product': active = dsProductFilter ? val === dsProductFilter : val === 'all'; break;
+    }
+    b.classList.toggle('active', active);
+  });
+}
+
 function initFilters() {
   const counts={}; CATALOG.skills.forEach(s=>{counts[s.category]=(counts[s.category]||0)+1});
-  document.getElementById('category-filters').innerHTML = `<button class="filter-btn active" onclick="setCategory('all')">All (${CATALOG.skills.length})</button>` +
-    CATALOG.categories.map(c=>`<button class="filter-btn" onclick="setCategory('${c.id}')">${c.name} (${counts[c.id]||0})</button>`).join('');
-  document.getElementById('product-type-filters').innerHTML = `<button class="filter-btn${!productFilter?' active':''}" onclick="setProductFilter(null)">All products</button>` +
-    CATALOG.product_types.map(pt=>`<button class="filter-btn${productFilter===pt.id?' active':''}" onclick="setProductFilter('${pt.id}')">${pt.name}</button>`).join('');
+  document.getElementById('category-filters').innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="category" data-filter-value="all">${t('filter.all')} (${CATALOG.skills.length})</button>` +
+    CATALOG.categories.map(c => `<button class="filter-btn" data-action="filter" data-filter-type="category" data-filter-value="${c.id}">${escapeHtml(c.name)} (${counts[c.id]||0})</button>`).join('');
+  document.getElementById('product-type-filters').innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="product" data-filter-value="all">${t('filter.allProducts')}</button>` +
+    CATALOG.product_types.map(pt => `<button class="filter-btn" data-action="filter" data-filter-type="product" data-filter-value="${pt.id}">${escapeHtml(pt.name)}</button>`).join('');
   const srcCounts={}; (CATALOG.design_systems||[]).forEach(ds=>{const s=ds.source_short||ds.source;if(s)srcCounts[s]=(srcCounts[s]||0)+1});
-  document.getElementById('source-filters').innerHTML = `<button class="filter-btn${!sourceFilter?' active':''}" onclick="setSource(null)">All</button>` +
-    Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).map(([s,c])=>`<button class="filter-btn${sourceFilter===s?' active':''}" onclick="setSource('${s.replace(/'/g,"\\'")}')">${s} (${c})</button>`).join('');
+  document.getElementById('source-filters').innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="source" data-filter-value="all">${t('filter.all')}</button>` +
+    Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).map(([s,c])=>`<button class="filter-btn" data-action="filter" data-filter-type="source" data-filter-value="${escapeAttr(s)}">${escapeHtml(s)} (${c})</button>`).join('');
 }
 
-function setCategory(cat){categoryFilter=cat;document.querySelectorAll('#category-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(cat==='all'?'All':CATALOG.categories.find(c=>c.id===cat)?.name)));page=0;filterSkills()}
-function setComplexity(val){complexityFilter=val;document.querySelectorAll('#complexity-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val==='all'?'All':{beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced'}[val])));page=0;filterSkills()}
-function setProductFilter(id){productFilter=id;document.querySelectorAll('#product-type-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(productFilter||'All')));page=0;filterSkills()}
-function setSource(src){sourceFilter=src===sourceFilter?null:src;document.querySelectorAll('#source-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().startsWith(sourceFilter||'All')));page=0;filterSkills()}
-function setRating(val){ratingFilter=val===ratingFilter?0:val;document.querySelectorAll('#rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(val===0?'Any':val+'+')));page=0;filterSkills()}
-function setDsRating(val){dsRatingFilter=dsRatingFilter===val?0:val;document.querySelectorAll('#ds-rating-filters .filter-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.rating)===dsRatingFilter||(dsRatingFilter===0&&parseInt(b.dataset.rating)===0)));dsPage=0;renderAllSystems()}
-function setDsPhilosophy(val){dsPhilosophyFilter=dsPhilosophyFilter===val?null:val;document.querySelectorAll('#ds-philosophy-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.phil===dsPhilosophyFilter||(!b.dataset.phil&&!dsPhilosophyFilter)));dsPage=0;renderAllSystems()}
-function shortCatName(c){
-  const phil=CATALOG.design_philosophies?.find(p=>p.id===c);
-  if(phil)return phil.name;
-  return c.replace(/-/g,' ');
+function shortCatName(c) {
+  const phil = CATALOG.design_philosophies?.find(p => p.id === c);
+  return phil ? phil.name : c.replace(/-/g, ' ');
 }
-function setDsProduct(val){dsProductFilter=dsProductFilter===val?null:val;document.querySelectorAll('#ds-product-filters .filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.prod===dsProductFilter||(!b.dataset.prod&&!dsProductFilter)));dsPage=0;renderAllSystems()}
 
-function initDsFilters(){
-  const usedCats=[...new Set((CATALOG.design_systems||[]).map(ds=>ds.category).filter(Boolean))].sort();
-  const el=document.getElementById('ds-philosophy-filters');
-  if(el)el.innerHTML=`<button class="filter-btn active" data-phil="" onclick="setDsPhilosophy(null)">All</button>`+usedCats.map(c=>{
-    const name=shortCatName(c);
-    return `<button class="filter-btn" data-phil="${c}" onclick="setDsPhilosophy('${c}')">${name}</button>`;
-  }).join('');
-  const el2=document.getElementById('ds-product-filters');
-  if(el2)el2.innerHTML=`<button class="filter-btn active" data-prod="" onclick="setDsProduct(null)">All</button>`+CATALOG.product_types.map(pt=>`<button class="filter-btn" data-prod="${pt.id}" onclick="setDsProduct('${pt.id}')">${pt.name}</button>`).join('');
+function initDsFilters() {
+  const usedCats = [...new Set((CATALOG.design_systems||[]).map(ds => ds.category).filter(Boolean))].sort();
+  const el = document.getElementById('ds-philosophy-filters');
+  if (el) el.innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="ds-philosophy" data-filter-value="all">${t('filter.all')}</button>` +
+    usedCats.map(c => `<button class="filter-btn" data-action="filter" data-filter-type="ds-philosophy" data-filter-value="${c}">${escapeHtml(shortCatName(c))}</button>`).join('');
+  const el2 = document.getElementById('ds-product-filters');
+  if (el2) el2.innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="ds-product" data-filter-value="all">${t('filter.all')}</button>` +
+    CATALOG.product_types.map(pt => `<button class="filter-btn" data-action="filter" data-filter-type="ds-product" data-filter-value="${pt.id}">${escapeHtml(pt.name)}</button>`).join('');
+  const el3 = document.getElementById('ds-rating-filters');
+  if (el3) el3.innerHTML =
+    `<button class="filter-btn active" data-action="filter" data-filter-type="ds-rating" data-filter-value="all">${t('filter.anyRating')}</button>` +
+    [5, 4, 3].map(r => `<button class="filter-btn" data-action="filter" data-filter-type="ds-rating" data-filter-value="${r}">${r}${r < 5 ? '+' : ''}</button>`).join('');
 }
 
 // Skills
@@ -596,8 +737,8 @@ function filterSkills() {
       return cols.some(c=>c?.toLowerCase()===hexSearch.toLowerCase());
     });
     const badge=document.getElementById('ds-hex-badge');
-    if(badge){badge.textContent=`🎨 ${dsCopy.length} systems with ${hexSearch}`;badge.style.display='inline-block'}
-    document.getElementById('ds-result-count').textContent=`${dsCopy.length} systems`;
+    if(badge){badge.textContent=`🎨 ${dsCopy.length} ${t('ds.systems')}`;badge.style.display='inline-block'}
+    document.getElementById('ds-result-count').textContent=`${dsCopy.length} ${t('ds.systems')}`;
   }else{
     const badge=document.getElementById('ds-hex-badge');
     if(badge)badge.style.display='none';
@@ -618,12 +759,12 @@ function filterSkills() {
   const start=page*pageSize;
   const paged=skills.slice(start,start+pageSize);
 
-  document.getElementById('result-count').textContent=`${total} skills`;
-  document.getElementById('active-filters').textContent=[categoryFilter!=='all'?CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter:'',complexityFilter!=='all'?complexityFilter:'',productFilter||'',sourceFilter||'',ratingFilter>0?ratingFilter+'+':'',document.getElementById('fav-filter')?.checked?'★ fav':''].filter(Boolean).join(' · ');
+  document.getElementById('result-count').textContent=`${total} ${t('filter.skills')}`;
+  document.getElementById('active-filters').textContent=[categoryFilter!=='all'?CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter:'',complexityFilter!=='all'?complexityFilter:'',productFilter||'',sourceFilter||'',ratingFilter>0?ratingFilter+'+':'',document.getElementById('fav-filter')?.checked?'fav':''].filter(Boolean).join(' · ');
 
   const grid=document.getElementById('skills-grid');
   if(paged.length===0){
-    grid.innerHTML=`<div class="empty">Nothing found<br><button class="btn btn-sm btn-outline" onclick="resetFilters()" style="margin-top:.75rem">Reset filters</button></div>`;
+    grid.innerHTML=`<div class="empty">${t('states.nothingFound')}<br><button class="btn btn-sm btn-outline" data-action="filter" data-filter-type="category" data-filter-value="all" style="margin-top:.75rem">${t('filter.reset')}</button></div>`;
   }else{
     grid.innerHTML=paged.map((s,i)=>renderSkillCard(s,i)).join('');
   }
@@ -637,16 +778,16 @@ function filterSkills() {
   window.page=page;window.totalPages=totalPages;
 }
 
+function escapeAttr(str) { return escapeHtml(str); }
+
 function resetFilters() {
   categoryFilter='all';complexityFilter='all';productFilter=null;sourceFilter=null;ratingFilter=0;
   document.getElementById('skill-search').value='';
   document.getElementById('fav-filter').checked=false;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelector('#category-filters .filter-btn:first-child')?.classList.add('active');
-  document.querySelector('#complexity-filters .filter-btn:first-child')?.classList.add('active');
-  document.querySelector('#product-type-filters .filter-btn:first-child')?.classList.add('active');
-  document.querySelector('#source-filters .filter-btn:first-child')?.classList.add('active');
-  document.querySelector('#rating-filters .filter-btn:first-child')?.classList.add('active');
+  document.querySelectorAll('[data-action="filter"]').forEach(b => {
+    if (b.dataset.filterValue === 'all' && b.dataset.filterType !== 'all') b.classList.add('active');
+  });
   page=0;filterSkills();
 }
 
@@ -657,18 +798,18 @@ function renderSkillCard(s,idx=0) {
   const isSelected=selectedSkillIds.has(s.id);
   const rating=s.rating?`<span>★ ${s.rating.toFixed(1)}</span>`:'';
   const catColor=CAT_COLORS[s.category]||'#6e6a69';
-  return `<div class="card${isSelected?' selected':''}" onclick="selectSkill('${s.id}')" style="border-left:3px solid ${catColor};animation-delay:${idx*30}ms" data-id="${s.id}">
+  return `<div class="card${isSelected?' selected':''}" data-action="select-skill" data-id="${escapeAttr(s.id)}" style="border-left:3px solid ${catColor};animation-delay:${idx*30}ms">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
-      <h4>${s.name}</h4>
-      <button class="fav-btn${isFav?' active':''}" onclick="event.stopPropagation();toggleFav('${s.id}')" title="Save">★</button>
+      <h4>${escapeHtml(s.name)}</h4>
+      <button class="fav-btn${isFav?' active':''}" data-action="fav" data-id="${escapeAttr(s.id)}" title="Save">★</button>
     </div>
-    ${s.tags?.length?`<div class="tags">${s.tags.slice(0,5).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`:''}
-    ${s.description?`<p>${s.description}</p>`:''}
+    ${s.tags?.length?`<div class="tags">${s.tags.slice(0,5).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>`:''}
+    ${s.description?`<p>${escapeHtml(s.description)}</p>`:''}
     <div class="meta">
-      ${complexityLabel?`<span class="complexity comp-${s.complexity}">${complexityLabel}</span>`:''}
+      ${complexityLabel?`<span class="complexity comp-${s.complexity}">${escapeHtml(complexityLabel)}</span>`:''}
       ${rating}
-      ${s.source_short?`<span>${s.source_short}</span>`:''}
-      <span style="font-size:.625rem;color:${catColor}">${catName}</span>
+      ${s.source_short?`<span>${escapeHtml(s.source_short)}</span>`:''}
+      <span style="font-size:.625rem;color:${catColor}">${escapeHtml(catName)}</span>
     </div>
   </div>`;
 }
@@ -676,16 +817,36 @@ function renderSkillCard(s,idx=0) {
 function goPage(p){if(p>=0&&p<window.totalPages){page=p;filterSkills()}}
 function goDsPage(p){if(p>=0&&p<window.totalDsPages){dsPage=p;renderAllSystems()}}
 
+function switchPanel(panel) {
+  document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const navEl = document.querySelector(`.nav [data-panel="${panel}"]`);
+  if (navEl) navEl.classList.add('active');
+  const panelEl = document.getElementById('panel-'+panel);
+  if (panelEl) panelEl.classList.add('active');
+  if (panel==='systems') renderAllSystems();
+  if (panel==='favorites') showFavorites();
+}
+
 // Favorites
 function toggleFav(id){
   if(favorites.has(id))favorites.delete(id);else favorites.add(id);
-  localStorage.setItem('designx-favs',JSON.stringify([...favorites]));
+  saveFavorites(favorites, 'designx-favs');
+  updateFavStats();
   filterSkills();
-  const stats=document.getElementById('stats-bar');
-  if(stats)stats.innerHTML=stats.innerHTML.replace(/★ \d+ saved/,'★ '+favorites.size+' saved');
 }
+
+function updateFavStats() {
+  const stats=document.getElementById('stats-bar');
+  if(stats&&CATALOG)stats.innerHTML=`<span>${CATALOG.skills.length} ${t('about.skills')}</span><span>${(CATALOG.design_systems||[]).length} ${t('about.designSystems')}</span><span>${(CATALOG.design_philosophies||[]).length} ${t('about.philosophies')}</span><span>${favorites.size} ${t('about.saved')}</span>`;
+}
+
 function showFavorites(){
   if(!CATALOG)return;
+  if (!document.getElementById('panel-favorites')?.classList.contains('active')) {
+    filterSkills();
+    return;
+  }
   const favs=CATALOG.skills.filter(s=>favorites.has(s.id));
   const grid=document.getElementById('favorites-grid');
   const empty=document.getElementById('favorites-empty');
@@ -700,7 +861,7 @@ function showFavorites(){
     if(clearBtn)clearBtn.style.display='inline-flex';
   }
 }
-function clearFavorites(){favorites.clear();localStorage.setItem('designx-favs','[]');showFavorites();filterSkills();}
+function clearFavorites(){favorites.clear();saveFavorites(favorites, 'designx-favs');showFavorites();filterSkills();}
 
 // Selection & Export
 function selectSkill(id){
@@ -712,7 +873,7 @@ function updateExportBar(){
   const bar=document.getElementById('export-bar');
   const count=document.getElementById('export-count');
   const total=selectedSkillIds.size+selectedSystemIds.size;
-  if(total>0){bar.classList.add('visible');count.textContent=`Selected: ${total}`}else{bar.classList.remove('visible')}
+  if(total>0){bar.classList.add('visible');count.textContent=`${t('exportBar.selected')}: ${total}`}else{bar.classList.remove('visible')}
   const cmp=document.getElementById('compare-btn');
   if(cmp)cmp.style.display=selectedSkillIds.size>=2?'inline-flex':'none';
 }
@@ -739,39 +900,47 @@ function compareSkills(){
 function showDetail(item) {
   const overlay=document.getElementById('detail-overlay');
   const content=document.getElementById('detail-content');
-  const tags=item.tags?.map(t=>`<span class="tag">${t}</span>`).join('')||'';
-  const principles=item.principles?.map(p=>`<li>${p}</li>`).join('')||'';
+  const tags=(item.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('');
+  const principles=(item.principles||[]).map(p=>`<li>${escapeHtml(p)}</li>`).join('');
   const rating=item.rating?`<span>★ ${item.rating.toFixed(1)}</span>`:'';
   content.innerHTML=`
-    <h2>${item.name}</h2>
+    <h2>${escapeHtml(item.name)}</h2>
     <div class="detail-meta">
       ${rating}
-      ${item.complexity?`<span class="complexity comp-${item.complexity}">${item.complexity}</span>`:''}
-      ${item.source?`<span>${item.source}</span>`:''}
+      ${item.complexity?`<span class="complexity comp-${item.complexity}">${escapeHtml(item.complexity)}</span>`:''}
+      ${item.source?`<span>${escapeHtml(item.source)}</span>`:''}
     </div>
-    ${item.description?`<p style="color:var(--text-muted);font-size:.8125rem;margin:.5rem 0">${item.description}</p>`:''}
+    ${item.description?`<p style="color:var(--text-muted);font-size:.8125rem;margin:.5rem 0">${escapeHtml(item.description)}</p>`:''}
     ${tags?`<div style="display:flex;gap:4px;flex-wrap:wrap;margin:.5rem 0">${tags}</div>`:''}
     ${principles?`<ol class="principles">${principles}</ol>`:''}
-    ${item.for_product_types?.length?`<div style="margin-top:.5rem"><span style="font-size:.6875rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Product types:</span><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">${item.for_product_types.map(pt=>`<span class="tag">${pt}</span>`).join('')}</div></div>`:''}
-    ${item.colors?`<div class="swatch-row">${Object.entries(item.colors).filter(([k])=>k!=='palette').map(([k,v])=>`<div class="swatch"><span class="swatch-dot" style="background:${v}"></span>${k}</div>`).join('')}${item.colors.palette?.map(c=>`<div class="swatch"><span class="swatch-dot" style="background:${c}"></span></div>`).join('')||''}</div>`:''}
+    ${item.for_product_types?.length?`<div style="margin-top:.5rem"><span style="font-size:.6875rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Product types:</span><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">${item.for_product_types.map(pt=>`<span class="tag">${escapeHtml(pt)}</span>`).join('')}</div></div>`:''}
+    ${item.colors?`<div class="swatch-row">${Object.entries(item.colors).filter(([k])=>k!=='palette').map(([k,v])=>`<div class="swatch"><span class="swatch-dot" style="background:${v}"></span>${escapeHtml(k)}</div>`).join('')}${item.colors.palette?.map(c=>`<div class="swatch"><span class="swatch-dot" style="background:${c}"></span></div>`).join('')||''}</div>`:''}
   `;
   overlay.classList.add('open');
-  if (item.principles) overlay.querySelector('.principles')?.classList.add('principles');
 }
+function showSkillDetail(id) {
+  const s = CATALOG?.skills?.find(x => x.id === id);
+  if (s) showDetail(s);
+}
+
+function showPhilosophyDetail(id) {
+  const p = CATALOG?.design_philosophies?.find(x => x.id === id);
+  if (p) showDetail(p);
+}
+
 function closeDetail(){document.getElementById('detail-overlay').classList.remove('open')}
 function showCompare(skills){
   showDetail({name:'Compare',description:'',tags:[]});
   const content=document.getElementById('detail-content');
   const cols=Math.min(skills.length,4);
   content.innerHTML=`<div class="compare-grid c${cols}">${skills.map(s=>{
-    const col=`<div class="compare-col">
+    return `<div class="compare-col">
       <div class="acc-bar" style="background:${CAT_COLORS[s.category]||'#6e6a69'}"></div>
-      <h3>${s.name}</h3>
-      ${s.description?`<div class="cm-section"><div class="cm-label">Description</div><div class="cm-value">${s.description}</div></div>`:''}
-      ${s.tags?.length?`<div class="cm-section"><div class="cm-label">Tags</div><div class="cm-tags">${s.tags.map(t=>`<span class="cm-tag">${t}</span>`).join('')}</div></div>`:''}
-      ${s.principles?.length?`<div class="cm-section"><div class="cm-label">Principles</div><div class="cm-value">${s.principles.join(', ')}</div></div>`:''}
+      <h3>${escapeHtml(s.name)}</h3>
+      ${s.description?`<div class="cm-section"><div class="cm-label">Description</div><div class="cm-value">${escapeHtml(s.description)}</div></div>`:''}
+      ${s.tags?.length?`<div class="cm-section"><div class="cm-label">Tags</div><div class="cm-tags">${s.tags.map(t=>`<span class="cm-tag">${escapeHtml(t)}</span>`).join('')}</div></div>`:''}
+      ${s.principles?.length?`<div class="cm-section"><div class="cm-label">Principles</div><div class="cm-value">${s.principles.map(p=>escapeHtml(p)).join(', ')}</div></div>`:''}
     </div>`;
-    return col;
   }).join('')}</div>`;
 }
 
@@ -801,19 +970,19 @@ function renderAllSystems(){
   if(dsPage>=window.totalDsPages)dsPage=Math.max(0,window.totalDsPages-1);
   const start=dsPage*dsPageSize;
   const paged=systems.slice(start,start+dsPageSize);
-  document.getElementById('ds-result-count').textContent=`${total} systems`;
+  document.getElementById('ds-result-count').textContent=`${total} ${t('ds.systems')}`;
   document.getElementById('systems-grid').innerHTML=paged.length?paged.map((ds,i)=>{
     const catColor=ds.colors?.primary||'#6e6a69';
     const isSelected=selectedSystemIds.has(ds.id);
-    return `<div class="card${isSelected?' selected':''}" onclick="selectSystem('${ds.id}')" style="border-left:3px solid ${catColor};animation-delay:${i*30}ms">
-      <h4>${ds.name}</h4>
-      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem;transition:color .15s">${ds.description||''}</p>
+    return `<div class="card${isSelected?' selected':''}" data-action="select-ds" data-id="${escapeAttr(ds.id)}" style="border-left:3px solid ${catColor};animation-delay:${i*30}ms">
+      <h4>${escapeHtml(ds.name)}</h4>
+      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem;transition:color .15s">${escapeHtml(ds.description||'')}</p>
       <div class="meta" style="margin-top:.5rem">
-        ${ds.category?`<span class="tag">${shortCatName(ds.category)}</span>`:''}
+        ${ds.category?`<span class="tag">${escapeHtml(shortCatName(ds.category))}</span>`:''}
         ${ds.rating?`<span>★ ${ds.rating.toFixed(1)}</span>`:''}
       </div>
     </div>`;
-  }).join(''):'<div class="empty">No systems found</div>';
+  }).join(''):'<div class="empty">'+t('ds.noSystems')+'</div>';
 
   document.getElementById('ds-page-first').disabled=dsPage===0;
   document.getElementById('ds-page-prev').disabled=dsPage===0;
@@ -823,7 +992,6 @@ function renderAllSystems(){
 }
 function selectSystem(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);updateExportBar();renderAllSystems();}
 
-// Philosophies
 // Philosophies
 const _philCategories=[
   {id:'minimal',name:'Minimal & Clean',items:['brutally-minimal','industrial-minimal','japanese-minimal','scandinavian','japanese-zen','nordic-hygge','minimalist-color','monochrome','borderless','airy-light','corporate-professional','modernist','typographic']},
@@ -838,20 +1006,21 @@ let _philActive=new Set();
 function renderPhilosophiesPage(){
   if(!CATALOG||!CATALOG.design_philosophies)return;
   const catBar=document.getElementById('phil-categories');
-  if(catBar)catBar.innerHTML=`<button class="tag${!_philActive.size?' active':''}" onclick="togglePhilCategory('all')">All</button>${_philCategories.map(c=>`<button class="tag${_philActive.has(c.id)?' active':''}" onclick="togglePhilCategory('${c.id}')">${c.name}</button>`).join('')}`;
+  if(catBar)catBar.innerHTML=`<button class="tag${!_philActive.size?' active':''}" data-action="phil-category" data-value="all">${t('filter.all')}</button>${_philCategories.map(c=>`<button class="tag${_philActive.has(c.id)?' active':''}" data-action="phil-category" data-value="${c.id}">${escapeHtml(c.name)}</button>`).join('')}`;
   let list=_philActive.size?CATALOG.design_philosophies.filter(p=>_philCategories.some(c=>_philActive.has(c.id)&&c.items.includes(p.id))):CATALOG.design_philosophies;
   const countEl=document.getElementById('phil-count');
-  if(countEl)countEl.textContent=`${list.length} of ${CATALOG.design_philosophies.length} philosophies`;
+  if(countEl)countEl.textContent=`${list.length} ${t('philosophies.of')} ${CATALOG.design_philosophies.length} ${t('philosophies.philosophies')}`;
   const grid=document.getElementById('philosophies-grid');
   if(grid)grid.innerHTML=list.map((p,i)=>{
     const cat=_philCategories.find(c=>c.items.includes(p.id));
-    return `<div class="card" onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})" style="animation-delay:${i*30}ms">
-      <h4>${p.name}</h4>
-      ${cat?`<span class="phil-cat-badge">${cat.name}</span>`:''}
-      <p>${p.description||''}</p>
+    return `<div class="card" data-action="show-phil-detail" data-id="${escapeAttr(p.id)}" style="animation-delay:${i*30}ms">
+      <h4>${escapeHtml(p.name)}</h4>
+      ${cat?`<span class="phil-cat-badge">${escapeHtml(cat.name)}</span>`:''}
+      <p>${escapeHtml(p.description||'')}</p>
     </div>`;
   }).join('');
 }
+
 function togglePhilCategory(cat){
   if(cat==='all'){_philActive.clear();renderPhilosophiesPage();return}
   if(_philActive.has(cat))_philActive.delete(cat);else _philActive.add(cat);
@@ -862,32 +1031,31 @@ function togglePhilCategory(cat){
 function renderMatcher(){
   if(!CATALOG)return;
   const ptEl=document.getElementById('matcher-product-types');
-  if(ptEl)ptEl.innerHTML=CATALOG.product_types.map(pt=>`<div class="product-item" onclick="selectMatcherProduct('${pt.id}')">${pt.name}</div>`).join('');
+  if(ptEl)ptEl.innerHTML=CATALOG.product_types.map(pt=>`<div class="product-item" data-action="matcher-product" data-id="${escapeAttr(pt.id)}"><span class="label">${escapeHtml(pt.name)}</span></div>`).join('');
 }
 function selectMatcherProduct(id){
   matcherProduct=id;
-  document.querySelectorAll('#matcher-product-types .product-item').forEach(el=>el.classList.toggle('selected',el.textContent.trim()===CATALOG.product_types.find(pt=>pt.id===id)?.name));
+  document.querySelectorAll('#matcher-product-types .product-item').forEach(el=>el.classList.toggle('selected',el.dataset.id===id));
   document.getElementById('matcher-step2').style.display='block';
   const philGrid=document.getElementById('matcher-philosophies');
-  if(philGrid)philGrid.innerHTML=CATALOG.design_philosophies.map(p=>`<div class="phil-item" data-id="${p.id}" onclick="selectMatcherPhilosophy('${p.id}')">${p.name}</div>`).join('');
+  if(philGrid)philGrid.innerHTML=CATALOG.design_philosophies.map(p=>`<div class="phil-item" data-action="matcher-philosophy" data-id="${escapeAttr(p.id)}">${escapeHtml(p.name)}</div>`).join('');
 }
 function selectMatcherPhilosophy(id){
   matcherPhilosophy=id;
   document.querySelectorAll('#matcher-philosophies .phil-item').forEach(el=>el.classList.toggle('selected',el.dataset.id===id));
-  // Show results
   const skills=CATALOG.skills.filter(s=>s.for_product_types?.includes(matcherProduct));
   const systems=(CATALOG.design_systems||[]).filter(ds=>ds.philosophy===id);
   document.getElementById('matcher-step3').style.display='block';
   const skillGrid=document.getElementById('matcher-skills');
   if(skillGrid)skillGrid.innerHTML=skills.slice(0,12).map((s,i)=>renderSkillCard(s,i)).join('');
-  document.getElementById('matcher-reason').textContent=`${skills.length} skills recommended for ${CATALOG.product_types.find(pt=>pt.id===matcherProduct)?.name||matcherProduct}`;
+  document.getElementById('matcher-reason').textContent=`${skills.length} ${t('matcher.reason')} ${CATALOG.product_types.find(pt=>pt.id===matcherProduct)?.name||matcherProduct}`;
   document.getElementById('matcher-step4').style.display='block';
   const sysGrid=document.getElementById('matcher-systems');
   if(sysGrid)sysGrid.innerHTML=systems.slice(0,12).map((ds,i)=>{
     const catColor=ds.colors?.primary||'#6e6a69';
     return `<div class="card" style="border-left:3px solid ${catColor};animation-delay:${i*30}ms">
-      <h4>${ds.name}</h4>
-      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem">${ds.description||''}</p>
+      <h4>${escapeHtml(ds.name)}</h4>
+      <p style="font-size:.75rem;color:var(--text-dim);margin-top:.25rem">${escapeHtml(ds.description||'')}</p>
     </div>`;
   }).join('');
   document.getElementById('matcher-step5').style.display='block';
@@ -895,7 +1063,7 @@ function selectMatcherPhilosophy(id){
 
 // Tools
 function renderTools(){
-  if(typeof checkContrast==='function')checkContrast();
+  checkContrast();
   initTokensViewer();
   renderNng();
   renderGestalt();
@@ -903,18 +1071,13 @@ function renderTools(){
 function checkContrast(){
   const fg=document.getElementById('contrast-fg')?.value||'#0d0d0d';
   const bg=document.getElementById('contrast-bg')?.value||'#f7f5f3';
-  const hexToRgb=h=>{const r=h.replace('#','');return [parseInt(r.substr(0,2),16),parseInt(r.substr(2,2),16),parseInt(r.substr(4,2),16)]};
-  const lum=(r,g,b)=>{const [R,G,B]=[r,g,b].map(c=>{c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)});return 0.2126*R+0.7152*G+0.0722*B};
-  try{
-    const [r1,g1,b1]=hexToRgb(fg);const [r2,g2,b2]=hexToRgb(bg);
-    const l1=lum(r1,g1,b1),l2=lum(r2,g2,b2);
-    const ratio=(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
-    const result=document.getElementById('contrast-result');
-    const sample=document.getElementById('contrast-sample');
-    if(result)result.className='contras-result '+(ratio>=4.5?'pass':'fail');
-    if(result)result.textContent=`Ratio: ${ratio.toFixed(1)}:1 · AA ${ratio>=4.5?'✓':'✗'} · AAA ${ratio>=7?'✓':'✗'}`;
-    if(sample){sample.style.color=fg;sample.style.background=bg;sample.textContent='Sample text for readability check'}
-  }catch(e){}
+  if(!/^#[0-9a-f]{6}$/i.test(fg)||!/^#[0-9a-f]{6}$/i.test(bg)) return;
+  const ratio=contrastRatio(fg,bg);
+  const result=document.getElementById('contrast-result');
+  const sample=document.getElementById('contrast-sample');
+  if(result)result.className='contras-result '+(ratio>=4.5?'pass':'fail');
+  if(result)result.textContent=`Ratio: ${ratio.toFixed(1)}:1 · AA ${ratio>=4.5?'✓':'✗'} · AAA ${ratio>=7?'✓':'✗'}`;
+  if(sample){sample.style.color=fg;sample.style.background=bg;sample.textContent='Sample text for readability check'}
 }
 // Tokens Viewer
 let _allTokenSystems=[];
@@ -929,10 +1092,9 @@ function filterTokensSystems(){
   if(!q){list.style.display='none';return}
   const matches=_allTokenSystems.filter(ds=>ds.name.toLowerCase().includes(q));
   list.style.display='block';
-  list.innerHTML=matches.map(ds=>`<div class="token-ds-item" onclick="selectTokenSystem('${ds.id}')">${ds.name}</div>`).join('');
-  if(!matches.length)list.innerHTML='<div style="padding:8px 12px;color:var(--text-dim);font-size:.75rem">No systems found</div>';
+  list.innerHTML=matches.map(ds=>`<div class="token-ds-item" data-action="select-token-system" data-id="${escapeAttr(ds.id)}">${escapeHtml(ds.name)}</div>`).join('');
+  if(!matches.length)list.innerHTML='<div style="padding:8px 12px;color:var(--text-dim);font-size:.75rem">'+t('ds.noSystems')+'</div>';
 }
-let _selectedTokenSystem=null;
 function selectTokenSystem(id){
   initTokensViewer();
   const ds=_allTokenSystems.find(d=>d.id===id);
@@ -943,67 +1105,106 @@ function selectTokenSystem(id){
   const viewer=document.getElementById('tokens-viewer');
   if(!viewer)return;
   const t=ds.tokens;
-  let swatches=Object.entries(t).filter(([k])=>!['font','radius','dark'].includes(k)&&typeof t[k]==='string'&&t[k].startsWith('#')).map(([k,v])=>`<div class="token-swatch"><span class="swatch-dot" style="background:${v}"></span><span class="token-key">${k}</span><span class="token-val">${v}</span></div>`).join('');
+  let swatches=Object.entries(t).filter(([k])=>!['font','radius','dark'].includes(k)&&typeof t[k]==='string'&&t[k].startsWith('#')).map(([k,v])=>`<div class="token-swatch"><span class="swatch-dot" style="background:${v}"></span><span class="token-key">${escapeHtml(k)}</span><span class="token-val">${v}</span></div>`).join('');
   viewer.innerHTML=`<div class="token-header">
-    <h4 style="font-size:.8125rem;margin:0">${ds.name}</h4>
-    <span class="token-meta">${t.dark?'Dark':'Light'} · ${t.font||'—'} · radius ${t.radius||'—'}</span>
+    <h4 style="font-size:.8125rem;margin:0">${escapeHtml(ds.name)}</h4>
+    <span class="token-meta">${t.dark?t('ds.dark'):t('ds.light')} · ${t.font||'—'} · ${t('ds.radius')} ${t.radius||'—'}</span>
   </div>
-  <div class="token-swatches">${swatches||'<span style="color:var(--text-dim)">No color tokens</span>'}</div>`;
+  <div class="token-swatches">${swatches||'<span style="color:var(--text-dim)">'+t('ds.noTokens')+'</span>'}</div>`;
 }
 
 // NN/g Principles
-const _nnPrinciples=[
-  {n:'Visibility of Status',d:'System always informs users about what is happening.'},
-  {n:'Match Real World',d:'Speak the user language, not system terms.'},
-  {n:'User Control',d:'Users can undo or redo actions.'},
-  {n:'Consistency',d:'Same terms, elements, patterns everywhere.'},
-  {n:'Error Prevention',d:'Prevent errors rather than show messages.'},
-  {n:'Recognition',d:'Minimize memory load — make elements visible.'},
-  {n:'Flexibility',d:'Shortcuts for power users without breaking basics.'},
-  {n:'Aesthetic Design',d:'Minimalist design with no irrelevant info.'},
-  {n:'Error Recovery',d:'Clear error messages with solutions.'},
-  {n:'Help & Docs',d:'Easy to find, task-focused documentation.'}
-];
 function renderNng(){
+  const principles = tArray('tools.principles.list') || [
+    {n:'Visibility of Status',d:'System always informs users about what is happening.'},
+    {n:'Match Real World',d:'Speak the user language, not system terms.'},
+    {n:'User Control',d:'Users can undo or redo actions.'},
+    {n:'Consistency',d:'Same terms, elements, patterns everywhere.'},
+    {n:'Error Prevention',d:'Prevent errors rather than show messages.'},
+    {n:'Recognition',d:'Minimize memory load — make elements visible.'},
+    {n:'Flexibility',d:'Shortcuts for power users without breaking basics.'},
+    {n:'Aesthetic Design',d:'Minimalist design with no irrelevant info.'},
+    {n:'Error Recovery',d:'Clear error messages with solutions.'},
+    {n:'Help & Docs',d:'Easy to find, task-focused documentation.'}
+  ];
   const el=document.getElementById('nn-grid');
-  if(el)el.innerHTML=_nnPrinciples.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*30}ms"><h4>${i+1}. ${p.n}</h4><p>${p.d}</p></div>`).join('');
+  if(el)el.innerHTML=principles.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*30}ms"><h4>${i+1}. ${escapeHtml(p.n)}</h4><p>${escapeHtml(p.d)}</p></div>`).join('');
 }
 
 // Gestalt Principles
-const _gestaltPrinciples=[
-  {n:'Proximity',d:'Objects close together are perceived as a group. Use spacing for grouping.',v:'<div style="display:flex;gap:4px;margin-top:6px"><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="width:12px"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span></div>'},
-  {n:'Similarity',d:'Similar elements are perceived as related. Color, shape, size signal group belonging.',v:'<div style="display:flex;gap:6px;margin-top:6px;justify-content:center"><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span></div>'},
-  {n:'Figure/Ground',d:'Perception separates image into object (figure) and background.',v:'<div style="display:flex;align-items:center;justify-content:center;height:36px;margin-top:6px;background:var(--bg-paper);padding:4px"><span style="width:28px;height:28px;background:var(--bg-surface);border:0.5px solid var(--border)"></span></div>'},
-  {n:'Closure',d:'The brain completes incomplete forms. Used in logos and icons.',v:'<div style="display:flex;gap:6px;margin-top:6px;justify-content:center;font-size:1.25rem;letter-spacing:4px;color:var(--text-primary)">&#x25E1;&#x25E1;&#x25E1;&#x25E1;</div>'},
-  {n:'Common Region',d:'Elements inside a bounded area are perceived as a group. The basis of cards.',v:'<div style="display:flex;gap:6px;margin-top:6px"><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:60%"></span><span style="height:4px;background:var(--text-muted);width:80%"></span></span><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:50%"></span></span></div>'},
-  {n:'Continuation',d:'The eye follows a line even if interrupted. Used in steps, progress bars.',v:'<div style="display:flex;gap:0;margin-top:6px;align-items:center"><span style="width:20px;height:20px;border-radius:50%;background:var(--text-primary);display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">1</span><span style="flex:1;height:2px;background:var(--text-primary);opacity:.5"></span><span style="width:16px;height:16px;border-radius:50%;background:var(--text-primary);opacity:.5;display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">2</span><span style="flex:1;height:2px;background:var(--border)"></span><span style="width:16px;height:16px;border-radius:50%;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--text-muted)">3</span></div>'}
-];
 function renderGestalt(){
+  const gestalt = tArray('tools.gestalt.list') || [
+    {n:'Proximity',d:'Objects close together are perceived as a group. Use spacing for grouping.'},
+    {n:'Similarity',d:'Similar elements are perceived as related. Color, shape, size signal group belonging.'},
+    {n:'Figure/Ground',d:'Perception separates image into object (figure) and background.'},
+    {n:'Closure',d:'The brain completes incomplete forms. Used in logos and icons.'},
+    {n:'Common Region',d:'Elements inside a bounded area are perceived as a group. The basis of cards.'},
+    {n:'Continuation',d:'The eye follows a line even if interrupted. Used in steps, progress bars.'}
+  ];
+  const vis=[
+    '<div style="display:flex;gap:4px;margin-top:6px"><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="flex:1;height:20px;background:var(--text-primary);opacity:.3"></span><span style="width:12px"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span><span style="flex:1;height:20px;background:var(--text-primary)"></span></div>',
+    '<div style="display:flex;gap:6px;margin-top:6px;justify-content:center"><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;background:var(--text-primary);border-radius:50%"></span><span style="width:16px;height:16px;border:2px solid var(--text-primary);border-radius:50%"></span></div>',
+    '<div style="display:flex;align-items:center;justify-content:center;height:36px;margin-top:6px;background:var(--bg-paper);padding:4px"><span style="width:28px;height:28px;background:var(--bg-surface);border:0.5px solid var(--border)"></span></div>',
+    '<div style="display:flex;gap:6px;margin-top:6px;justify-content:center;font-size:1.25rem;letter-spacing:4px;color:var(--text-primary)">&#x25E1;&#x25E1;&#x25E1;&#x25E1;</div>',
+    '<div style="display:flex;gap:6px;margin-top:6px"><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:60%"></span><span style="height:4px;background:var(--text-muted);width:80%"></span></span><span style="flex:1;border:0.5px solid var(--border);padding:4px;display:flex;flex-direction:column;gap:2px"><span style="height:4px;background:var(--text-muted);width:50%"></span></span></div>',
+    '<div style="display:flex;gap:0;margin-top:6px;align-items:center"><span style="width:20px;height:20px;border-radius:50%;background:var(--text-primary);display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">1</span><span style="flex:1;height:2px;background:var(--text-primary);opacity:.5"></span><span style="width:16px;height:16px;border-radius:50%;background:var(--text-primary);opacity:.5;display:flex;align-items:center;justify-content:center;color:var(--bg-surface);font-size:.5rem;font-weight:700">2</span><span style="flex:1;height:2px;background:var(--border)"></span><span style="width:16px;height:16px;border-radius:50%;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--text-muted)">3</span></div>'
+  ];
   const el=document.getElementById('gestalt-grid');
-  if(el)el.innerHTML=_gestaltPrinciples.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*40}ms"><h4>${p.n}</h4><p>${p.d}</p>${p.v}</div>`).join('');
+  if(el)el.innerHTML=gestalt.map((p,i)=>`<div class="principle-card" style="animation-delay:${i*40}ms"><h4>${escapeHtml(p.n)}</h4><p>${escapeHtml(p.d)}</p>${vis[i]||''}</div>`).join('');
 }
 
 function renderToolsMap(){
   const tools={Design:'Figma,Sketch,Adobe XD',Prototyping:'Framer,ProtoPie,Principle',Research:'Maze,UserTesting,Hotjar',Dev:'VS Code,Storybook,Chrome DevTools',Accessibility:'axe,WAVE,Stark',Icons:'Phosphor,Feather,Radix'};
+  const cats=t('tools.toolsMap.categories');
   const el=document.getElementById('tools-map');
-  if(el)el.innerHTML=Object.entries(tools).map(([cat,items],i)=>`<div class="card" style="cursor:default;animation-delay:${i*40}ms"><h4 style="font-size:.8125rem">${cat}</h4><div class="tags" style="margin-top:.35rem">${items.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('')}</div></div>`).join('');
+  if(el)el.innerHTML=Object.entries(tools).map(([key,items],i)=>`<div class="card" style="cursor:default;animation-delay:${i*40}ms"><h4 style="font-size:.8125rem">${escapeHtml(cats?.[key.toLowerCase()]||key)}</h4><div class="tags" style="margin-top:.35rem">${items.split(',').map(t=>`<span class="tag">${escapeHtml(t.trim())}</span>`).join('')}</div></div>`).join('');
 }
+
 // About
 function updateStats(){
   if(!CATALOG)return;
   const el=document.getElementById('about-stats');
-  if(el)el.innerHTML=`<li>${CATALOG.skills.length} skills</li><li>${(CATALOG.design_systems||[]).length} design systems</li><li>${(CATALOG.design_philosophies||[]).length} design philosophies</li><li>${CATALOG.categories.length} categories</li><li>${CATALOG.product_types.length} product types</li>`;
+  if(el)el.innerHTML=`<li>${CATALOG.skills.length} ${t('about.skills')}</li><li>${(CATALOG.design_systems||[]).length} ${t('about.designSystems')}</li><li>${(CATALOG.design_philosophies||[]).length} ${t('about.philosophies')}</li><li>${CATALOG.categories.length} ${t('about.categories')}</li><li>${CATALOG.product_types.length} ${t('about.productTypes')}</li>`;
   const srcEl=document.getElementById('about-sources');
-  if(srcEl)srcEl.innerHTML=(CATALOG.meta?.sources||['Open Design','DesignX curated']).map(s=>`<li>${s}</li>`).join('');
+  if(srcEl)srcEl.innerHTML=(CATALOG.meta?.sources||['Open Design','DesignX curated']).map(s=>`<li>${escapeHtml(s)}</li>`).join('');
   const recEl=document.getElementById('about-recommended');
-  if(recEl&&CATALOG.skills)recEl.innerHTML=CATALOG.skills.filter(s=>['Design Research','Visual Design','Design Systems','Prototyping','Typography'].includes(s.name)).map(s=>`<span class="tag" style="cursor:pointer" onclick="selectSkill('${s.id}');updateExportBar()">${s.name}</span>`).join('');
+  if(recEl&&CATALOG.skills)recEl.innerHTML=CATALOG.skills.filter(s=>['Design Research','Visual Design','Design Systems','Prototyping','Typography'].includes(s.name)).map(s=>`<span class="tag" data-action="select-skill" data-id="${escapeAttr(s.id)}" style="cursor:pointer">${escapeHtml(s.name)}</span>`).join('');
 }
 
-// Export for hex search (maintain compatibility)
-document.addEventListener('DOMContentLoaded',()=>{
-  const hexInput=document.getElementById('hex-search');
-  if(hexInput)hexInput.addEventListener('input',filterSkills);
+// --- Initialization ---
+setupDelegation();
+
+// Debounced search
+const debouncedFilter = debounce(filterSkills, 250);
+const searchInput = document.getElementById('skill-search');
+if (searchInput) searchInput.addEventListener('input', debouncedFilter);
+
+const hexInput = document.getElementById('hex-search');
+if (hexInput) hexInput.addEventListener('input', filterSkills);
+
+// Inline input/change listeners (replaces on* attributes)
+document.getElementById('fav-filter')?.addEventListener('change', filterSkills);
+document.getElementById('sort-select')?.addEventListener('change', filterSkills);
+document.getElementById('ds-sort-select')?.addEventListener('change', renderAllSystems);
+document.getElementById('contrast-fg')?.addEventListener('input', checkContrast);
+document.getElementById('contrast-bg')?.addEventListener('input', checkContrast);
+document.getElementById('tokens-search')?.addEventListener('input', filterTokensSystems);
+document.getElementById('detail-overlay')?.addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeDetail();
 });
+document.querySelector('[data-action="close-detail"]')?.addEventListener('click', closeDetail);
+
+// Load catalog
+loadCore(['src/data/catalog.json', '../src/data/catalog.json', 'data/catalog.json'],
+  (c) => {
+    CATALOG = c;
+    document.getElementById('loader').style.display = 'none';
+    init();
+  },
+  () => {
+    document.getElementById('loader').innerHTML = '<p style="color:var(--error)">'+t('states.error')+'</p><p style="color:var(--text-muted);font-size:.8125rem">'+t('states.errorHint')+' <code style="font-family:var(--font-mono);color:var(--text-primary)">'+t('states.errorServe')+'</code></p>';
+  }
+);
 </script>
 </body>
 </html>
