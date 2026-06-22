@@ -68,7 +68,7 @@ h3{font-size:.6875rem;font-weight:500;color:var(--text-muted);text-transform:upp
 .grid-4{grid-template-columns:repeat(auto-fill,minmax(16rem,1fr))}
 
 /* Cards */
-.card{background:var(--bg-surface);padding:1.25rem 1.5rem;cursor:pointer;display:flex;flex-direction:column;position:relative;border:none;border-left:3px solid transparent;animation:cardEnter .35s ease both;transition:background .15s,transform .15s,border-left-color .15s}
+.card{background:var(--bg-surface);padding:1.25rem 1.5rem;cursor:pointer;display:flex;flex-direction:column;position:relative;border:none;border-left:3px solid transparent;transition:background .15s,transform .15s,border-left-color .15s}
 .card:hover{background:var(--bg-hover);transform:translateY(-2px);border-left-color:var(--border-hover)}
 .card.selected{background:var(--bg-hover)}
 .card h4{font-size:.9375rem;font-weight:500;color:var(--text-primary);line-height:1.4;transition:color .15s}
@@ -268,6 +268,31 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
 .tools-layout{grid-template-columns:1fr}
 .compare-grid.c2,.compare-grid.c3,.compare-grid.c4{grid-template-columns:1fr}
 }
+
+/* === DARK THEME === */
+[data-theme="dark"]{--bg-paper:#1a1512;--bg-surface:#262019;--bg-elevated:#2e2720;--bg-hover:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.15);--text-primary:#e8ddd0;--text-muted:#9a8e82;--text-dim:#6b6058;--accent:#4da3ff;--accent-hover:#3d93ef;--focus-ring:rgba(77,163,255,0.25);--success:#00af5d;--warning:#e8a838;--error:#bd3c1f}
+[data-theme="dark"] #detail-overlay{background:rgba(10,8,6,0.75)}
+[data-theme="dark"] .comp-beginner{background:rgba(0,175,93,0.15)}
+[data-theme="dark"] .comp-intermediate{background:rgba(232,168,56,0.15)}
+[data-theme="dark"] .comp-advanced{background:rgba(189,60,31,0.15)}
+[data-theme="dark"] .contras-result.pass{background:rgba(0,175,93,0.15)}
+[data-theme="dark"] .contras-result.fail{background:rgba(189,60,31,0.15)}
+[data-theme="dark"] .badge-updated{background:rgba(41,101,246,0.15)}
+[data-theme="dark"] .badge-created{background:rgba(0,175,93,0.15)}
+[data-theme="dark"] .card .tag{background:rgba(255,255,255,0.05)}
+[data-theme="dark"] .card:hover .tag{background:rgba(255,255,255,0.08)}
+[data-theme="dark"] .phil-cat-badge{background:rgba(255,255,255,0.05)}
+[data-theme="dark"] .card:hover .phil-cat-badge{background:var(--text-primary);color:var(--bg-surface)}
+[data-theme="dark"] .tokens-viewer{background:rgba(255,255,255,0.02)}
+[data-theme="dark"] .source-badge{background:rgba(255,255,255,0.05)}
+[data-theme="dark"] .cm-tag{background:rgba(255,255,255,0.05)}
+
+/* Theme toggle */
+.theme-toggle{display:inline-flex;align-items:center;gap:0;border:0.5px solid var(--border);background:transparent;cursor:pointer;padding:0;font-family:var(--font);font-size:.75rem;height:32px}
+.theme-toggle-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:100%;border:none;background:transparent;color:var(--text-muted);cursor:pointer;font-size:.875rem;transition:all .15s;padding:0}
+.theme-toggle-btn.active{background:var(--text-primary);color:var(--bg-surface)}
+.theme-toggle-btn:hover:not(.active){color:var(--text-primary)}
+.theme-toggle-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--focus-ring)}
 </style>
 </head>
 <body>
@@ -279,6 +304,10 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
       <small>v2</small>
     </a>
     <div class="header-right">
+      <div class="theme-toggle" data-action="toggle-theme">
+        <button class="theme-toggle-btn active" data-theme-btn="dark" title="Dark theme">&#9790;</button>
+        <button class="theme-toggle-btn" data-theme-btn="light" title="Light theme">&#9728;</button>
+      </div>
       <div class="lang-switcher" style="display:flex;gap:2px" data-i18n-title="lang.switcherTitle">
         <button class="btn btn-sm btn-ghost lang-btn active" data-action="lang" data-lang="ru" data-i18n-text="lang.ru">РУС</button>
         <button class="btn btn-sm btn-ghost lang-btn" data-action="lang" data-lang="en" data-i18n-text="lang.en">ENG</button>
@@ -308,24 +337,6 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
       <input type="text" id="skill-search" data-i18n-placeholder="search.placeholder" placeholder="Search skills by name, tags, description..." data-i18n-title="search.pressToSearch" title="Press / to search">
     </div>
 
-    <div class="section"><h3 data-i18n="filter.category">Category</h3><div class="filter-scroll" id="category-filters"></div></div>
-    <div class="section">
-      <h3 data-i18n="filter.level">Level</h3>
-      <div class="filter-bar" id="complexity-filters">
-        <button class="filter-btn active" data-action="filter" data-filter-type="complexity" data-filter-value="all" data-i18n="filter.any">All</button>
-        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="beginner" data-i18n="filter.beginner">Beginner</button>
-        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="intermediate" data-i18n="filter.intermediate">Intermediate</button>
-        <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="advanced" data-i18n="filter.advanced">Advanced</button>
-      </div>
-    </div>
-    <div class="section"><h3 data-i18n="filter.productType">Product type</h3><div class="filter-scroll" id="product-type-filters"></div></div>
-    <div class="section"><h3 data-i18n="filter.source">Source</h3><div class="filter-scroll" id="source-filters"></div></div>
-    <div class="section"><h3 data-i18n="filter.rating">Rating</h3><div class="filter-bar" id="rating-filters">
-      <button class="filter-btn active" data-action="filter" data-filter-type="rating" data-filter-value="all" data-i18n="filter.anyRating">Any</button>
-      <button class="filter-btn" data-action="filter" data-filter-type="rating" data-filter-value="4">4+</button>
-      <button class="filter-btn" data-action="filter" data-filter-type="rating" data-filter-value="3">3+</button>
-    </div></div>
-
     <div class="toolbar">
       <div class="toolbar-left">
         <span class="result-count" id="result-count"></span>
@@ -334,8 +345,6 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
       <div class="toolbar-right">
         <label class="check-label"><input type="checkbox" id="fav-filter"> <span data-i18n="filter.favorites">Favorites</span></label>
         <span style="color:var(--text-dim)">|</span>
-        <span style="font-size:.6875rem;color:var(--text-dim)" data-i18n="filter.hex">HEX:</span>
-        <input type="text" id="hex-search" data-i18n-placeholder="search.hexPlaceholder" placeholder="#2965f6" style="width:100px;height:32px;padding:0 10px;background:var(--bg-surface);border:0.5px solid var(--border);color:var(--text-primary);font-family:var(--font);font-size:.75rem;outline:none" data-i18n-title="search.hexTitle" title="Search systems by hex color">
         <select class="sort-select" id="sort-select">
           <option value="name-asc" data-i18n="sort.nameAsc">Name ↑</option>
           <option value="name-desc" data-i18n="sort.nameDesc">Name ↓</option>
@@ -353,6 +362,21 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
       <span class="page-info" id="page-info"></span>
       <button data-action="page" data-page="1" id="page-next" data-i18n="pagination.next">›</button>
       <button data-action="page" data-page="-2" id="page-last" data-i18n="pagination.last">»</button>
+    </div>
+
+    <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:1rem">
+      <div class="section" style="flex:1;min-width:14rem"><h3 data-i18n="filter.category">Category</h3><div class="filter-scroll" id="category-filters"></div></div>
+      <div class="section" style="flex:1;min-width:14rem">
+        <h3 data-i18n="filter.level">Level</h3>
+        <div class="filter-bar" id="complexity-filters">
+          <button class="filter-btn active" data-action="filter" data-filter-type="complexity" data-filter-value="all" data-i18n="filter.any">All</button>
+          <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="beginner" data-i18n="filter.beginner">Beginner</button>
+          <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="intermediate" data-i18n="filter.intermediate">Intermediate</button>
+          <button class="filter-btn" data-action="filter" data-filter-type="complexity" data-filter-value="advanced" data-i18n="filter.advanced">Advanced</button>
+        </div>
+      </div>
+      <div class="section" style="flex:1;min-width:14rem"><h3 data-i18n="filter.productType">Product type</h3><div class="filter-scroll" id="product-type-filters"></div></div>
+      <div class="section" style="flex:1;min-width:14rem"><h3 data-i18n="filter.source">Source</h3><div class="filter-scroll" id="source-filters"></div></div>
     </div>
   </div>
 
@@ -387,7 +411,6 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
           <option value="name-desc">Name ↓</option>
         </select>
         <span class="result-count" id="ds-result-count"></span>
-        <span id="ds-hex-badge" style="display:none;font-size:.6875rem;padding:2px 10px;background:var(--text-primary);color:var(--bg-surface)"></span>
       </div>
     </div>
     <div class="grid grid-3" id="systems-grid"></div>
@@ -500,6 +523,24 @@ label.check-label{font-size:.75rem;color:var(--text-muted);cursor:pointer;displa
 </div>
 
 <script type="module">
+// Theme — default dark, persisted in localStorage
+const savedTheme = localStorage.getItem('designx-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+function applyThemeToggleUI() {
+  const current = document.documentElement.getAttribute('data-theme');
+  document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeBtn === current);
+  });
+}
+applyThemeToggleUI();
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('designx-theme', next);
+  applyThemeToggleUI();
+}
+
 import {
   CAT_COLORS, escapeHtml, debounce, contrastRatio, hexToLuminance, isDarkColor,
   filterSkills as coreFilter, sortSkills, paginate, loadCatalog as loadCore,
@@ -566,7 +607,7 @@ let CATALOG = null;
 let selectedSkillIds = new Set();
 let selectedSystemIds = new Set();
 let categoryFilter = 'all', complexityFilter = 'all', productFilter = null;
-let sourceFilter = null, ratingFilter = 0, sortBy = 'name-asc';
+let sourceFilter = null, sortBy = 'name-asc';
 let dsRatingFilter = 0;
 let page = 0, pageSize = 50;
 let matcherProduct = null, matcherPhilosophy = null;
@@ -590,9 +631,9 @@ function setupDelegation() {
     const panel = actionEl.dataset.panel;
 
     switch (action) {
-      case 'select-skill': selectSkill(id); break;
-      case 'select-ds': selectSystem(id); break;
-      case 'fav': e.stopPropagation(); toggleFav(id); break;
+      case 'select-skill': selectSkill(id, actionEl.closest('[data-id]')); break;
+      case 'select-ds': selectSystem(id, actionEl.closest('[data-id]')); break;
+      case 'fav': e.stopPropagation(); toggleFav(id, actionEl); break;
       case 'nav': switchPanel(panel); break;
       case 'filter': applyFilter(actionEl.dataset.filterType, actionEl.dataset.filterValue); break;
       case 'page': {
@@ -616,6 +657,7 @@ function setupDelegation() {
       case 'lang': setLanguage(actionEl.dataset.lang); break;
       case 'random': pickRandom(); break;
       case 'clear-favs': clearFavorites(); break;
+      case 'toggle-theme': toggleTheme(); break;
     }
   });
   document.addEventListener('dblclick', e => {
@@ -641,7 +683,6 @@ function applyFilter(type, value) {
     case 'complexity': complexityFilter = value; page = 0; filterSkills(); break;
     case 'product': productFilter = productFilter === value ? null : value; page = 0; filterSkills(); break;
     case 'source': sourceFilter = sourceFilter === value ? null : value; page = 0; filterSkills(); break;
-    case 'rating': ratingFilter = ratingFilter === value ? 0 : value; page = 0; filterSkills(); break;
     case 'ds-rating': dsRatingFilter = dsRatingFilter === Number(value) ? 0 : Number(value); dsPage = 0; renderAllSystems(); break;
     case 'ds-philosophy': dsPhilosophyFilter = dsPhilosophyFilter === value ? null : value; dsPage = 0; renderAllSystems(); break;
     case 'ds-product': dsProductFilter = dsProductFilter === value ? null : value; dsPage = 0; renderAllSystems(); break;
@@ -656,7 +697,6 @@ function updateFilterUI(type) {
     complexity: '#complexity-filters .filter-btn',
     product: '#product-type-filters .filter-btn',
     source: '#source-filters .filter-btn',
-    rating: '#rating-filters .filter-btn',
     'ds-rating': '#ds-rating-filters .filter-btn',
     'ds-philosophy': '#ds-philosophy-filters .filter-btn',
     'ds-product': '#ds-product-filters .filter-btn',
@@ -671,7 +711,6 @@ function updateFilterUI(type) {
       case 'complexity': active = val === complexityFilter; break;
       case 'product': active = productFilter ? val === productFilter : val === 'all'; break;
       case 'source': active = sourceFilter ? val === sourceFilter : val === 'all'; break;
-      case 'rating': active = ratingFilter ? val === String(ratingFilter) : val === 'all'; break;
       case 'ds-rating': active = dsRatingFilter ? val === String(dsRatingFilter) : val === 'all'; break;
       case 'ds-philosophy': active = dsPhilosophyFilter ? val === dsPhilosophyFilter : val === 'all'; break;
       case 'ds-product': active = dsProductFilter ? val === dsProductFilter : val === 'all'; break;
@@ -720,29 +759,13 @@ function filterSkills() {
   if(!CATALOG)return;
   let skills=[...CATALOG.skills];
   const search=(document.getElementById('skill-search')?.value||'').toLowerCase();
-  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
 
   if(categoryFilter!=='all')skills=skills.filter(s=>s.category===categoryFilter);
   if(complexityFilter!=='all')skills=skills.filter(s=>s.complexity===complexityFilter);
   if(productFilter)skills=skills.filter(s=>s.for_product_types?.includes(productFilter));
   if(sourceFilter)skills=skills.filter(s=>(s.source_short||s.source||'')===sourceFilter);
-  if(ratingFilter>0)skills=skills.filter(s=>(s.rating||0)>=ratingFilter);
   if(search)skills=skills.filter(s=>(s.name+' '+s.description+' '+s.tags?.join(' ')).toLowerCase().includes(search));
   if(document.getElementById('fav-filter')?.checked)skills=skills.filter(s=>favorites.has(s.id));
-
-  // Hex search redirects to DS tab
-  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
-    const dsCopy=[...(CATALOG.design_systems||[])].filter(ds=>{
-      const cols=[ds.colors?.primary,ds.colors?.secondary,ds.colors?.accent,...(ds.colors?.palette||[])];
-      return cols.some(c=>c?.toLowerCase()===hexSearch.toLowerCase());
-    });
-    const badge=document.getElementById('ds-hex-badge');
-    if(badge){badge.textContent=`🎨 ${dsCopy.length} ${t('ds.systems')}`;badge.style.display='inline-block'}
-    document.getElementById('ds-result-count').textContent=`${dsCopy.length} ${t('ds.systems')}`;
-  }else{
-    const badge=document.getElementById('ds-hex-badge');
-    if(badge)badge.style.display='none';
-  }
 
   sortBy=document.getElementById('sort-select')?.value||'name-asc';
   skills.sort((a,b)=>{
@@ -760,7 +783,7 @@ function filterSkills() {
   const paged=skills.slice(start,start+pageSize);
 
   document.getElementById('result-count').textContent=`${total} ${t('filter.skills')}`;
-  document.getElementById('active-filters').textContent=[categoryFilter!=='all'?CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter:'',complexityFilter!=='all'?complexityFilter:'',productFilter||'',sourceFilter||'',ratingFilter>0?ratingFilter+'+':'',document.getElementById('fav-filter')?.checked?'fav':''].filter(Boolean).join(' · ');
+  document.getElementById('active-filters').textContent=[categoryFilter!=='all'?CATALOG.categories.find(c=>c.id===categoryFilter)?.name||categoryFilter:'',complexityFilter!=='all'?complexityFilter:'',productFilter||'',sourceFilter||'',document.getElementById('fav-filter')?.checked?'fav':''].filter(Boolean).join(' · ');
 
   const grid=document.getElementById('skills-grid');
   if(paged.length===0){
@@ -781,7 +804,7 @@ function filterSkills() {
 function escapeAttr(str) { return escapeHtml(str); }
 
 function resetFilters() {
-  categoryFilter='all';complexityFilter='all';productFilter=null;sourceFilter=null;ratingFilter=0;
+  categoryFilter='all';complexityFilter='all';productFilter=null;sourceFilter=null;
   document.getElementById('skill-search').value='';
   document.getElementById('fav-filter').checked=false;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
@@ -829,11 +852,21 @@ function switchPanel(panel) {
 }
 
 // Favorites
-function toggleFav(id){
+function toggleFav(id, el){
   if(favorites.has(id))favorites.delete(id);else favorites.add(id);
   saveFavorites(favorites, 'designx-favs');
   updateFavStats();
-  filterSkills();
+  const favOnly = document.getElementById('fav-filter')?.checked;
+  const onFavPanel = document.getElementById('panel-favorites')?.classList.contains('active');
+  if(onFavPanel){
+    filterSkills();
+    showFavorites();
+  }else if(favOnly){
+    filterSkills();
+  }else if(el){
+    const card = el.closest('.card');
+    if(card)card.querySelector('.fav-btn')?.classList.toggle('active');
+  }
 }
 
 function updateFavStats() {
@@ -861,14 +894,26 @@ function showFavorites(){
     if(clearBtn)clearBtn.style.display='inline-flex';
   }
 }
-function clearFavorites(){favorites.clear();saveFavorites(favorites, 'designx-favs');showFavorites();filterSkills();}
+function clearFavorites(){
+  favorites.clear();
+  saveFavorites(favorites, 'designx-favs');
+  updateFavStats();
+  document.querySelectorAll('.fav-btn.active').forEach(el => el.classList.remove('active'));
+  if(document.getElementById('panel-favorites')?.classList.contains('active')){
+    showFavorites();
+  }
+}
 
 // Selection & Export
-function selectSkill(id){
+function selectSkill(id, el){
   if(selectedSkillIds.has(id))selectedSkillIds.delete(id);else selectedSkillIds.add(id);
-  updateExportBar();filterSkills();
+  updateExportBar();
+  if(el)el.classList.toggle('selected');
 }
-function clearSelection(){selectedSkillIds.clear();selectedSystemIds.clear();updateExportBar();filterSkills();}
+function clearSelection(){
+  document.querySelectorAll('.grid .card.selected').forEach(el => el.classList.remove('selected'));
+  selectedSkillIds.clear();selectedSystemIds.clear();updateExportBar();
+}
 function updateExportBar(){
   const bar=document.getElementById('export-bar');
   const count=document.getElementById('export-count');
@@ -887,7 +932,9 @@ function exportSelected(){
 function pickRandom(){
   if(!CATALOG)return;
   const s=CATALOG.skills[Math.floor(Math.random()*CATALOG.skills.length)];
-  selectedSkillIds.add(s.id);updateExportBar();filterSkills();
+  selectedSkillIds.add(s.id);updateExportBar();
+  const card = document.querySelector(`[data-id="${escapeAttr(s.id)}"]`);
+  if(card)card.classList.add('selected');
   showDetail(s);
 }
 function compareSkills(){
@@ -949,16 +996,9 @@ let dsPhilosophyFilter=null,dsProductFilter=null,dsPage=0,dsPageSize=24; dsRatin
 function renderAllSystems(){
   if(!CATALOG||!CATALOG.design_systems)return;
   let systems=[...CATALOG.design_systems];
-  const hexSearch=(document.getElementById('hex-search')?.value||'').trim();
   if(dsPhilosophyFilter)systems=systems.filter(ds=>ds.category===dsPhilosophyFilter);
   if(dsProductFilter)systems=systems.filter(ds=>ds.for_product_types?.includes(dsProductFilter));
   if(dsRatingFilter>0)systems=systems.filter(ds=>(ds.rating||0)>=dsRatingFilter);
-  if(hexSearch&&/^#[0-9a-f]{3,8}$/i.test(hexSearch)){
-    systems=systems.filter(ds=>{
-      const cols=[ds.colors?.primary,ds.colors?.secondary,ds.colors?.accent,...(ds.colors?.palette||[])];
-      return cols.some(c=>c?.toLowerCase()===hexSearch.toLowerCase());
-    });
-  }
   const sort=document.getElementById('ds-sort-select')?.value||'name-asc';
   systems.sort((a,b)=>{
     if(sort==='name-asc')return a.name.localeCompare(b.name);
@@ -990,7 +1030,7 @@ function renderAllSystems(){
   document.getElementById('ds-page-last').disabled=dsPage>=window.totalDsPages-1;
   document.getElementById('ds-page-info').textContent=`${dsPage+1} / ${window.totalDsPages}`;
 }
-function selectSystem(id){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);updateExportBar();renderAllSystems();}
+function selectSystem(id, el){if(selectedSystemIds.has(id))selectedSystemIds.delete(id);else selectedSystemIds.add(id);updateExportBar();if(el)el.classList.toggle('selected');}
 
 // Philosophies
 const _philCategories=[
@@ -1177,9 +1217,6 @@ setupDelegation();
 const debouncedFilter = debounce(filterSkills, 250);
 const searchInput = document.getElementById('skill-search');
 if (searchInput) searchInput.addEventListener('input', debouncedFilter);
-
-const hexInput = document.getElementById('hex-search');
-if (hexInput) hexInput.addEventListener('input', filterSkills);
 
 // Inline input/change listeners (replaces on* attributes)
 document.getElementById('fav-filter')?.addEventListener('change', filterSkills);
