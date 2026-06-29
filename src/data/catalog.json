@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Comprehensive UI/UX Design Skills Catalog for DesignX — Skill & Design System Matcher",
-    "lastUpdated": "2026-06-28",
+    "lastUpdated": "2026-06-29",
     "sources": [
       "WebDesignHot/design-md (403)",
       "ndroussi/design-md-for-ai (156)",
@@ -22,7 +22,7 @@
     "total_skills": 390,
     "total_design_systems": 1176,
     "version": "1.0.0",
-    "totalDesignSystems": 146,
+    "totalDesignSystems": 148,
     "totalSkills": 383,
     "sourcesTotal": 15,
     "skillsTotal": 390
@@ -2772,6 +2772,32 @@
       "updatedAt": "2026-06-11"
     },
     {
+      "id": "skill-design-power",
+      "name": "Power",
+      "source": "awesome-design-skills",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "Power design system from awesome-design-skills.",
+      "preview": "color-accent-primary: #FAFAFA\ncolor-bg-surface: #000000",
+      "tokens_css": {
+        "bg": "#000000",
+        "bg_elevated": "#f5f6f8",
+        "text": "#ffffff",
+        "text_muted": "#6b7380",
+        "accent": "#FAFAFA",
+        "accent2": "#FAFAFA",
+        "border": "#e2e5ec",
+        "success": "#16A34A",
+        "error": "#DC2626",
+        "font": "Inter",
+        "radius": "6px",
+        "dark": false
+      },
+      "preview_demo": true,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
       "id": "skill-design-premium",
       "name": "Premium",
       "source": "awesome-design-skills",
@@ -3142,6 +3168,32 @@
       "aesthetic": "scandinavian",
       "product_types": [],
       "description": "Aesthetic: Scandinavian Light.",
+      "preview": "color-accent-primary: #3B82F6\ncolor-bg-surface: #FFFFFF",
+      "tokens_css": {
+        "bg": "#FFFFFF",
+        "bg_elevated": "#f5f6f8",
+        "text": "#111827",
+        "text_muted": "#6b7380",
+        "accent": "#3B82F6",
+        "accent2": "#8B5CF6",
+        "border": "#e2e5ec",
+        "success": "#16A34A",
+        "error": "#DC2626",
+        "font": "Inter",
+        "radius": "6px",
+        "dark": false
+      },
+      "preview_demo": true,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "skill-design-square",
+      "name": "Square",
+      "source": "awesome-design-skills",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "Square design system from awesome-design-skills.",
       "preview": "color-accent-primary: #3B82F6\ncolor-bg-surface: #FFFFFF",
       "tokens_css": {
         "bg": "#FFFFFF",
