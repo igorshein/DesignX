@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Comprehensive UI/UX Design Skills Catalog for DesignX — Skill & Design System Matcher",
-    "lastUpdated": "2026-10-11",
+    "lastUpdated": "2026-10-12",
     "sources": [
       "WebDesignHot/design-md (403)",
       "ndroussi/design-md-for-ai (156)",
@@ -22,7 +22,7 @@
     "total_skills": 390,
     "total_design_systems": 1176,
     "version": "1.0.0",
-    "totalDesignSystems": 148,
+    "totalDesignSystems": 158,
     "totalSkills": 383,
     "sourcesTotal": 15,
     "skillsTotal": 390
@@ -484,6 +484,19 @@
   ],
   "design_systems": [
     {
+      "id": "design-md-1win",
+      "name": "1win Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of 1win's design language — a near-black crypto casino and sportsbook built on Inter at heavy weights, where a vivid green action color and an electric blue secondary carry every CTA across dense, full-bleed game-tile rails, promo cards, and live betting panels on a flat dark-grey surface ladder.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
       "id": "design-md-airbnb",
       "name": "Airbnb-design-analysis",
       "source": "awesome-design-md",
@@ -503,6 +516,19 @@
       "aesthetic": "industrial-minimal",
       "product_types": [],
       "description": "A sober, editorial workflow-software interface anchored on white canvas and dark-ink type, where brand voltage comes from full-bleed signature cards in coral, dark green, peach, and dark navy that punctuate long-scroll explainer pages. Primary actions use a near-black pill CTA; secondary actions sit in a white outlined button. Type runs Haas Grotesk in modest weights — never bold for its own sake.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-aljazeera",
+      "name": "Al Jazeera Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of Al Jazeera's design language — a hard-news editorial system built on flat white paper and dense Roboto headline stacks, signed by one saturated orange used as logo block and section-eyebrow bar, punctuated by a live-red that marks breaking coverage with timeline dots and LIVE badges, and interfaced through compact black pills; the corporate network pages extend the same identity onto a near-black canvas with royal-indigo hero panels, gold rules and amber links, and vivid teal and crimson section rails beside monochrome leadership portraiture.",
       "preview": "",
       "tokens_css": null,
       "preview_demo": false,
@@ -692,6 +718,19 @@
       "updatedAt": "2026-06-11"
     },
     {
+      "id": "design-md-dji",
+      "name": "DJI Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of DJI's design language — a product-photography showroom for drones and cameras, where full-bleed studio renders sit in square, gutter-separated tiles on a white canvas, every action is a rounded pill in a single engineering blue, type is a tightly tracked Open Sans set in near-black ink at stepped opacities, small orange tier labels mark product rank, and the store layers 8px option cards, a sticky purchase bar and pale grey panels on top of the same restrained system before closing on a charcoal footer.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
       "id": "design-md-elevenlabs",
       "name": "ElevenLabs-design-analysis",
       "source": "awesome-design-md",
@@ -809,6 +848,19 @@
       "updatedAt": "2026-06-11"
     },
     {
+      "id": "design-md-jobright",
+      "name": "Jobright Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of Jobright's design language — an AI job-hunting platform built on an energetic spring-mint green against black and white, with pale-mint section bands carrying the page rhythm. Bold condensed Titillium Web display headings pair with a clean Inter UI, and the CTA system runs on high-contrast pill buttons — black pills for primary actions, a mint-green pill for the signature accent. Rounded product-mockup cards, a scrolling black job ticker, and generous whitespace give it a friendly, high-energy startup feel.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
       "id": "design-md-kraken",
       "name": "kraken",
       "source": "awesome-design-md",
@@ -867,6 +919,19 @@
       "aesthetic": "industrial-minimal",
       "product_types": [],
       "description": "Design system analysis for mastercard.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-mercury",
+      "name": "Mercury Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of Mercury's design language — a fintech system that moves between a deep ink-violet night world on the homepage and a pale, near-white light world on its product and pricing pages, held together by one confident indigo action pill, soft translucent secondary pills, gently rounded cards and a quiet custom sans set at unusually light weights.",
       "preview": "",
       "tokens_css": null,
       "preview_demo": false,
@@ -952,6 +1017,32 @@
       "updatedAt": "2026-06-11"
     },
     {
+      "id": "design-md-mydealz",
+      "name": "mydealz Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of mydealz's design language — a high-density German deals-community system built on a confident brand green, where a stacked white-card feed carries thousands of deals and every card wears the signature hot/cold temperature control that turns pricing into a crowd vote. Fully-round 540px pill buttons, Averta CY at two weights, cool-gray page canvas, and a compact red/blue/orange status vocabulary keep the information-dense feed scannable and playful at once.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-nerdwallet",
+      "name": "NerdWallet Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of NerdWallet's design language — a personal-finance comparison platform built almost entirely from one deep green and a ladder of mints beneath it. Editorial pages open on a green gradient band, then drop to near-white where dense comparison tables do the real work. Corners are almost square, shadows are nearly absent, and the whole system separates content with hairlines and pale mint washes rather than elevation.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
       "id": "design-md-nike",
       "name": "Nike-design-analysis",
       "source": "awesome-design-md",
@@ -1023,6 +1114,32 @@
       "aesthetic": "industrial-minimal",
       "product_types": [],
       "description": {},
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-oracle",
+      "name": "Oracle Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of Oracle's design language — an enterprise system built on a warm neutral ladder rather than a colour palette. Six numbered greys carry almost every surface, a single dark charcoal carries every action, and the famous red is held back for the wordmark alone. Two display registers coexist, being a very light sans on the corporate index and a Georgia serif across the product pages, and the only chromatic moments are a thin gold rule under a headline and the occasional full-width band of teal or forest green.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-oura",
+      "name": "Oura Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of Oura's design language — a warm-paper wellness system that pairs a high-contrast Editorial serif with a quiet grotesque sans, wraps every surface in a cream-and-earth palette drawn from mustard, clay and olive, and drives conversion with a single decisive action blue against otherwise calm, photography-led layouts.",
       "preview": "",
       "tokens_css": null,
       "preview_demo": false,
@@ -1153,6 +1270,19 @@
       "aesthetic": "industrial-minimal",
       "product_types": [],
       "description": "Design system analysis for sanity.",
+      "preview": "",
+      "tokens_css": null,
+      "preview_demo": false,
+      "createdAt": "2026-06-11",
+      "updatedAt": "2026-06-11"
+    },
+    {
+      "id": "design-md-sap",
+      "name": "SAP Analysis",
+      "source": "awesome-design-md",
+      "aesthetic": "industrial-minimal",
+      "product_types": [],
+      "description": "An analysis of SAP's design language — an enterprise system that keeps almost everything on white and spends its structure on two greys and one blue. The chrome is deliberately quiet, a 60px light-grey bar over a product tab rail, so the page reads as an application frame rather than a marketing surface. Depth comes from broad flat bands rather than shadow, corners stay at 8px on controls and 12px on media, and the brand's own variable typeface carries a 350-to-700 weight range that lets a 15px list item and a 15px nav link read as different classes of text at the same size.",
       "preview": "",
       "tokens_css": null,
       "preview_demo": false,
