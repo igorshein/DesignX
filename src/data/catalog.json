@@ -1,7 +1,7 @@
 {
   "meta": {
     "description": "Comprehensive UI/UX Design Skills Catalog for DesignX — Skill & Design System Matcher",
-    "lastUpdated": "2026-11-18",
+    "lastUpdated": "2026-11-19",
     "sources": [
       "WebDesignHot/design-md (403)",
       "ndroussi/design-md-for-ai (156)",
@@ -17349,6 +17349,22 @@
       ],
       "source_short": "RESOURCES.md",
       "createdAt": "2026-06-16"
+    },
+    {
+      "id": "addyosmani-agent-skills-accessibility-engineering",
+      "name": "Accessibility Engineering",
+      "source": "addyosmani/agent-skills",
+      "category": "accessibility",
+      "complexity": "intermediate",
+      "summary": "Audits existing interfaces for WCAG 2.2 AA conformance and remediates the violations found. Use when auditing a page or ...",
+      "description": "Audits existing interfaces for WCAG 2.2 AA conformance and remediates the violations found. Use when auditing a page or component for accessibility, running axe-core or pa11y, triaging a11y violations, or checking screen reader and contrast issues before shipping.",
+      "for_product_types": [],
+      "tags": [
+        "addyosmani"
+      ],
+      "key_principles": [],
+      "frameworks": [],
+      "rating": 0
     }
   ]
 }
